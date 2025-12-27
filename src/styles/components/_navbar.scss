@@ -1,0 +1,152 @@
+// ============================================
+// Navbar Styles
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-sticky;
+  padding: $space-lg 0;
+  transition: all $transition-base;
+
+  &--scrolled {
+    @include glass(0.8);
+    padding: $space-md 0;
+    border-bottom: 1px solid $glass-border;
+  }
+
+  &__container {
+    @include container;
+    @include flex-between;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-family: $font-display;
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: $color-text-primary;
+    transition: color $transition-fast;
+
+    &-dot {
+      width: 10px;
+      height: 10px;
+      background: $color-accent-primary;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    &:hover {
+      color: $color-accent-primary;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: $space-2xl;
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  &__link {
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    @include animated-underline;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+
+  &__cta {
+    @include button-primary;
+    padding: $space-sm $space-lg;
+    font-size: $font-size-sm;
+  }
+
+  &__mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: $space-sm;
+    cursor: pointer;
+
+    @include tablet {
+      display: flex;
+    }
+
+    span {
+      width: 24px;
+      height: 2px;
+      background: $color-text-primary;
+      transition: all $transition-base;
+    }
+
+    &--active {
+      span:first-child {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:last-child {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+  }
+
+  // Mobile Menu
+  &__mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($color-bg-primary, 0.98);
+    backdrop-filter: blur(20px);
+    @include flex-center;
+    flex-direction: column;
+    gap: $space-xl;
+    z-index: $z-overlay;
+
+    @include tablet {
+      &--open {
+        display: flex;
+      }
+    }
+
+    .navbar__link {
+      font-size: $font-size-2xl;
+      color: $color-text-primary;
+    }
+
+    .navbar__cta {
+      margin-top: $space-lg;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}

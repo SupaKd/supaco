@@ -1,0 +1,221 @@
+// ============================================
+// Hero Section
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  @include flex-center;
+  @include grid-pattern;
+  overflow: hidden;
+
+  // Gradient orbs
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  &::before {
+    width: 600px;
+    height: 600px;
+    background: $color-accent-primary;
+    top: -200px;
+    right: -200px;
+    animation-delay: 0s;
+  }
+
+  &::after {
+    width: 400px;
+    height: 400px;
+    background: $color-accent-secondary;
+    bottom: -100px;
+    left: -100px;
+    animation-delay: -4s;
+  }
+
+  &__container {
+    @include container;
+    position: relative;
+    z-index: $z-base;
+    text-align: center;
+    padding: $space-5xl 0;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm $space-lg;
+    margin-bottom: $space-2xl;
+    @include glass;
+    border-radius: $radius-full;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $color-text-secondary;
+
+    &-dot {
+      width: 8px;
+      height: 8px;
+      background: $color-accent-secondary;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    &-text {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  &__title {
+    @include heading-xl;
+    color: $color-text-primary;
+    margin-bottom: $space-xl;
+
+    .highlight {
+      position: relative;
+      @include gradient-text;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: $color-accent-gradient;
+        border-radius: $radius-full;
+      }
+    }
+  }
+
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto $space-2xl;
+    @include body-text;
+    font-size: $font-size-xl;
+
+    @include tablet {
+      font-size: $font-size-lg;
+    }
+  }
+
+  &__ctas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-lg;
+    margin-bottom: $space-4xl;
+
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+
+  &__cta-primary {
+    @include button-primary;
+    padding: $space-lg $space-2xl;
+    font-size: $font-size-lg;
+  }
+
+  &__cta-secondary {
+    @include button-secondary;
+    padding: $space-lg $space-2xl;
+    font-size: $font-size-lg;
+  }
+
+  &__stats {
+    display: flex;
+    justify-content: center;
+    gap: $space-4xl;
+
+    @include tablet {
+      gap: $space-2xl;
+    }
+
+    @include mobile {
+      flex-direction: column;
+      gap: $space-xl;
+    }
+  }
+
+  &__stat {
+    text-align: center;
+
+    &-value {
+      font-family: $font-display;
+      font-size: $font-size-5xl;
+      font-weight: 700;
+      @include gradient-text;
+      line-height: 1;
+      margin-bottom: $space-xs;
+
+      @include tablet {
+        font-size: $font-size-4xl;
+      }
+    }
+
+    &-label {
+      font-size: $font-size-sm;
+      color: $color-text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  // Scroll indicator
+  &__scroll {
+    position: absolute;
+    bottom: $space-2xl;
+    left: 50%;
+    transform: translateX(-50%);
+    @include flex-column;
+    align-items: center;
+    gap: $space-sm;
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    animation: bounce 2s ease-in-out infinite;
+
+    &-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, $color-accent-primary, transparent);
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(20px, -20px) rotate(5deg);
+  }
+  50% {
+    transform: translate(-10px, 20px) rotate(-5deg);
+  }
+  75% {
+    transform: translate(-20px, -10px) rotate(3deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,55 @@
+// ============================================
+// Custom Cursor
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+
+  @include tablet {
+    display: none;
+  }
+
+  &__dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: $color-accent-primary;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+  }
+
+  &__ring {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid $color-accent-primary;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+    opacity: 0.5;
+  }
+
+  &--hover {
+    .cursor__dot {
+      transform: translate(-50%, -50%) scale(2);
+    }
+
+    .cursor__ring {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0.8;
+    }
+  }
+
+  &--clicking {
+    .cursor__ring {
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+  }
+}
