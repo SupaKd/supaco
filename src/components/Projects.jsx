@@ -9,36 +9,40 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'Restaurant Le Gourmet',
-      description: 'Site vitrine avec réservation en ligne pour un restaurant gastronomique',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop',
-      tags: ['Site Vitrine', 'Restaurant'],
-      category: 'vitrine',
+      title: 'Restaurant Sabai',
+      description: 'Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry',
+      image: 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=800&h=600&fit=crop',
+      tags: ['Application Web', 'Restaurant'],
+      category: 'app',
       featured: true,
+      url: 'https://sabai-thoiry.com/',
     },
     {
       id: 2,
-      title: 'Boutique Mode Éthique',
-      description: 'E-commerce complet pour une marque de vêtements durables',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop',
-      tags: ['E-Commerce', 'Mode'],
-      category: 'ecommerce',
+      title: 'Dépannage Gémeaux',
+      description: 'Site vitrine professionnel pour une entreprise de plomberie et chauffage avec formulaire de contact et présentation des services',
+      image: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=800&h=600&fit=crop',
+      tags: ['Site Vitrine', 'Artisan'],
+      category: 'vitrine',
+      url: 'https://depannage-gemeaux.fr/',
     },
     {
       id: 3,
-      title: 'Cabinet Médical',
-      description: 'Plateforme de prise de rendez-vous pour un cabinet de médecins',
-      image: 'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop',
-      tags: ['Application', 'Santé'],
-      category: 'app',
+      title: 'Yojeme',
+      description: 'Site vitrine moderne et responsive avec design épuré et optimisation SEO',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+      tags: ['Site Vitrine', 'Services'],
+      category: 'vitrine',
+      url: 'https://www.yojeme.fr/',
     },
     {
       id: 4,
-      title: 'Agence Immobilière',
-      description: 'Site avec catalogue de biens et formulaires de contact avancés',
-      image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop',
-      tags: ['Site Vitrine', 'Immobilier'],
+      title: 'Bellifood',
+      description: 'Site vitrine avec menu digital pour un restaurant de tacos et burgers à Oyonnax',
+      image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&h=600&fit=crop',
+      tags: ['Site Vitrine', 'Restaurant'],
       category: 'vitrine',
+      url: 'https://bellifood.com/',
     },
   ];
 
@@ -73,6 +77,12 @@ const Projects = () => {
         ease: 'easeOut',
       },
     },
+  };
+
+  const handleProjectClick = (url) => {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -120,6 +130,7 @@ const Projects = () => {
               variants={cardVariants}
               layout
               data-cursor-hover
+              onClick={() => handleProjectClick(project.url)}
             >
               <img
                 src={project.image}
