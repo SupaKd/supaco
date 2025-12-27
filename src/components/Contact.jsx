@@ -150,7 +150,7 @@ const Contact = () => {
             </div>
 
             <div className="contact__socials">
-              <a href="#" className="contact__social" aria-label="Instagram">
+              <a href="https://www.instagram.com/supa_c0/" className="contact__social" aria-label="Instagram">
                 <FaInstagram size={20} />
               </a>
               <span>Suivez-nous !</span>
