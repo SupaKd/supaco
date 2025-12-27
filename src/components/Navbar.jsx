@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,22 +11,22 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { label: 'Services', href: '#services' },
-    { label: 'Projets', href: '#projects' },
-    { label: 'Tarifs', href: '#pricing' },
-    { label: 'Contact', href: '#contact' },
+    { label: "Services", href: "#services" },
+    { label: "Projets", href: "#projects" },
+    { label: "Tarifs", href: "#pricing" },
+    { label: "Contact", href: "#contact" },
   ];
 
   const scrollToSection = (e, href) => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
       setIsMobileMenuOpen(false);
     }
   };
@@ -33,15 +34,14 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}
+        className={`navbar ${isScrolled ? "navbar--scrolled" : ""}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="navbar__container">
           <a href="/" className="navbar__logo">
-            <span className="navbar__logo-dot" />
-            Supaco Digital
+            <img src="/newlogo.png" alt="logo" />
           </a>
 
           <div className="navbar__menu">
@@ -63,7 +63,7 @@ const Navbar = () => {
           <motion.a
             href="#contact"
             className="navbar__cta"
-            onClick={(e) => scrollToSection(e, '#contact')}
+            onClick={(e) => scrollToSection(e, "#contact")}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.7 }}
@@ -74,13 +74,20 @@ const Navbar = () => {
           </motion.a>
 
           <button
-            className={`navbar__mobile-toggle ${isMobileMenuOpen ? 'navbar__mobile-toggle--active' : ''}`}
+            className="navbar__mobile-toggle navbar__mobile-toggle--icon"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Menu"
           >
-            <span />
-            <span />
-            <span />
+            <motion.div
+              initial={{ rotate: 0, scale: 0.8 }}
+              animate={{
+                rotate: isMobileMenuOpen ? 180 : 0,
+                scale: 1,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+            </motion.div>
           </button>
         </div>
       </motion.nav>
@@ -109,7 +116,7 @@ const Navbar = () => {
             <motion.a
               href="#contact"
               className="navbar__cta"
-              onClick={(e) => scrollToSection(e, '#contact')}
+              onClick={(e) => scrollToSection(e, "#contact")}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}

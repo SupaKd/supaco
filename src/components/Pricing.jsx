@@ -1,54 +1,50 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 const Pricing = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const plans = [
     {
-      name: 'Essentiel',
-      description: 'Parfait pour démarrer votre présence en ligne',
-      price: '500',
-      duration: 'Livré en 72h',
+      name: "Essentiel",
+      description: "Parfait pour démarrer votre présence en ligne",
+      price: "500",
+      duration: "Livré en 72h",
       features: [
-        'Site one-page responsive',
-        'Design moderne personnalisé',
-        'Formulaire de contact',
-        'Optimisation SEO de base',
-        'Hébergement 1 an inclus',
-        'Nom de domaine offert',
+        "Site one-page responsive",
+        "Design moderne personnalisé",
+        "Formulaire de contact",
+        "Optimisation SEO de base",
       ],
     },
     {
-      name: 'Professionnel',
-      description: 'La solution complète pour votre entreprise',
-      price: '1200',
-      duration: 'Livré en 5 jours',
+      name: "Professionnel",
+      description: "La solution complète pour votre entreprise",
+      price: "1200",
+      duration: "Livré en 5 jours",
       popular: true,
       features: [
-        'Site multi-pages (jusqu\'à 5)',
-        'Design premium sur-mesure',
-        'Animations et effets avancés',
-        'SEO optimisé + Analytics',
-        'Blog intégré',
-        'Formation utilisation',
-        'Support prioritaire 3 mois',
+        "Site multi-pages (jusqu'à 5)",
+        "Design premium sur-mesure",
+        "Animations et effets avancés",
+        "SEO optimisé + Analytics",
+        "Blog intégré",
+        "Formation utilisation",
       ],
     },
     {
-      name: 'E-Commerce',
-      description: 'Vendez en ligne avec une boutique complète',
-      price: '2500',
-      duration: 'Livré en 10 jours',
+      name: "E-Commerce",
+      description: "Vendez en ligne avec une boutique complète",
+      price: "2500",
+      duration: "Livré en 10 jours",
       features: [
-        'Boutique en ligne complète',
-        'Jusqu\'à 50 produits',
-        'Paiement Stripe/PayPal',
-        'Gestion des stocks',
-        'Emails automatiques',
-        'Dashboard admin',
-        'Support 6 mois inclus',
+        "Boutique en ligne complète",
+        "Jusqu'à 50 produits",
+        "Paiement Stripe/PayPal",
+        "Gestion des stocks",
+        "Emails automatiques",
+        "Dashboard admin",
       ],
     },
   ];
@@ -77,7 +73,7 @@ const Pricing = () => {
 
   const scrollToContact = (e) => {
     e.preventDefault();
-    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -92,8 +88,8 @@ const Pricing = () => {
           <span className="pricing__label">Tarifs</span>
           <h2 className="pricing__title">Des prix transparents</h2>
           <p className="pricing__subtitle">
-            Pas de surprise ni de coûts cachés. Choisissez la formule
-            adaptée à vos besoins et lancez votre projet dès aujourd'hui.
+            Pas de surprise ni de coûts cachés. Choisissez la formule adaptée à
+            vos besoins et lancez votre projet dès aujourd'hui.
           </p>
         </motion.div>
 
@@ -101,12 +97,14 @@ const Pricing = () => {
           className="pricing__grid"
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate={isInView ? "visible" : "hidden"}
         >
           {plans.map((plan) => (
             <motion.div
               key={plan.name}
-              className={`pricing__card ${plan.popular ? 'pricing__card--popular' : ''}`}
+              className={`pricing__card ${
+                plan.popular ? "pricing__card--popular" : ""
+              }`}
               variants={cardVariants}
               whileHover={{ y: -8 }}
             >
@@ -118,7 +116,9 @@ const Pricing = () => {
                 <h3 className="pricing__card-name">{plan.name}</h3>
                 <p className="pricing__card-description">{plan.description}</p>
                 <div className="pricing__card-price">
-                  <span className="pricing__card-price-amount">{plan.price}</span>
+                  <span className="pricing__card-price-amount">
+                    {plan.price}
+                  </span>
                   <span className="pricing__card-price-currency">€</span>
                 </div>
                 <span className="pricing__card-duration">{plan.duration}</span>
@@ -152,10 +152,10 @@ const Pricing = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
         >
-          <span className="pricing__guarantee-icon">🛡️</span>
           <p className="pricing__guarantee-text">
-            <strong>Satisfait ou remboursé</strong> — Si le résultat ne vous convient pas,
-            nous vous remboursons intégralement. Sans condition.
+            <strong>Exigence & excellence</strong> — Chaque prestation est
+            ajustée avec soin afin de garantir un résultat à la hauteur de vos
+            attentes.
           </p>
         </motion.div>
       </div>

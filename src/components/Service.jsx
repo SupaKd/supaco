@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { HiOutlineGlobeAlt } from 'react-icons/hi';
+import { HiOutlineShoppingCart } from 'react-icons/hi';
+import { HiOutlineLightningBolt } from 'react-icons/hi';
 
 const Services = () => {
   const ref = useRef(null);
@@ -8,19 +11,19 @@ const Services = () => {
 
   const services = [
     {
-      icon: '🚀',
+      icon: <HiOutlineGlobeAlt />,
       title: 'Site Vitrine',
       description: 'Un site web professionnel qui présente votre activité et convertit vos visiteurs en clients.',
       features: ['Design sur-mesure', 'Responsive mobile', 'Optimisation SEO', 'Formulaire de contact'],
     },
     {
-      icon: '🛒',
+      icon: <HiOutlineShoppingCart />,
       title: 'E-Commerce',
       description: 'Vendez vos produits en ligne avec une boutique moderne et sécurisée.',
       features: ['Catalogue produits', 'Paiement sécurisé', 'Gestion des stocks', 'Suivi commandes'],
     },
     {
-      icon: '⚡',
+      icon: <HiOutlineLightningBolt />,
       title: 'Application Web',
       description: 'Des applications sur-mesure pour digitaliser et automatiser votre activité.',
       features: ['Développement React', 'Base de données', 'API sur-mesure', 'Dashboard admin'],

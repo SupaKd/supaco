@@ -96,7 +96,7 @@
 
     &-badge {
       position: absolute;
-      top: -12px;
+      top: 6px;
       left: 50%;
       transform: translateX(-50%);
       padding: $space-xs $space-lg;
@@ -107,6 +107,12 @@
       color: $color-bg-primary;
       text-transform: uppercase;
       letter-spacing: 0.1em;
+
+      @include tablet {
+        top: $space-md;
+        left: $space-md;
+        transform: none;
+      }
     }
 
     &-header {

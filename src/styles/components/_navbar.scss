@@ -18,6 +18,8 @@
     @include glass(0.8);
     padding: $space-md 0;
     border-bottom: 1px solid $glass-border;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(25px) saturate(180%);
   }
 
   &__container {
@@ -25,27 +27,15 @@
     @include flex-between;
   }
 
-  &__logo {
-    display: flex;
-    align-items: center;
-    gap: $space-sm;
-    font-family: $font-display;
-    font-size: $font-size-xl;
-    font-weight: 600;
-    color: $color-text-primary;
-    transition: color $transition-fast;
-
-    &-dot {
-      width: 10px;
-      height: 10px;
-      background: $color-accent-primary;
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
+ img{
+    width: 90px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    
     &:hover {
-      color: $color-accent-primary;
-    }
+      transform: scale(1.05);
+ };
   }
 
   &__menu {

@@ -1,8 +1,23 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+import { 
+  HiOutlineMail, 
+  HiOutlineLocationMarker, 
+  HiOutlineClock,
+  HiOutlinePaperAirplane
+} from 'react-icons/hi';
+import { FaInstagram } from 'react-icons/fa';
+import { HiCheck, HiXMark } from 'react-icons/hi2';
+
+// ⚠️ REMPLACE CES VALEURS PAR LES TIENNES (depuis emailjs.com)
+const EMAILJS_SERVICE_ID = 'service_z9k3dwd';
+const EMAILJS_TEMPLATE_ID = 'template_qr0hizb';
+const EMAILJS_PUBLIC_KEY = 'crjyM7CbUuPkyfBTT';
 
 const Contact = () => {
   const ref = useRef(null);
+  const formRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const [formState, setFormState] = useState({
@@ -14,7 +29,8 @@ const Contact = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setFormState({
@@ -26,15 +42,83 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setSubmitStatus(null);
+    setErrorMessage('');
+
+    // Prépare les données pour EmailJS
+    const templateParams = {
+      from_name: formState.name,
+      from_email: formState.email,
+      phone: formState.phone || 'Non renseigné',
+      service: getServiceLabel(formState.service),
+      budget: getBudgetLabel(formState.budget),
+      message: formState.message,
+      // Pour l'email de réponse
+      reply_to: formState.email,
+    };
+
+    try {
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('Email envoyé avec succès:', response);
+      setSubmitStatus('success');
+      
+      // Reset le formulaire
+      setFormState({
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        budget: '',
+        message: '',
+      });
+
+    } catch (error) {
+      console.error('Erreur envoi email:', error);
+      setSubmitStatus('error');
+      setErrorMessage(
+        error.text || 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Convertit les valeurs en labels lisibles
+  const getServiceLabel = (value) => {
+    const services = {
+      'vitrine': 'Site Vitrine',
+      'ecommerce': 'E-Commerce',
+      'app': 'Application Web',
+      'autre': 'Autre projet',
+    };
+    return services[value] || value || 'Non spécifié';
+  };
+
+  const getBudgetLabel = (value) => {
+    const budgets = {
+      '500-1000': '500€ - 1 000€',
+      '1000-2500': '1 000€ - 2 500€',
+      '2500-5000': '2 500€ - 5 000€',
+      '5000+': 'Plus de 5 000€',
+    };
+    return budgets[value] || value || 'Non spécifié';
+  };
+
+  const resetForm = () => {
+    setSubmitStatus(null);
+    setErrorMessage('');
   };
 
   const contactDetails = [
-    { icon: '📧', label: 'Email', value: 'contact@supaco.digital' },
-    { icon: '📍', label: 'Localisation', value: 'Pays de Gex, France' },
-    { icon: '⏰', label: 'Réponse', value: 'Sous 24 heures' },
+    { icon: <HiOutlineMail size={24} />, label: 'Email', value: 'contact@supaco.digital.com' },
+    { icon: <HiOutlineLocationMarker size={24} />, label: 'Localisation', value: 'Pays de Gex, France' },
+    { icon: <HiOutlineClock size={24} />, label: 'Réponse', value: 'Sous 24 heures' },
   ];
 
   return (
@@ -67,9 +151,10 @@ const Contact = () => {
             </div>
 
             <div className="contact__socials">
-              <a href="#" className="contact__social" aria-label="LinkedIn">in</a>
-              <a href="#" className="contact__social" aria-label="Twitter">𝕏</a>
-              <a href="#" className="contact__social" aria-label="Instagram">📷</a>
+              <a href="#" className="contact__social" aria-label="Instagram">
+                <FaInstagram size={20} />
+              </a>
+              <span>Suivez-nous !</span>
             </div>
           </motion.div>
 
@@ -79,7 +164,8 @@ const Contact = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {isSubmitted ? (
+            {/* Message de succès */}
+            {submitStatus === 'success' && (
               <div className="contact__success">
                 <motion.div
                   className="contact__success-icon"
@@ -87,15 +173,50 @@ const Contact = () => {
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 10 }}
                 >
-                  ✓
+                  <HiCheck size={48} />
                 </motion.div>
                 <h3 className="contact__success-title">Message envoyé !</h3>
                 <p className="contact__success-text">
                   Merci pour votre message. Nous vous répondrons dans les 24 heures.
                 </p>
+                <button 
+                  className="contact__form-submit contact__form-submit--secondary"
+                  onClick={resetForm}
+                >
+                  Envoyer un autre message
+                </button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
+            )}
+
+            {/* Message d'erreur */}
+            {submitStatus === 'error' && (
+              <div className="contact__error">
+                <motion.div
+                  className="contact__error-icon"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 10 }}
+                >
+                  <HiXMark size={48} />
+                </motion.div>
+                <h3 className="contact__error-title">Erreur d'envoi</h3>
+                <p className="contact__error-text">{errorMessage}</p>
+                <p className="contact__error-alternative">
+                  Vous pouvez aussi nous contacter directement à{' '}
+                  <a href="mailto:contact@supaco.digital">contact@supaco.digital</a>
+                </p>
+                <button 
+                  className="contact__form-submit"
+                  onClick={resetForm}
+                >
+                  Réessayer
+                </button>
+              </div>
+            )}
+
+            {/* Formulaire */}
+            {submitStatus === null && (
+              <form ref={formRef} onSubmit={handleSubmit}>
                 <div className="contact__form-grid">
                   <div className="contact__form-group">
                     <label className="contact__form-label">Nom complet</label>
@@ -196,9 +317,7 @@ const Contact = () => {
                   ) : (
                     <>
                       Envoyer ma demande
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                      </svg>
+                      <HiOutlinePaperAirplane size={20} style={{ transform: 'rotate(90deg)' }} />
                     </>
                   )}
                 </motion.button>

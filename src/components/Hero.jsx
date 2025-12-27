@@ -102,14 +102,17 @@ const Hero = () => {
         >
           <motion.div className="hero__stat" variants={statVariants}>
             <span className="hero__stat-value">72h</span>
+            <br />
             <span className="hero__stat-label">Délai de livraison</span>
           </motion.div>
           <motion.div className="hero__stat" variants={statVariants}>
             <span className="hero__stat-value">500€</span>
+            <br />
             <span className="hero__stat-label">À partir de</span>
           </motion.div>
           <motion.div className="hero__stat" variants={statVariants}>
             <span className="hero__stat-value">100%</span>
+            <br />
             <span className="hero__stat-label">Satisfaction client</span>
           </motion.div>
         </motion.div>

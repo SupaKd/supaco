@@ -12,9 +12,14 @@ $color-text-secondary: #a0a0a0;
 $color-text-muted: #666666;
 
 // Accent - Electric Lime for Impact
-$color-accent-primary: #d4ff00;
-$color-accent-secondary: #00ff88;
-$color-accent-gradient: linear-gradient(135deg, $color-accent-primary 0%, $color-accent-secondary 100%);
+$color-accent-primary: #00d4ff; // jaune
+$color-accent-secondary: #0099ff; // bleu vif
+$color-accent-gradient: linear-gradient(
+  135deg,
+  $color-accent-primary 0%,
+  $color-accent-secondary 100%
+);
+
 
 // Glass Effect Colors
 $glass-bg: rgba(255, 255, 255, 0.03);
