@@ -1,15 +1,33 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { HiOutlineGlobeAlt } from 'react-icons/hi';
-import { HiOutlineShoppingCart } from 'react-icons/hi';
-import { HiOutlineLightningBolt } from 'react-icons/hi';
+import { memo, useRef, useMemo } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { HiOutlineGlobeAlt, HiOutlineShoppingCart, HiOutlineLightningBolt } from 'react-icons/hi';
+
+const ServiceCard = memo(({ service, variants }) => (
+  <motion.div
+    className="services__card"
+    variants={variants}
+    whileHover={{ y: -8 }}
+  >
+    <div className="services__card-icon">{service.icon}</div>
+    <h3 className="services__card-title">{service.title}</h3>
+    <p className="services__card-description">{service.description}</p>
+    <ul className="services__card-features">
+      {service.features.map((feature) => (
+        <li key={feature} className="services__card-feature">
+          {feature}
+        </li>
+      ))}
+    </ul>
+  </motion.div>
+));
+
+ServiceCard.displayName = 'ServiceCard';
 
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const services = [
+  const services = useMemo(() => [
     {
       icon: <HiOutlineGlobeAlt />,
       title: 'Site Vitrine',
@@ -28,9 +46,9 @@ const Services = () => {
       description: 'Des applications sur-mesure pour digitaliser et automatiser votre activité.',
       features: ['Développement React', 'Base de données', 'API sur-mesure', 'Dashboard admin'],
     },
-  ];
+  ], []);
 
-  const containerVariants = {
+  const containerVariants = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -38,9 +56,9 @@ const Services = () => {
         staggerChildren: 0.2,
       },
     },
-  };
+  }), []);
 
-  const cardVariants = {
+  const cardVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 60 },
     visible: {
       opacity: 1,
@@ -50,7 +68,7 @@ const Services = () => {
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
-  };
+  }), []);
 
   return (
     <section className="services" id="services" ref={ref}>
@@ -75,24 +93,12 @@ const Services = () => {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {services.map((service, index) => (
-            <motion.div
+          {services.map((service) => (
+            <ServiceCard
               key={service.title}
-              className="services__card"
+              service={service}
               variants={cardVariants}
-              whileHover={{ y: -8 }}
-            >
-              <div className="services__card-icon">{service.icon}</div>
-              <h3 className="services__card-title">{service.title}</h3>
-              <p className="services__card-description">{service.description}</p>
-              <ul className="services__card-features">
-                {service.features.map((feature) => (
-                  <li key={feature} className="services__card-feature">
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+            />
           ))}
         </motion.div>
       </div>
@@ -100,4 +106,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default memo(Services);

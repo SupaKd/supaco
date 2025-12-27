@@ -1,7 +1,8 @@
+import { memo, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
-const Hero = () => {
-  const containerVariants = {
+const Hero = memo(() => {
+  const containerVariants = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -10,9 +11,9 @@ const Hero = () => {
         delayChildren: 0.3,
       },
     },
-  };
+  }), []);
 
-  const itemVariants = {
+  const itemVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
@@ -22,9 +23,9 @@ const Hero = () => {
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
-  };
+  }), []);
 
-  const statVariants = {
+  const statVariants = useMemo(() => ({
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
       opacity: 1,
@@ -34,17 +35,23 @@ const Hero = () => {
         ease: 'easeOut',
       },
     },
-  };
+  }), []);
 
-  const scrollToContact = (e) => {
+  const scrollToContact = useCallback((e) => {
     e.preventDefault();
     document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
-  const scrollToProjects = (e) => {
+  const scrollToProjects = useCallback((e) => {
     e.preventDefault();
     document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
+
+  const stats = useMemo(() => [
+    { value: '72h', label: 'Délai de livraison' },
+    { value: '500€', label: 'À partir de' },
+    { value: '100%', label: 'Satisfaction client' },
+  ], []);
 
   return (
     <section className="hero" id="hero">
@@ -100,21 +107,13 @@ const Hero = () => {
           animate="visible"
           transition={{ delay: 0.8 }}
         >
-          <motion.div className="hero__stat" variants={statVariants}>
-            <span className="hero__stat-value">72h</span>
-            <br />
-            <span className="hero__stat-label">Délai de livraison</span>
-          </motion.div>
-          <motion.div className="hero__stat" variants={statVariants}>
-            <span className="hero__stat-value">500€</span>
-            <br />
-            <span className="hero__stat-label">À partir de</span>
-          </motion.div>
-          <motion.div className="hero__stat" variants={statVariants}>
-            <span className="hero__stat-value">100%</span>
-            <br />
-            <span className="hero__stat-label">Satisfaction client</span>
-          </motion.div>
+          {stats.map((stat) => (
+            <motion.div key={stat.label} className="hero__stat" variants={statVariants}>
+              <span className="hero__stat-value">{stat.value}</span>
+              <br />
+              <span className="hero__stat-label">{stat.label}</span>
+            </motion.div>
+          ))}
         </motion.div>
 
         <motion.div
@@ -129,6 +128,8 @@ const Hero = () => {
       </motion.div>
     </section>
   );
-};
+});
+
+Hero.displayName = 'Hero';
 
 export default Hero;

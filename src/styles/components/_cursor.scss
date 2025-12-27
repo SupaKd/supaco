@@ -1,5 +1,5 @@
 // ============================================
-// Custom Cursor
+// Custom Cursor - OPTIMIZED
 // ============================================
 
 @use '../variables' as *;
@@ -7,49 +7,70 @@
 
 .cursor {
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: difference;
+  // Optimisation: contient le layout
+  contain: layout style;
 
   @include tablet {
     display: none;
   }
 
   &__dot {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 8px;
     height: 8px;
     background: $color-accent-primary;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
+    // Optimisation GPU
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
   }
 
   &__ring {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 40px;
     height: 40px;
+    margin-left: -16px;
+    margin-top: -16px;
     border: 1px solid $color-accent-primary;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.15s ease;
+    // Optimisation GPU
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease, border 0.2s ease;
     opacity: 0.5;
   }
 
   &--hover {
     .cursor__dot {
-      transform: translate(-50%, -50%) scale(2);
+      width: 16px;
+      height: 16px;
     }
 
     .cursor__ring {
-      transform: translate(-50%, -50%) scale(1.5);
+      width: 60px;
+      height: 60px;
+      margin-left: -26px;
+      margin-top: -26px;
       opacity: 0.8;
     }
   }
 
   &--clicking {
     .cursor__ring {
-      transform: translate(-50%, -50%) scale(0.8);
+      width: 32px;
+      height: 32px;
+      margin-left: -12px;
+      margin-top: -12px;
     }
   }
 }

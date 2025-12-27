@@ -1,5 +1,5 @@
 // ============================================
-// Navbar Styles
+// Navbar Styles - OPTIMIZED
 // ============================================
 
 @use '../variables' as *;
@@ -12,14 +12,22 @@
   right: 0;
   z-index: $z-sticky;
   padding: $space-lg 0;
-  transition: all $transition-base;
+  transition: padding $transition-base, background-color $transition-base;
+  // Optimisation: force GPU layer
+  will-change: transform;
+  transform: translateZ(0);
 
   &--scrolled {
-    @include glass(0.8);
     padding: $space-md 0;
+    background: rgba(17, 17, 17, 0.95);
     border-bottom: 1px solid $glass-border;
-    background: rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(25px) saturate(180%);
+    
+    // Backdrop-filter uniquement sur desktop (coûteux en GPU)
+    @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(17, 17, 17, 0.85);
+    }
   }
 
   &__container {
@@ -27,7 +35,7 @@
     @include flex-between;
   }
 
- img{
+  img {
     width: 90px;
     height: auto;
     cursor: pointer;
@@ -35,7 +43,7 @@
     
     &:hover {
       transform: scale(1.05);
- };
+    }
   }
 
   &__menu {
@@ -107,11 +115,11 @@
     right: 0;
     bottom: 0;
     background: rgba($color-bg-primary, 0.98);
-    backdrop-filter: blur(20px);
     @include flex-center;
     flex-direction: column;
     gap: $space-xl;
     z-index: $z-overlay;
+    // Pas de backdrop-filter sur mobile (perf)
 
     @include tablet {
       &--open {

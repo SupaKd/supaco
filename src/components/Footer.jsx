@@ -1,9 +1,22 @@
+import { memo, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
+
+const FooterLink = memo(({ link, onClick }) => (
+  <a
+    href={link.href}
+    className="footer__link"
+    onClick={onClick}
+  >
+    {link.label}
+  </a>
+));
+
+FooterLink.displayName = 'FooterLink';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const footerLinks = {
+  const footerLinks = useMemo(() => ({
     services: [
       { label: 'Site Vitrine', href: '#services' },
       { label: 'E-Commerce', href: '#services' },
@@ -21,9 +34,9 @@ const Footer = () => {
       { label: 'CGV', href: '#' },
       { label: 'Politique de confidentialité', href: '#' },
     ],
-  };
+  }), []);
 
-  const scrollToSection = (e, href) => {
+  const scrollToSection = useCallback((e, href) => {
     if (href.startsWith('#') && href.length > 1) {
       e.preventDefault();
       const element = document.querySelector(href);
@@ -31,7 +44,7 @@ const Footer = () => {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  };
+  }, []);
 
   return (
     <footer className="footer">
@@ -65,39 +78,29 @@ const Footer = () => {
           <div className="footer__column">
             <h4 className="footer__column-title">Services</h4>
             {footerLinks.services.map((link) => (
-              <a
+              <FooterLink
                 key={link.label}
-                href={link.href}
-                className="footer__link"
+                link={link}
                 onClick={(e) => scrollToSection(e, link.href)}
-              >
-                {link.label}
-              </a>
+              />
             ))}
           </div>
 
           <div className="footer__column">
             <h4 className="footer__column-title">Entreprise</h4>
             {footerLinks.company.map((link) => (
-              <a
+              <FooterLink
                 key={link.label}
-                href={link.href}
-                className="footer__link"
+                link={link}
                 onClick={(e) => scrollToSection(e, link.href)}
-              >
-                {link.label}
-              </a>
+              />
             ))}
           </div>
 
           <div className="footer__column">
             <h4 className="footer__column-title">Légal</h4>
             {footerLinks.legal.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="footer__link"
-              >
+              <a key={link.label} href={link.href} className="footer__link">
                 {link.label}
               </a>
             ))}
@@ -119,4 +122,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

@@ -1,5 +1,5 @@
 // ============================================
-// Projects Section
+// Projects Section - OPTIMIZED
 // ============================================
 
 @use '../variables' as *;
@@ -9,6 +9,8 @@
   position: relative;
   padding: $space-5xl 0;
   background: $color-bg-primary;
+  // Optimisation: isolation du contexte de rendu
+  contain: content;
 
   &__container {
     @include container;
@@ -75,6 +77,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: $space-xl;
+    // Optimisation: contient les enfants
+    contain: layout style;
 
     @include tablet {
       grid-template-columns: 1fr;
@@ -87,7 +91,10 @@
     overflow: hidden;
     aspect-ratio: 16 / 10;
     cursor: pointer;
-    group: project-card;
+    // Optimisation GPU pour les animations
+    will-change: transform;
+    transform: translateZ(0);
+    contain: layout paint;
 
     &::before {
       content: '';
@@ -118,6 +125,14 @@
       }
     }
 
+    // Placeholder pour lazy loading
+    &-placeholder {
+      position: absolute;
+      inset: 0;
+      background: $color-bg-tertiary;
+      animation: pulse-bg 1.5s ease-in-out infinite;
+    }
+
     &-image {
       position: absolute;
       inset: 0;
@@ -125,6 +140,13 @@
       height: 100%;
       object-fit: cover;
       transition: transform $transition-slow;
+      will-change: transform;
+      opacity: 0;
+      
+      &--loaded {
+        opacity: 1;
+        transition: transform $transition-slow, opacity 0.3s ease;
+      }
     }
 
     &-content {
@@ -213,5 +235,14 @@
         font-size: $font-size-xl;
       }
     }
+  }
+}
+
+@keyframes pulse-bg {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
   }
 }

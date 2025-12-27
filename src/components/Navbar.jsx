@@ -1,35 +1,53 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
+
+// Throttle utility
+const throttle = (func, limit) => {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+};
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    // Throttle le scroll handler à 100ms
+    const handleScroll = throttle(() => {
       setIsScrolled(window.scrollY > 50);
-    };
+    }, 100);
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
+  // Memoize les liens de navigation
+  const navLinks = useMemo(() => [
     { label: "Services", href: "#services" },
     { label: "Projets", href: "#projects" },
     { label: "Tarifs", href: "#pricing" },
     { label: "Contact", href: "#contact" },
-  ];
+  ], []);
 
-  const scrollToSection = (e, href) => {
+  const scrollToSection = useCallback((e, href) => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       setIsMobileMenuOpen(false);
     }
-  };
+  }, []);
+
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(prev => !prev);
+  }, []);
 
   return (
     <>
@@ -41,7 +59,7 @@ const Navbar = () => {
       >
         <div className="navbar__container">
           <a href="/" className="navbar__logo">
-            <img src="/newlogo.png" alt="logo" />
+            <img src="/newlogo.png" alt="logo" loading="eager" />
           </a>
 
           <div className="navbar__menu">
@@ -75,14 +93,13 @@ const Navbar = () => {
 
           <button
             className="navbar__mobile-toggle navbar__mobile-toggle--icon"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={toggleMobileMenu}
             aria-label="Menu"
           >
             <motion.div
-              initial={{ rotate: 0, scale: 0.8 }}
+              initial={false}
               animate={{
                 rotate: isMobileMenuOpen ? 180 : 0,
-                scale: 1,
               }}
               transition={{ duration: 0.3 }}
             >

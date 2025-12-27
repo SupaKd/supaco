@@ -1,11 +1,54 @@
-import { useRef } from "react";
+import { useRef, memo, useMemo, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+
+const PricingCard = memo(({ plan, variants, onContactClick }) => (
+  <motion.div
+    className={`pricing__card ${plan.popular ? "pricing__card--popular" : ""}`}
+    variants={variants}
+    whileHover={{ y: -8 }}
+  >
+    {plan.popular && (
+      <span className="pricing__card-badge">Le plus populaire</span>
+    )}
+
+    <div className="pricing__card-header">
+      <h3 className="pricing__card-name">{plan.name}</h3>
+      <p className="pricing__card-description">{plan.description}</p>
+      <div className="pricing__card-price">
+        <span className="pricing__card-price-amount">{plan.price}</span>
+        <span className="pricing__card-price-currency">€</span>
+      </div>
+      <span className="pricing__card-duration">{plan.duration}</span>
+    </div>
+
+    <ul className="pricing__card-features">
+      {plan.features.map((feature) => (
+        <li key={feature} className="pricing__card-feature">
+          <span className="pricing__card-feature-icon">✓</span>
+          {feature}
+        </li>
+      ))}
+    </ul>
+
+    <motion.a
+      href="#contact"
+      className="pricing__card-cta"
+      onClick={onContactClick}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      Choisir cette offre
+    </motion.a>
+  </motion.div>
+));
+
+PricingCard.displayName = 'PricingCard';
 
 const Pricing = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const plans = [
+  const plans = useMemo(() => [
     {
       name: "Essentiel",
       description: "Parfait pour démarrer votre présence en ligne",
@@ -47,9 +90,9 @@ const Pricing = () => {
         "Dashboard admin",
       ],
     },
-  ];
+  ], []);
 
-  const containerVariants = {
+  const containerVariants = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -57,9 +100,9 @@ const Pricing = () => {
         staggerChildren: 0.2,
       },
     },
-  };
+  }), []);
 
-  const cardVariants = {
+  const cardVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 60 },
     visible: {
       opacity: 1,
@@ -69,12 +112,12 @@ const Pricing = () => {
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
-  };
+  }), []);
 
-  const scrollToContact = (e) => {
+  const scrollToContact = useCallback((e) => {
     e.preventDefault();
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   return (
     <section className="pricing" id="pricing" ref={ref}>
@@ -100,49 +143,12 @@ const Pricing = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           {plans.map((plan) => (
-            <motion.div
+            <PricingCard
               key={plan.name}
-              className={`pricing__card ${
-                plan.popular ? "pricing__card--popular" : ""
-              }`}
+              plan={plan}
               variants={cardVariants}
-              whileHover={{ y: -8 }}
-            >
-              {plan.popular && (
-                <span className="pricing__card-badge">Le plus populaire</span>
-              )}
-
-              <div className="pricing__card-header">
-                <h3 className="pricing__card-name">{plan.name}</h3>
-                <p className="pricing__card-description">{plan.description}</p>
-                <div className="pricing__card-price">
-                  <span className="pricing__card-price-amount">
-                    {plan.price}
-                  </span>
-                  <span className="pricing__card-price-currency">€</span>
-                </div>
-                <span className="pricing__card-duration">{plan.duration}</span>
-              </div>
-
-              <ul className="pricing__card-features">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="pricing__card-feature">
-                    <span className="pricing__card-feature-icon">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <motion.a
-                href="#contact"
-                className="pricing__card-cta"
-                onClick={scrollToContact}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Choisir cette offre
-              </motion.a>
-            </motion.div>
+              onContactClick={scrollToContact}
+            />
           ))}
         </motion.div>
 
@@ -163,4 +169,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default memo(Pricing);

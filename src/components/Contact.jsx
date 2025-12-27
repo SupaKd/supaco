@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, memo, useCallback, useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { 
@@ -10,10 +10,21 @@ import {
 import { FaInstagram } from 'react-icons/fa';
 import { HiCheck, HiXMark } from 'react-icons/hi2';
 
-// ⚠️ REMPLACE CES VALEURS PAR LES TIENNES (depuis emailjs.com)
 const EMAILJS_SERVICE_ID = 'service_z9k3dwd';
 const EMAILJS_TEMPLATE_ID = 'template_qr0hizb';
 const EMAILJS_PUBLIC_KEY = 'crjyM7CbUuPkyfBTT';
+
+const ContactDetail = memo(({ icon, label, value }) => (
+  <div className="contact__detail">
+    <span className="contact__detail-icon">{icon}</span>
+    <div className="contact__detail-content">
+      <span className="contact__detail-label">{label}</span>
+      <span className="contact__detail-value">{value}</span>
+    </div>
+  </div>
+));
+
+ContactDetail.displayName = 'ContactDetail';
 
 const Contact = () => {
   const ref = useRef(null);
@@ -29,23 +40,43 @@ const Contact = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [submitStatus, setSubmitStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (e) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormState(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const getServiceLabel = useCallback((value) => {
+    const services = {
+      'vitrine': 'Site Vitrine',
+      'ecommerce': 'E-Commerce',
+      'app': 'Application Web',
+      'autre': 'Autre projet',
+    };
+    return services[value] || value || 'Non spécifié';
+  }, []);
+
+  const getBudgetLabel = useCallback((value) => {
+    const budgets = {
+      '500-1000': '500€ - 1 000€',
+      '1000-2500': '1 000€ - 2 500€',
+      '2500-5000': '2 500€ - 5 000€',
+      '5000+': 'Plus de 5 000€',
+    };
+    return budgets[value] || value || 'Non spécifié';
+  }, []);
+
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
     setErrorMessage('');
 
-    // Prépare les données pour EmailJS
     const templateParams = {
       from_name: formState.name,
       from_email: formState.email,
@@ -53,22 +84,18 @@ const Contact = () => {
       service: getServiceLabel(formState.service),
       budget: getBudgetLabel(formState.budget),
       message: formState.message,
-      // Pour l'email de réponse
       reply_to: formState.email,
     };
 
     try {
-      const response = await emailjs.send(
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams,
         EMAILJS_PUBLIC_KEY
       );
 
-      console.log('Email envoyé avec succès:', response);
       setSubmitStatus('success');
-      
-      // Reset le formulaire
       setFormState({
         name: '',
         email: '',
@@ -77,7 +104,6 @@ const Contact = () => {
         budget: '',
         message: '',
       });
-
     } catch (error) {
       console.error('Erreur envoi email:', error);
       setSubmitStatus('error');
@@ -87,39 +113,18 @@ const Contact = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [formState, getServiceLabel, getBudgetLabel]);
 
-  // Convertit les valeurs en labels lisibles
-  const getServiceLabel = (value) => {
-    const services = {
-      'vitrine': 'Site Vitrine',
-      'ecommerce': 'E-Commerce',
-      'app': 'Application Web',
-      'autre': 'Autre projet',
-    };
-    return services[value] || value || 'Non spécifié';
-  };
-
-  const getBudgetLabel = (value) => {
-    const budgets = {
-      '500-1000': '500€ - 1 000€',
-      '1000-2500': '1 000€ - 2 500€',
-      '2500-5000': '2 500€ - 5 000€',
-      '5000+': 'Plus de 5 000€',
-    };
-    return budgets[value] || value || 'Non spécifié';
-  };
-
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setSubmitStatus(null);
     setErrorMessage('');
-  };
+  }, []);
 
-  const contactDetails = [
+  const contactDetails = useMemo(() => [
     { icon: <HiOutlineMail size={24} />, label: 'Email', value: 'contact@supaco.digital.com' },
     { icon: <HiOutlineLocationMarker size={24} />, label: 'Localisation', value: 'Pays de Gex, France' },
     { icon: <HiOutlineClock size={24} />, label: 'Réponse', value: 'Sous 24 heures' },
-  ];
+  ], []);
 
   return (
     <section className="contact" id="contact" ref={ref}>
@@ -140,13 +145,7 @@ const Contact = () => {
 
             <div className="contact__details">
               {contactDetails.map((detail) => (
-                <div key={detail.label} className="contact__detail">
-                  <span className="contact__detail-icon">{detail.icon}</span>
-                  <div className="contact__detail-content">
-                    <span className="contact__detail-label">{detail.label}</span>
-                    <span className="contact__detail-value">{detail.value}</span>
-                  </div>
-                </div>
+                <ContactDetail key={detail.label} {...detail} />
               ))}
             </div>
 
@@ -164,7 +163,6 @@ const Contact = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {/* Message de succès */}
             {submitStatus === 'success' && (
               <div className="contact__success">
                 <motion.div
@@ -188,7 +186,6 @@ const Contact = () => {
               </div>
             )}
 
-            {/* Message d'erreur */}
             {submitStatus === 'error' && (
               <div className="contact__error">
                 <motion.div
@@ -214,7 +211,6 @@ const Contact = () => {
               </div>
             )}
 
-            {/* Formulaire */}
             {submitStatus === null && (
               <form ref={formRef} onSubmit={handleSubmit}>
                 <div className="contact__form-grid">
@@ -330,4 +326,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default memo(Contact);
