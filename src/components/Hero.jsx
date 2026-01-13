@@ -61,10 +61,7 @@ const Hero = memo(() => {
         initial="hidden"
         animate="visible"
       >
-        <motion.div className="hero__badge" variants={itemVariants}>
-          <span className="hero__badge-dot" />
-          <span className="hero__badge-text">Disponible pour nouveaux projets</span>
-        </motion.div>
+     
 
         <motion.h1 className="hero__title" variants={itemVariants}>
           Votre site web<br />

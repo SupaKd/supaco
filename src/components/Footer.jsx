@@ -111,9 +111,6 @@ const Footer = () => {
           <p className="footer__copyright">
             © {currentYear} Supaco Digital. Tous droits réservés.
           </p>
-          <div className="footer__bottom-links">
-            <a href="#" className="footer__bottom-link">Made with ❤️ in Pays de Gex</a>
-          </div>
         </div>
       </div>
 
