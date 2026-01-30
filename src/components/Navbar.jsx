@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
+import { Sun, Moon } from "lucide-react";
 
 // Throttle utility
 const throttle = (func, limit) => {
@@ -17,6 +18,16 @@ const throttle = (func, limit) => {
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Initialiser depuis localStorage ou true par défaut
+    const saved = localStorage.getItem('theme');
+    return saved ? saved === 'dark' : true;
+  });
+
+  useEffect(() => {
+    // Appliquer le thème au chargement
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   useEffect(() => {
     // Throttle le scroll handler à 100ms
@@ -47,6 +58,14 @@ const Navbar = () => {
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setIsDarkMode(prev => {
+      const newMode = !prev;
+      localStorage.setItem('theme', newMode ? 'dark' : 'light');
+      return newMode;
+    });
   }, []);
 
   return (
@@ -90,6 +109,19 @@ const Navbar = () => {
           >
             Démarrer un projet
           </motion.a>
+
+          <motion.button
+            className="navbar__theme-toggle"
+            onClick={toggleTheme}
+            aria-label={isDarkMode ? "Activer le mode clair" : "Activer le mode sombre"}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </motion.button>
 
           <button
             className="navbar__mobile-toggle navbar__mobile-toggle--icon"

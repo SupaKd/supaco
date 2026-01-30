@@ -8,7 +8,7 @@
 .contact {
   position: relative;
   padding: $space-5xl 0;
-  background: $color-bg-primary;
+  background: var(--color-bg-primary);
   overflow: hidden;
 
   // Decorative gradient orb
@@ -17,7 +17,7 @@
     position: absolute;
     width: 800px;
     height: 800px;
-    background: $color-accent-primary;
+    background: var(--color-accent-primary);
     border-radius: 50%;
     filter: blur(200px);
     opacity: 0.1;
@@ -57,7 +57,7 @@
     display: inline-block;
     font-size: $font-size-sm;
     font-weight: 500;
-    color: $color-accent-primary;
+    color: var(--color-accent-primary);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-bottom: $space-md;
@@ -65,7 +65,7 @@
 
   &__title {
     @include heading-lg;
-    color: $color-text-primary;
+    color: var(--color-text-primary);
     margin-bottom: $space-lg;
   }
 
@@ -104,14 +104,14 @@
 
     &-label {
       font-size: $font-size-sm;
-      color: $color-text-muted;
+      color: var(--color-text-muted);
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
 
     &-value {
       font-size: $font-size-lg;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
       font-weight: 500;
     }
   }
@@ -119,6 +119,9 @@
   &__socials {
     display: flex;
     gap: $space-md;
+    align-items: center;
+    font-weight: 700;
+
   }
 
   &__social {
@@ -131,8 +134,8 @@
     transition: all $transition-base;
 
     &:hover {
-      background: $color-accent-primary;
-      color: $color-bg-primary;
+      background: var(--color-accent-primary);
+      color: var(--color-bg-primary);
       transform: translateY(-4px);
     }
   }
@@ -171,7 +174,7 @@
   &__form-label {
     font-size: $font-size-sm;
     font-weight: 500;
-    color: $color-text-secondary;
+    color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -184,11 +187,11 @@
     @include glass;
     border-radius: $radius-md;
     font-size: $font-size-base;
-    color: $color-text-primary;
+    color: var(--color-text-primary);
     transition: all $transition-fast;
 
     &:focus {
-      border-color: $color-accent-primary;
+      border-color: var(--color-accent-primary);
       background: rgba($color-accent-primary, 0.05);
     }
   }
@@ -202,8 +205,8 @@
     padding-right: $space-3xl;
 
     option {
-      background: $color-bg-secondary;
-      color: $color-text-primary;
+      background: var(--color-bg-secondary);
+      color: var(--color-text-primary);
     }
   }
 
@@ -254,7 +257,7 @@
 
     &-title {
       @include heading-md;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
     }
 
     &-text {

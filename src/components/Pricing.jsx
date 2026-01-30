@@ -87,7 +87,6 @@ const Pricing = () => {
         "Paiement Stripe/PayPal",
         "Gestion des stocks",
         "Emails automatiques",
-        "Dashboard admin",
       ],
     },
   ], []);

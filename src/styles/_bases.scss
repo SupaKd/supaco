@@ -21,7 +21,7 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: $color-accent-primary $color-bg-secondary;
+  scrollbar-color: var(--color-accent-primary) var(--color-bg-secondary);
 
   @include tablet {
     font-size: 15px;
@@ -32,11 +32,12 @@ body {
   font-family: $font-body;
   font-size: $font-size-base;
   line-height: 1.6;
-  color: $color-text-primary;
-  background-color: $color-bg-primary;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 // Custom Scrollbar
@@ -45,18 +46,18 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: $color-bg-secondary;
+  background: var(--color-bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $color-accent-primary;
+  background: var(--color-accent-primary);
   border-radius: $radius-full;
 }
 
 // Selection
 ::selection {
-  background: $color-accent-primary;
-  color: $color-bg-primary;
+  background: var(--color-accent-primary);
+  color: var(--color-bg-primary);
 }
 
 // Links
@@ -97,7 +98,7 @@ input, textarea {
   outline: none;
 
   &::placeholder {
-    color: $color-text-muted;
+    color: var(--color-text-muted);
   }
 }
 

@@ -1,80 +1,94 @@
 import { useState, useRef, memo, useCallback, useMemo } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 
 // Composant Image avec lazy loading
 const ProjectImage = memo(({ src, alt }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   return (
-    <>
-      {!isLoaded && <div className="projects__card-placeholder" />}
+    <div className="projects__item-image-wrapper">
+      {!isLoaded && <div className="projects__item-placeholder" />}
       <img
         src={src}
         alt={alt}
-        className={`projects__card-image ${isLoaded ? 'projects__card-image--loaded' : ''}`}
+        className={`projects__item-image ${isLoaded ? 'projects__item-image--loaded' : ''}`}
         loading="lazy"
         decoding="async"
         onLoad={() => setIsLoaded(true)}
       />
-    </>
+    </div>
   );
 });
 
 ProjectImage.displayName = 'ProjectImage';
 
-// Composant Card memoizé
-const ProjectCard = memo(({ project, variants, onProjectClick }) => {
+// Composant Item de liste memoizé
+const ProjectItem = memo(({ project, variants, onProjectClick }) => {
   const handleClick = useCallback(() => {
     onProjectClick(project.url);
   }, [project.url, onProjectClick]);
 
   return (
     <motion.article
-      className={`projects__card ${project.featured ? 'projects__featured' : ''}`}
+      className="projects__item"
       variants={variants}
       layout
+      initial="hidden"
+      animate="visible"
+      exit="exit"
       data-cursor-hover
       onClick={handleClick}
     >
-      <ProjectImage 
-        src={project.image} 
+      <ProjectImage
+        src={project.image}
         alt={project.title}
       />
-      <div className="projects__card-content">
-        <div className="projects__card-tags">
+
+      <div className="projects__item-content">
+        <div className="projects__item-tags">
           {project.tags.map((tag) => (
-            <span key={tag} className="projects__card-tag">{tag}</span>
+            <span key={tag} className="projects__item-tag">{tag}</span>
           ))}
         </div>
-        <h3 className="projects__card-title">{project.title}</h3>
-        <p className="projects__card-description">{project.description}</p>
+        <h3 className="projects__item-title">{project.title}</h3>
+        <p className="projects__item-description">{project.description}</p>
       </div>
-      <div className="projects__card-arrow">↗</div>
+
+      <div className="projects__item-arrow">
+        <span className="projects__item-arrow-icon">→</span>
+      </div>
     </motion.article>
   );
 });
 
-ProjectCard.displayName = 'ProjectCard';
+ProjectItem.displayName = 'ProjectItem';
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeFilter, setActiveFilter] = useState('all');
 
-  // Images optimisées avec tailles réduites
   const projects = useMemo(() => [
     {
       id: 1,
+      title: 'Optical Store',
+      description: 'Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon',
+      image: '/optical.webp',
+      tags: ['Site Vitrine', 'Lunettes'],
+      category: 'vitrine',
+      url: 'https://cms-xi-self.vercel.app/',
+    },
+    {
+      id: 2,
       title: 'Restaurant Sabai',
       description: 'Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry',
       image: 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=75',
       tags: ['Application Web', 'Restaurant'],
       category: 'app',
-      featured: true,
       url: 'https://sabai-thoiry.com/',
     },
     {
-      id: 2,
+      id: 3,
       title: 'Dépannage Gémeaux',
       description: 'Site vitrine professionnel pour une entreprise de plomberie et chauffage avec formulaire de contact et présentation des services',
       image: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=600&h=400&fit=crop&q=75',
@@ -83,7 +97,7 @@ const Projects = () => {
       url: 'https://depannage-gemeaux.fr/',
     },
     {
-      id: 3,
+      id: 4,
       title: 'Yojeme',
       description: 'Site vitrine moderne et responsive avec design épuré et optimisation SEO',
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&q=75',
@@ -92,7 +106,7 @@ const Projects = () => {
       url: 'https://www.yojeme.fr/',
     },
     {
-      id: 4,
+      id: 5,
       title: 'Bellifood',
       description: 'Site vitrine avec menu digital pour un restaurant de tacos et burgers à Oyonnax',
       image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&q=75',
@@ -109,7 +123,7 @@ const Projects = () => {
     { id: 'app', label: 'Applications' },
   ], []);
 
-  const filteredProjects = useMemo(() => 
+  const filteredProjects = useMemo(() =>
     activeFilter === 'all'
       ? projects
       : projects.filter((p) => p.category === activeFilter),
@@ -121,19 +135,27 @@ const Projects = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.1,
       },
     },
   }), []);
 
-  const cardVariants = useMemo(() => ({
-    hidden: { opacity: 0, y: 40 },
+  const itemVariants = useMemo(() => ({
+    hidden: { opacity: 0, x: -30 },
     visible: {
       opacity: 1,
-      y: 0,
+      x: 0,
       transition: {
-        duration: 0.6,
-        ease: 'easeOut',
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
+    exit: {
+      opacity: 0,
+      x: 30,
+      transition: {
+        duration: 0.3,
+        ease: 'easeIn',
       },
     },
   }), []);
@@ -181,19 +203,21 @@ const Projects = () => {
         </motion.div>
 
         <motion.div
-          className="projects__grid"
+          className="projects__list"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {filteredProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              variants={cardVariants}
-              onProjectClick={handleProjectClick}
-            />
-          ))}
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => (
+              <ProjectItem
+                key={project.id}
+                project={project}
+                variants={itemVariants}
+                onProjectClick={handleProjectClick}
+              />
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

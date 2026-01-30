@@ -31,16 +31,16 @@
 
 // Glass Effect
 @mixin glass($opacity: 0.03) {
-  background: rgba(255, 255, 255, $opacity);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid $glass-border;
+  border: 1px solid var(--glass-border);
 }
 
 @mixin glass-hover {
   &:hover {
-    background: $glass-hover;
-    border-color: rgba(255, 255, 255, 0.12);
+    background: var(--glass-hover);
+    border-color: var(--glass-border);
   }
 }
 
@@ -129,7 +129,7 @@
   font-size: $font-size-lg;
   font-weight: 400;
   line-height: 1.6;
-  color: $color-text-secondary;
+  color: var(--color-text-secondary);
 }
 
 // Button Base
@@ -152,8 +152,8 @@
 
 @mixin button-primary {
   @include button-base;
-  background: $color-accent-primary;
-  color: $color-bg-primary;
+  background: var(--color-accent-primary);
+  color: var(--color-bg-primary);
 
   &:hover {
     transform: translateY(-2px);
@@ -164,12 +164,12 @@
 @mixin button-secondary {
   @include button-base;
   @include glass;
-  color: $color-text-primary;
+  color: var(--color-text-primary);
 
   &:hover {
-    background: $glass-hover;
-    border-color: $color-accent-primary;
-    color: $color-accent-primary;
+    background: var(--glass-hover);
+    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
   }
 }
 
@@ -208,7 +208,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: $color-accent-primary;
+    background: var(--color-accent-primary);
     transition: width $transition-base;
   }
 
@@ -219,8 +219,8 @@
 
 // Grid Pattern Background
 @mixin grid-pattern {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-image:
+    linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
   background-size: 60px 60px;
 }

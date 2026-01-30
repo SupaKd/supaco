@@ -8,7 +8,7 @@
 .pricing {
   position: relative;
   padding: $space-5xl 0;
-  background: $color-bg-secondary;
+  background: var(--color-bg-secondary);
   @include grid-pattern;
 
   &__container {
@@ -24,7 +24,7 @@
     display: inline-block;
     font-size: $font-size-sm;
     font-weight: 500;
-    color: $color-accent-primary;
+    color: var(--color-accent-primary);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-bottom: $space-md;
@@ -32,7 +32,7 @@
 
   &__title {
     @include heading-lg;
-    color: $color-text-primary;
+    color: var(--color-text-primary);
     margin-bottom: $space-lg;
   }
 
@@ -68,7 +68,7 @@
     }
 
     &--popular {
-      border-color: $color-accent-primary;
+      border-color: var(--color-accent-primary);
       transform: scale(1.05);
 
       @include tablet {
@@ -104,7 +104,7 @@
       border-radius: $radius-full;
       font-size: $font-size-xs;
       font-weight: 600;
-      color: $color-bg-primary;
+      color: var(--color-bg-primary);
       text-transform: uppercase;
       letter-spacing: 0.1em;
 
@@ -118,7 +118,7 @@
     &-header {
       text-align: center;
       padding-bottom: $space-xl;
-      border-bottom: 1px solid $glass-border;
+      border-bottom: 1px solid var(--glass-border);
       margin-bottom: $space-xl;
     }
 
@@ -126,13 +126,13 @@
       font-family: $font-display;
       font-size: $font-size-xl;
       font-weight: 500;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
       margin-bottom: $space-sm;
     }
 
     &-description {
       font-size: $font-size-sm;
-      color: $color-text-muted;
+      color: var(--color-text-muted);
       margin-bottom: $space-lg;
     }
 
@@ -152,13 +152,13 @@
 
       &-currency {
         font-size: $font-size-xl;
-        color: $color-text-muted;
+        color: var(--color-text-muted);
       }
     }
 
     &-duration {
       font-size: $font-size-sm;
-      color: $color-text-muted;
+      color: var(--color-text-muted);
       margin-top: $space-sm;
     }
 
@@ -175,7 +175,7 @@
       align-items: flex-start;
       gap: $space-md;
       font-size: $font-size-base;
-      color: $color-text-secondary;
+      color: var(--color-text-secondary);
 
       &-icon {
         flex-shrink: 0;
@@ -220,10 +220,10 @@
 
     &-text {
       font-size: $font-size-lg;
-      color: $color-text-secondary;
+      color: var(--color-text-secondary);
 
       strong {
-        color: $color-accent-primary;
+        color: var(--color-accent-primary);
       }
     }
   }

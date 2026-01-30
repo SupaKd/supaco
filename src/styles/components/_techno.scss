@@ -8,7 +8,7 @@
 .technologies {
   position: relative;
   padding: $space-5xl 0;
-  background: $color-bg-primary;
+  background: var(--color-bg-primary);
   overflow: hidden;
 
   // Background gradient orb
@@ -17,7 +17,7 @@
     position: absolute;
     width: 600px;
     height: 600px;
-    background: $color-accent-secondary;
+    background: var(--color-accent-secondary);
     border-radius: 50%;
     filter: blur(150px);
     opacity: 0.08;
@@ -42,7 +42,7 @@
     display: inline-block;
     font-size: $font-size-sm;
     font-weight: 500;
-    color: $color-accent-primary;
+    color: var(--color-accent-primary);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-bottom: $space-md;
@@ -50,7 +50,7 @@
 
   &__title {
     @include heading-lg;
-    color: $color-text-primary;
+    color: var(--color-text-primary);
     margin-bottom: $space-lg;
   }
 
@@ -123,13 +123,13 @@
       font-family: $font-display;
       font-size: $font-size-lg;
       font-weight: 600;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
       margin-bottom: $space-xs;
     }
 
     &-description {
       font-size: $font-size-xs;
-      color: $color-text-muted;
+      color: var(--color-text-muted);
       line-height: 1.4;
     }
 
@@ -201,12 +201,12 @@
         font-family: $font-display;
         font-size: $font-size-lg;
         font-weight: 600;
-        color: $color-text-primary;
+        color: var(--color-text-primary);
       }
 
       span {
         font-size: $font-size-sm;
-        color: $color-text-muted;
+        color: var(--color-text-muted);
       }
     }
   }

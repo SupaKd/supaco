@@ -8,8 +8,8 @@
 .footer {
   position: relative;
   padding: $space-4xl 0 $space-xl;
-  background: $color-bg-secondary;
-  border-top: 1px solid $glass-border;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--glass-border);
 
   &__container {
     @include container;
@@ -20,7 +20,7 @@
     grid-template-columns: 2fr repeat(3, 1fr);
     gap: $space-4xl;
     padding-bottom: $space-4xl;
-    border-bottom: 1px solid $glass-border;
+    border-bottom: 1px solid var(--glass-border);
 
     @include tablet {
       grid-template-columns: 1fr 1fr;
@@ -49,13 +49,13 @@
     font-family: $font-display;
     font-size: $font-size-xl;
     font-weight: 600;
-    color: $color-text-primary;
+    color: var(--color-text-primary);
     margin-bottom: $space-lg;
 
     &-dot {
       width: 10px;
       height: 10px;
-      background: $color-accent-primary;
+      background: var(--color-accent-primary);
       border-radius: 50%;
     }
   }
@@ -81,11 +81,11 @@
       @include glass;
       border-radius: $radius-full;
       font-size: $font-size-sm;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
       min-width: 200px;
 
       &:focus {
-        border-color: $color-accent-primary;
+        border-color: var(--color-accent-primary);
       }
     }
 
@@ -106,7 +106,7 @@
     font-family: $font-display;
     font-size: $font-size-sm;
     font-weight: 600;
-    color: $color-text-primary;
+    color: var(--color-text-primary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: $space-sm;
@@ -114,13 +114,13 @@
 
   &__link {
     font-size: $font-size-sm;
-    color: $color-text-muted;
+    color: var(--color-text-muted);
     transition: color $transition-fast;
     @include animated-underline;
     width: fit-content;
 
     &:hover {
-      color: $color-text-primary;
+      color: var(--color-text-primary);
     }
   }
 
@@ -138,7 +138,7 @@
 
   &__copyright {
     font-size: $font-size-sm;
-    color: $color-text-muted;
+    color: var(--color-text-muted);
   }
 
   &__bottom-links {
@@ -153,11 +153,11 @@
 
   &__bottom-link {
     font-size: $font-size-sm;
-    color: $color-text-muted;
+    color: var(--color-text-muted);
     transition: color $transition-fast;
 
     &:hover {
-      color: $color-accent-primary;
+      color: var(--color-accent-primary);
     }
   }
 

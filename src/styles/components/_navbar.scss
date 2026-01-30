@@ -19,14 +19,14 @@
 
   &--scrolled {
     padding: $space-md 0;
-    background: rgba(17, 17, 17, 0.95);
-    border-bottom: 1px solid $glass-border;
-    
+    background: var(--navbar-scrolled-bg);
+    border-bottom: 1px solid var(--glass-border);
+
     // Backdrop-filter uniquement sur desktop (coûteux en GPU)
     @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: rgba(17, 17, 17, 0.85);
+      background: var(--navbar-scrolled-backdrop);
     }
   }
 
@@ -59,13 +59,13 @@
   &__link {
     font-size: $font-size-sm;
     font-weight: 500;
-    color: $color-text-secondary;
+    color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     @include animated-underline;
 
     &:hover {
-      color: $color-text-primary;
+      color: var(--color-text-primary);
     }
   }
 
@@ -73,6 +73,26 @@
     @include button-primary;
     padding: $space-sm $space-lg;
     font-size: $font-size-sm;
+  }
+
+  &__theme-toggle {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    @include glass;
+    border-radius: 50%;
+    color: var(--color-text-primary);
+    transition: all $transition-base;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--glass-hover);
+      color: var(--color-accent-primary);
+    }
+
+    @include tablet {
+      display: none;
+    }
   }
 
   &__mobile-toggle {
@@ -89,7 +109,7 @@
     span {
       width: 24px;
       height: 2px;
-      background: $color-text-primary;
+      background: var(--color-text-primary);
       transition: all $transition-base;
     }
 
@@ -114,7 +134,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba($color-bg-primary, 0.98);
+    background: var(--color-bg-primary);
     @include flex-center;
     flex-direction: column;
     gap: $space-xl;
@@ -129,7 +149,7 @@
 
     .navbar__link {
       font-size: $font-size-2xl;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
     }
 
     .navbar__cta {

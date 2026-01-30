@@ -19,15 +19,15 @@ const SectionLoader = () => (
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      background: "#0a0a0a",
+      background: "var(--color-bg-primary)",
     }}
   >
     <div
       style={{
         width: "40px",
         height: "40px",
-        border: "3px solid rgba(0, 212, 255, 0.2)",
-        borderTopColor: "#00d4ff",
+        border: "3px solid var(--glass-border)",
+        borderTopColor: "var(--color-accent-primary)",
         borderRadius: "50%",
         animation: "spin 1s linear infinite",
       }}
@@ -37,6 +37,11 @@ const SectionLoader = () => (
 
 function App() {
   useEffect(() => {
+    // Initialiser le thème depuis localStorage
+    const savedTheme = localStorage.getItem('theme');
+    const theme = savedTheme || 'dark';
+    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+
     // Smooth scroll
     document.documentElement.style.scrollBehavior = "smooth";
 

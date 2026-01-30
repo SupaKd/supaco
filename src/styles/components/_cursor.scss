@@ -25,7 +25,7 @@
     left: 0;
     width: 8px;
     height: 8px;
-    background: $color-accent-primary;
+    background: var(--color-accent-primary);
     border-radius: 50%;
     // Optimisation GPU
     will-change: transform;
@@ -41,7 +41,7 @@
     height: 40px;
     margin-left: -16px;
     margin-top: -16px;
-    border: 1px solid $color-accent-primary;
+    border: 1px solid var(--color-accent-primary);
     border-radius: 50%;
     // Optimisation GPU
     will-change: transform;
