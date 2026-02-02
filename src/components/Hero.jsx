@@ -16,11 +16,26 @@ const Hero = memo(() => {
     <section className="hero" id="hero">
       {/* Logos flottants en arrière-plan */}
       <div className="hero__bg-logos">
-        <img src="/android-chrome-512x512.png" alt="" className="hero__bg-logo hero__bg-logo--1" />
-        <img src="/android-chrome-512x512.png" alt="" className="hero__bg-logo hero__bg-logo--2" />
-        <img src="/newlogo.png" alt="" className="hero__bg-logo hero__bg-logo--3" />
-        <img src="/newlogo.png" alt="" className="hero__bg-logo hero__bg-logo--4" />
-
+        <img
+          src="/android-chrome-512x512.png"
+          alt=""
+          className="hero__bg-logo hero__bg-logo--1"
+        />
+        <img
+          src="/android-chrome-512x512.png"
+          alt=""
+          className="hero__bg-logo hero__bg-logo--2"
+        />
+        <img
+          src="/newlogo.png"
+          alt=""
+          className="hero__bg-logo hero__bg-logo--3"
+        />
+        <img
+          src="/newlogo.png"
+          alt=""
+          className="hero__bg-logo hero__bg-logo--4"
+        />
       </div>
 
       {/* Particules décoratives */}
@@ -41,17 +56,13 @@ const Hero = memo(() => {
 
         {/* Titre accrocheur */}
         <h1 className="hero__title">
-          Transformez votre vision en
-          <br />
-          <span className="hero__title-highlight">
-            site web performant
-          </span>
+          Des sites sur-mesure pour booster votre activité <br />
         </h1>
 
         {/* Sous-titre impactant */}
         <p className="hero__subtitle">
-          De l'idée au lancement en 72h. Design moderne, code propre,
-          résultats mesurables. Votre succès digital commence ici.
+          De l'idée au lancement en 72h. Design moderne, code propre, résultats
+          mesurables. Votre succès digital commence ici.
         </p>
 
         {/* CTAs */}
@@ -61,7 +72,11 @@ const Hero = memo(() => {
             <ArrowRight size={20} strokeWidth={2.5} />
           </a>
 
-          <a href="#projects" className="hero__secondary" onClick={scrollToProjects}>
+          <a
+            href="#projects"
+            className="hero__secondary"
+            onClick={scrollToProjects}
+          >
             Voir nos réalisations
           </a>
         </div>
