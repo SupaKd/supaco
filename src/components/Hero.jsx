@@ -1,4 +1,5 @@
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback } from "react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const Hero = memo(() => {
   const scrollToContact = useCallback((e) => {
@@ -11,67 +12,85 @@ const Hero = memo(() => {
     document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
-  const stats = useMemo(
-    () => [
-      { value: "72h", label: "Délai de livraison" },
-      { value: "500€", label: "À partir de" },
-      { value: "100%", label: "Satisfaction client" },
-    ],
-    []
-  );
-
   return (
     <section className="hero" id="hero">
+      {/* Logos flottants en arrière-plan */}
+      <div className="hero__bg-logos">
+        <img src="/android-chrome-512x512.png" alt="" className="hero__bg-logo hero__bg-logo--1" />
+        <img src="/android-chrome-512x512.png" alt="" className="hero__bg-logo hero__bg-logo--2" />
+        <img src="/newlogo.png" alt="" className="hero__bg-logo hero__bg-logo--3" />
+        <img src="/newlogo.png" alt="" className="hero__bg-logo hero__bg-logo--4" />
+
+      </div>
+
+      {/* Particules décoratives */}
+      <div className="hero__particles">
+        <div className="hero__particle"></div>
+        <div className="hero__particle"></div>
+        <div className="hero__particle"></div>
+        <div className="hero__particle"></div>
+        <div className="hero__particle"></div>
+      </div>
+
       <div className="hero__container">
+        {/* Badge premium */}
+        <div className="hero__badge">
+          <Sparkles size={14} />
+          <span>Agence Web </span>
+        </div>
+
+        {/* Titre accrocheur */}
         <h1 className="hero__title">
-          Votre site web
+          Transformez votre vision en
           <br />
-          livré en <span className="highlight">72 heures</span>
+          <span className="hero__title-highlight">
+            site web performant
+          </span>
         </h1>
 
+        {/* Sous-titre impactant */}
         <p className="hero__subtitle">
-          Agence web spécialisée dans la création de sites modernes et
-          performants pour les entreprises locales. Prix transparents, résultats
-          garantis.
+          De l'idée au lancement en 72h. Design moderne, code propre,
+          résultats mesurables. Votre succès digital commence ici.
         </p>
 
-        <div className="hero__ctas">
-          <a
-            href="#contact"
-            className="hero__cta-primary"
-            onClick={scrollToContact}
-          >
-            Obtenir un devis gratuit
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+        {/* CTAs */}
+        <div className="hero__actions">
+          <a href="#contact" className="hero__cta" onClick={scrollToContact}>
+            Lancer mon projet
+            <ArrowRight size={20} strokeWidth={2.5} />
           </a>
-          <a
-            href="#projects"
-            className="hero__cta-secondary"
-            onClick={scrollToProjects}
-          >
+
+          <a href="#projects" className="hero__secondary" onClick={scrollToProjects}>
             Voir nos réalisations
           </a>
         </div>
 
+        {/* Stats avec badges */}
         <div className="hero__stats">
-          {stats.map((stat) => (
-            <div key={stat.label} className="hero__stat">
-              <span className="hero__stat-value">{stat.value}</span>
-              <br />
-              <span className="hero__stat-label">{stat.label}</span>
-            </div>
-          ))}
+          <div className="hero__stat">
+            <strong>+20</strong>
+            <span>Projets livrés</span>
+          </div>
+
+          <div className="hero__stat-divider"></div>
+
+          <div className="hero__stat">
+            <strong>72h</strong>
+            <span>Livraison express</span>
+          </div>
+
+          <div className="hero__stat-divider"></div>
+
+          <div className="hero__stat">
+            <strong>100%</strong>
+            <span>Satisfaction</span>
+          </div>
         </div>
       </div>
+
+      {/* Gradient décoratif */}
+      <div className="hero__gradient"></div>
     </section>
   );
 });
