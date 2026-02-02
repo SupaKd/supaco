@@ -25,6 +25,10 @@
       text-align: center;
       gap: $space-xl;
     }
+
+    @include mobile {
+      overflow: hidden;
+    }
   }
 
   &__header-content {
@@ -52,8 +56,22 @@
     gap: $space-sm;
 
     @include mobile {
-      flex-wrap: wrap;
-      justify-content: center;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      // Empêcher le wrap et forcer les éléments à rester sur une ligne
+      flex-wrap: nowrap;
+
+      // Padding pour que les boutons ne soient pas collés aux bords
+      padding: $space-xs $space-lg;
+      margin: 0 calc(-1 * $space-lg);
     }
   }
 
@@ -71,6 +89,12 @@
       background: var(--color-accent-primary);
       color: var(--color-bg-primary);
       border-color: var(--color-accent-primary);
+    }
+
+    @include mobile {
+      // Empêcher le rétrécissement des boutons
+      flex-shrink: 0;
+      white-space: nowrap;
     }
   }
 

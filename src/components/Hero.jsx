@@ -1,132 +1,81 @@
-import { memo, useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { memo, useCallback, useMemo } from "react";
 
 const Hero = memo(() => {
-  const containerVariants = useMemo(() => ({
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
-    },
-  }), []);
-
-  const itemVariants = useMemo(() => ({
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
-    },
-  }), []);
-
-  const statVariants = useMemo(() => ({
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  }), []);
-
   const scrollToContact = useCallback((e) => {
     e.preventDefault();
-    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   const scrollToProjects = useCallback((e) => {
     e.preventDefault();
-    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
-  const stats = useMemo(() => [
-    { value: '72h', label: 'Délai de livraison' },
-    { value: '500€', label: 'À partir de' },
-    { value: '100%', label: 'Satisfaction client' },
-  ], []);
+  const stats = useMemo(
+    () => [
+      { value: "72h", label: "Délai de livraison" },
+      { value: "500€", label: "À partir de" },
+      { value: "100%", label: "Satisfaction client" },
+    ],
+    []
+  );
 
   return (
     <section className="hero" id="hero">
-      <motion.div
-        className="hero__container"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-     
-
-        <motion.h1 className="hero__title" variants={itemVariants}>
-          Votre site web<br />
+      <div className="hero__container">
+        <h1 className="hero__title">
+          Votre site web
+          <br />
           livré en <span className="highlight">72 heures</span>
-        </motion.h1>
+        </h1>
 
-        <motion.p className="hero__subtitle" variants={itemVariants}>
-          Agence web spécialisée dans la création de sites modernes et performants
-          pour les entreprises locales. Prix transparents, résultats garantis.
-        </motion.p>
+        <p className="hero__subtitle">
+          Agence web spécialisée dans la création de sites modernes et
+          performants pour les entreprises locales. Prix transparents, résultats
+          garantis.
+        </p>
 
-        <motion.div className="hero__ctas" variants={itemVariants}>
-          <motion.a
+        <div className="hero__ctas">
+          <a
             href="#contact"
             className="hero__cta-primary"
             onClick={scrollToContact}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
           >
             Obtenir un devis gratuit
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </motion.a>
-          <motion.a
+          </a>
+          <a
             href="#projects"
             className="hero__cta-secondary"
             onClick={scrollToProjects}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             Voir nos réalisations
-          </motion.a>
-        </motion.div>
+          </a>
+        </div>
 
-        <motion.div
-          className="hero__stats"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.8 }}
-        >
+        <div className="hero__stats">
           {stats.map((stat) => (
-            <motion.div key={stat.label} className="hero__stat" variants={statVariants}>
+            <div key={stat.label} className="hero__stat">
               <span className="hero__stat-value">{stat.value}</span>
               <br />
               <span className="hero__stat-label">{stat.label}</span>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
-
-        <motion.div
-          className="hero__scroll"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-        >
-          <span>Scroll</span>
-          <span className="hero__scroll-line" />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 });
 
-Hero.displayName = 'Hero';
+Hero.displayName = "Hero";
 
 export default Hero;

@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Sun, Moon } from "lucide-react";
 
@@ -70,111 +69,93 @@ const Navbar = () => {
 
   return (
     <>
-      <motion.nav
-        className={`navbar ${isScrolled ? "navbar--scrolled" : ""}`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
+      <nav className={`navbar ${isScrolled ? "navbar--scrolled" : ""}`}>
         <div className="navbar__container">
           <a href="/" className="navbar__logo">
             <img src="/newlogo.png" alt="logo" loading="eager" />
           </a>
 
           <div className="navbar__menu">
-            {navLinks.map((link, index) => (
-              <motion.a
+            {navLinks.map((link) => (
+              <a
                 key={link.label}
                 href={link.href}
                 className="navbar__link"
                 onClick={(e) => scrollToSection(e, link.href)}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index + 0.3 }}
               >
                 {link.label}
-              </motion.a>
+              </a>
             ))}
           </div>
 
-          <motion.a
-            href="#contact"
-            className="navbar__cta"
-            onClick={(e) => scrollToSection(e, "#contact")}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Démarrer un projet
-          </motion.a>
-
-          <motion.button
+          <button
             className="navbar__theme-toggle"
             onClick={toggleTheme}
             aria-label={isDarkMode ? "Activer le mode clair" : "Activer le mode sombre"}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </motion.button>
+          </button>
 
           <button
-            className="navbar__mobile-toggle navbar__mobile-toggle--icon"
+            className="navbar__mobile-toggle"
             onClick={toggleMobileMenu}
             aria-label="Menu"
           >
-            <motion.div
-              initial={false}
-              animate={{
-                rotate: isMobileMenuOpen ? 180 : 0,
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-            </motion.div>
+            {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="navbar__mobile-menu navbar__mobile-menu--open"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
-                className="navbar__link"
-                onClick={(e) => scrollToSection(e, link.href)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.a
+      {isMobileMenuOpen && (
+        <>
+          {/* Overlay pour fermer en cliquant à l'extérieur */}
+          <div
+            className="navbar__mobile-overlay"
+            onClick={toggleMobileMenu}
+          />
+          <div className="navbar__mobile-menu navbar__mobile-menu--open">
+            {/* Bouton fermer en haut du menu */}
+            <button
+              className="navbar__mobile-close"
+              onClick={toggleMobileMenu}
+              aria-label="Fermer le menu"
+            >
+              <FiX size={28} />
+            </button>
+
+            <div className="navbar__mobile-links">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="navbar__link"
+                  onClick={(e) => scrollToSection(e, link.href)}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            <a
               href="#contact"
               className="navbar__cta"
               onClick={(e) => scrollToSection(e, "#contact")}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
             >
               Démarrer un projet
-            </motion.a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </a>
+
+            {/* Toggle thème dans le menu mobile */}
+            <button
+              className="navbar__mobile-theme"
+              onClick={toggleTheme}
+              aria-label={isDarkMode ? "Mode clair" : "Mode sombre"}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              <span>{isDarkMode ? "Mode clair" : "Mode sombre"}</span>
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 };

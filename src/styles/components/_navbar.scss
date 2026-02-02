@@ -16,6 +16,7 @@
   // Optimisation: force GPU layer
   will-change: transform;
   transform: translateZ(0);
+  animation: slideDown 0.4s ease-out;
 
   &--scrolled {
     padding: $space-md 0;
@@ -126,35 +127,137 @@
     }
   }
 
-  // Mobile Menu
-  &__mobile-menu {
+  // Mobile Overlay (fond sombre cliquable)
+  &__mobile-overlay {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-overlay - 1;
+    animation: fadeIn 0.3s ease-out;
+
+    @include tablet {
+      display: block;
+    }
+  }
+
+  // Mobile Menu - Style slide-in depuis la droite
+  &__mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    max-width: 85vw;
     background: var(--color-bg-primary);
-    @include flex-center;
     flex-direction: column;
-    gap: $space-xl;
+    padding: $space-xl;
     z-index: $z-overlay;
-    // Pas de backdrop-filter sur mobile (perf)
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    animation: slideInRight 0.3s ease-out;
 
     @include tablet {
       &--open {
         display: flex;
       }
     }
+  }
+
+  // Bouton fermer
+  &__mobile-close {
+    position: absolute;
+    top: $space-lg;
+    right: $space-lg;
+    @include flex-center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background: var(--glass-hover);
+    }
+  }
+
+  // Container des liens
+  &__mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    margin-top: $space-3xl;
+    flex: 1;
 
     .navbar__link {
-      font-size: $font-size-2xl;
+      font-size: $font-size-lg;
+      color: var(--color-text-primary);
+      padding: $space-sm 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+  }
+
+  // CTA dans le menu mobile
+  &__mobile-menu .navbar__cta {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: $space-md;
+  }
+
+  // Toggle thème dans le menu mobile
+  &__mobile-theme {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: $radius-md;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: $font-size-sm;
+    transition: all $transition-base;
+
+    &:hover {
+      background: var(--glass-hover);
       color: var(--color-text-primary);
     }
+  }
+}
 
-    .navbar__cta {
-      margin-top: $space-lg;
-    }
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
