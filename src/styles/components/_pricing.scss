@@ -1,0 +1,230 @@
+// ============================================
+// Pricing Section
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.pricing {
+  position: relative;
+  padding: $space-5xl 0;
+  background: var(--color-bg-secondary);
+  @include grid-pattern;
+
+  &__container {
+    @include container;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: $space-md;
+  }
+
+  &__title {
+    @include heading-lg;
+    color: var(--color-text-primary);
+    margin-bottom: $space-lg;
+  }
+
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto;
+    @include body-text;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+    align-items: stretch;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+
+  &__card {
+    @include card;
+    padding: $space-2xl;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &:hover {
+      transform: translateY(-8px);
+      border-color: rgba($color-accent-primary, 0.3);
+    }
+
+    &--popular {
+      border-color: var(--color-accent-primary);
+      transform: scale(1.05);
+
+      @include tablet {
+        transform: scale(1);
+      }
+
+      &:hover {
+        transform: scale(1.05) translateY(-8px);
+
+        @include tablet {
+          transform: translateY(-8px);
+        }
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background: $color-accent-gradient;
+        border-radius: $radius-lg;
+        z-index: -1;
+        opacity: 0.2;
+      }
+    }
+
+    &-badge {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: $space-xs $space-lg;
+      background: $color-accent-gradient;
+      border-radius: $radius-full;
+      font-size: $font-size-xs;
+      font-weight: 600;
+      color: var(--color-bg-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+
+      @include tablet {
+        top: $space-md;
+        left: $space-md;
+        transform: none;
+      }
+    }
+
+    &-header {
+      text-align: center;
+      padding-bottom: $space-xl;
+      border-bottom: 1px solid var(--glass-border);
+      margin-bottom: $space-xl;
+    }
+
+    &-name {
+      font-family: $font-display;
+      font-size: $font-size-xl;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: $space-sm;
+    }
+
+    &-description {
+      font-size: $font-size-sm;
+      color: var(--color-text-muted);
+      margin-bottom: $space-lg;
+    }
+
+    &-price {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: $space-xs;
+
+      &-amount {
+        font-family: $font-display;
+        font-size: $font-size-5xl;
+        font-weight: 700;
+        @include gradient-text;
+        line-height: 1;
+      }
+
+      &-currency {
+        font-size: $font-size-xl;
+        color: var(--color-text-muted);
+      }
+    }
+
+    &-duration {
+      font-size: $font-size-sm;
+      color: var(--color-text-muted);
+      margin-top: $space-sm;
+    }
+
+    &-features {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: $space-md;
+      margin-bottom: $space-xl;
+    }
+
+    &-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: $space-md;
+      font-size: $font-size-base;
+      color: var(--color-text-secondary);
+
+      &-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        @include flex-center;
+        background: rgba($color-accent-secondary, 0.2);
+        border-radius: 50%;
+        font-size: $font-size-xs;
+        color: $color-accent-secondary;
+      }
+    }
+
+    &-cta {
+      @include button-secondary;
+      width: 100%;
+    }
+
+    &--popular &-cta {
+      @include button-primary;
+    }
+  }
+
+  // Guarantee Banner
+  &__guarantee {
+    margin-top: $space-4xl;
+    @include flex-center;
+    gap: $space-xl;
+    padding: $space-xl $space-2xl;
+    @include glass;
+    border-radius: $radius-lg;
+    text-align: center;
+
+    @include tablet {
+      flex-direction: column;
+      gap: $space-md;
+    }
+
+    &-icon {
+      font-size: $font-size-4xl;
+    }
+
+    &-text {
+      font-size: $font-size-lg;
+      color: var(--color-text-secondary);
+
+      strong {
+        color: var(--color-accent-primary);
+      }
+    }
+  }
+}
