@@ -84,7 +84,7 @@ const Hero = memo(() => {
         {/* Stats avec badges */}
         <div className="hero__stats">
           <div className="hero__stat">
-            <strong>+20</strong>
+            <strong>+15</strong>
             <span>Projets livrés</span>
           </div>
 

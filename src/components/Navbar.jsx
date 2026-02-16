@@ -5,11 +5,11 @@ import { Sun, Moon } from "lucide-react";
 // Throttle utility
 const throttle = (func, limit) => {
   let inThrottle;
-  return function(...args) {
+  return function (...args) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 };
@@ -19,13 +19,16 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Initialiser depuis localStorage ou true par défaut
-    const saved = localStorage.getItem('theme');
-    return saved ? saved === 'dark' : true;
+    const saved = localStorage.getItem("theme");
+    return saved ? saved === "dark" : true;
   });
 
   useEffect(() => {
     // Appliquer le thème au chargement
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDarkMode ? "dark" : "light"
+    );
   }, [isDarkMode]);
 
   useEffect(() => {
@@ -39,12 +42,15 @@ const Navbar = () => {
   }, []);
 
   // Memoize les liens de navigation
-  const navLinks = useMemo(() => [
-    { label: "Services", href: "#services" },
-    { label: "Projets", href: "#projects" },
-    { label: "Tarifs", href: "#pricing" },
-    { label: "Contact", href: "#contact" },
-  ], []);
+  const navLinks = useMemo(
+    () => [
+      { label: "Services", href: "#services" },
+      { label: "Projets", href: "#projects" },
+      { label: "Étapes", href: "#etapes" },
+      { label: "Contact", href: "#contact" },
+    ],
+    []
+  );
 
   const scrollToSection = useCallback((e, href) => {
     e.preventDefault();
@@ -56,13 +62,13 @@ const Navbar = () => {
   }, []);
 
   const toggleMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen(prev => !prev);
+    setIsMobileMenuOpen((prev) => !prev);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setIsDarkMode(prev => {
+    setIsDarkMode((prev) => {
       const newMode = !prev;
-      localStorage.setItem('theme', newMode ? 'dark' : 'light');
+      localStorage.setItem("theme", newMode ? "dark" : "light");
       return newMode;
     });
   }, []);
@@ -91,7 +97,9 @@ const Navbar = () => {
           <button
             className="navbar__theme-toggle"
             onClick={toggleTheme}
-            aria-label={isDarkMode ? "Activer le mode clair" : "Activer le mode sombre"}
+            aria-label={
+              isDarkMode ? "Activer le mode clair" : "Activer le mode sombre"
+            }
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
@@ -109,10 +117,7 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <>
           {/* Overlay pour fermer en cliquant à l'extérieur */}
-          <div
-            className="navbar__mobile-overlay"
-            onClick={toggleMobileMenu}
-          />
+          <div className="navbar__mobile-overlay" onClick={toggleMobileMenu} />
           <div className="navbar__mobile-menu navbar__mobile-menu--open">
             {/* Bouton fermer en haut du menu */}
             <button

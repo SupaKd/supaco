@@ -11,6 +11,10 @@
   @include flex-center;
   padding: $space-xl;
 
+  [data-theme="light"] & {
+    background: rgba(0, 0, 0, 0.35);
+  }
+
   @include tablet {
     padding: $space-md;
   }
@@ -26,10 +30,20 @@
   flex-direction: column;
   box-shadow: var(--shadow-lg);
 
+  [data-theme="light"] & {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+  }
+
   &__header {
     @include flex-between;
     padding: $space-xl $space-xl $space-lg;
     border-bottom: 1px solid var(--glass-border);
+
+    [data-theme="light"] & {
+      border-bottom-color: rgba(0, 0, 0, 0.1);
+    }
 
     h2 {
       font-family: $font-display;
@@ -118,6 +132,10 @@
     border-top: 1px solid var(--glass-border);
     display: flex;
     justify-content: flex-end;
+
+    [data-theme="light"] & {
+      border-top-color: rgba(0, 0, 0, 0.1);
+    }
   }
 
   &__btn {
@@ -132,6 +150,17 @@
     &:hover {
       border-color: var(--color-text-muted);
       color: var(--color-text-primary);
+    }
+
+    [data-theme="light"] & {
+      border-color: rgba(0, 0, 0, 0.15);
+      color: var(--color-text-secondary);
+
+      &:hover {
+        border-color: rgba(0, 0, 0, 0.3);
+        color: var(--color-text-primary);
+        background: rgba(0, 0, 0, 0.04);
+      }
     }
   }
 }

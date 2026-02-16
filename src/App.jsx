@@ -10,6 +10,7 @@ import LegalModalsProvider from "./components/LegalModals";
 const Services = lazy(() => import("./components/Service"));
 const Technologies = lazy(() => import("./components/Technologies"));
 const Projects = lazy(() => import("./components/Projects"));
+const Stats = lazy(() => import("./components/Stats"));
 const Pricing = lazy(() => import("./components/Pricing"));
 const Testimonials = lazy(() => import("./components/Testimonials"));
 const Contact = lazy(() => import("./components/Contact"));
@@ -42,9 +43,12 @@ const SectionLoader = () => (
 function App() {
   useEffect(() => {
     // Initialiser le thème depuis localStorage
-    const savedTheme = localStorage.getItem('theme');
-    const theme = savedTheme || 'dark';
-    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    const savedTheme = localStorage.getItem("theme");
+    const theme = savedTheme || "dark";
+    document.documentElement.setAttribute(
+      "data-theme",
+      theme === "dark" ? "dark" : "light"
+    );
 
     // Smooth scroll
     document.documentElement.style.scrollBehavior = "smooth";
@@ -68,6 +72,9 @@ function App() {
         <Hero />
         <Suspense fallback={<SectionLoader />}>
           <Services />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <Stats />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <Technologies />

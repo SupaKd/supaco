@@ -1,117 +1,83 @@
 import { useRef, memo, useMemo, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import {
+  HiOutlineChatBubbleLeftRight,
+  HiOutlinePaintBrush,
+  HiOutlineCodeBracket,
+  HiOutlineRocketLaunch,
+} from "react-icons/hi2";
 
-const PricingCard = memo(({ plan, variants, onContactClick }) => (
-  <motion.div
-    className={`pricing__card ${plan.popular ? "pricing__card--popular" : ""}`}
-    variants={variants}
-    whileHover={{ y: -8 }}
-  >
-    {plan.popular && (
-      <span className="pricing__card-badge">Le plus populaire</span>
-    )}
+const steps = [
+  {
+    number: "01",
+    icon: <HiOutlineChatBubbleLeftRight size={28} />,
+    title: "Échange",
+    description:
+      "On discute de votre projet, vos besoins et vos objectifs pour définir ensemble la meilleure approche.",
+  },
+  {
+    number: "02",
+    icon: <HiOutlinePaintBrush size={28} />,
+    title: "Maquette",
+    description:
+      "On crée le design de votre site sur-mesure. Vous validez chaque étape avant de passer au développement.",
+  },
+  {
+    number: "03",
+    icon: <HiOutlineCodeBracket size={28} />,
+    title: "Développement",
+    description:
+      "On code votre site avec les dernières technologies pour un résultat rapide, responsive et optimisé.",
+  },
+  {
+    number: "04",
+    icon: <HiOutlineRocketLaunch size={28} />,
+    title: "Livraison",
+    description:
+      "Votre site est mis en ligne. On vous forme à son utilisation et on reste disponible pour le suivi.",
+  },
+];
 
-    <div className="pricing__card-header">
-      <h3 className="pricing__card-name">{plan.name}</h3>
-      <p className="pricing__card-description">{plan.description}</p>
-      <div className="pricing__card-price">
-        <span className="pricing__card-price-amount">{plan.price}</span>
-        <span className="pricing__card-price-currency">€</span>
-      </div>
-      <span className="pricing__card-duration">{plan.duration}</span>
-    </div>
-
-    <ul className="pricing__card-features">
-      {plan.features.map((feature) => (
-        <li key={feature} className="pricing__card-feature">
-          <span className="pricing__card-feature-icon">✓</span>
-          {feature}
-        </li>
-      ))}
-    </ul>
-
-    <motion.a
-      href="#contact"
-      className="pricing__card-cta"
-      onClick={onContactClick}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      Choisir cette offre
-    </motion.a>
+const ProcessStep = memo(({ step, variants }) => (
+  <motion.div className="process__step" variants={variants}>
+    <div className="process__step-number">{step.number}</div>
+    <div className="process__step-icon">{step.icon}</div>
+    <h3 className="process__step-title">{step.title}</h3>
+    <p className="process__step-description">{step.description}</p>
   </motion.div>
 ));
 
-PricingCard.displayName = 'PricingCard';
+ProcessStep.displayName = "ProcessStep";
 
-const Pricing = () => {
+const Process = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const plans = useMemo(() => [
-    {
-      name: "Essentiel",
-      description: "Parfait pour démarrer votre présence en ligne",
-      price: "500",
-      duration: "Livré en 72h",
-      features: [
-        "Site one-page responsive",
-        "Design moderne personnalisé",
-        "Formulaire de contact",
-        "Optimisation SEO de base",
-      ],
-    },
-    {
-      name: "Professionnel",
-      description: "La solution complète pour votre entreprise",
-      price: "1200",
-      duration: "Livré en 5 jours",
-      popular: true,
-      features: [
-        "Site multi-pages (jusqu'à 5)",
-        "Design premium sur-mesure",
-        "Animations et effets avancés",
-        "SEO optimisé + Analytics",
-        "Blog intégré",
-        "Formation utilisation",
-      ],
-    },
-    {
-      name: "E-Commerce",
-      description: "Vendez en ligne avec une boutique complète",
-      price: "2500",
-      duration: "Livré en 10 jours",
-      features: [
-        "Boutique en ligne complète",
-        "Jusqu'à 50 produits",
-        "Paiement Stripe/PayPal",
-        "Gestion des stocks",
-        "Emails automatiques",
-      ],
-    },
-  ], []);
-
-  const containerVariants = useMemo(() => ({
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
+  const containerVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.2 },
       },
-    },
-  }), []);
+    }),
+    []
+  );
 
-  const cardVariants = useMemo(() => ({
-    hidden: { opacity: 0, y: 60 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94],
+  const stepVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 40 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.6,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
       },
-    },
-  }), []);
+    }),
+    []
+  );
 
   const scrollToContact = useCallback((e) => {
     e.preventDefault();
@@ -119,48 +85,54 @@ const Pricing = () => {
   }, []);
 
   return (
-    <section className="pricing" id="pricing" ref={ref}>
-      <div className="pricing__container">
+    <section className="process" id="etapes" ref={ref}>
+      <div className="process__container">
         <motion.div
-          className="pricing__header"
+          className="process__header"
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <span className="pricing__label">Tarifs</span>
-          <h2 className="pricing__title">Des prix transparents</h2>
-          <p className="pricing__subtitle">
-            Pas de surprise ni de coûts cachés. Choisissez la formule adaptée à
-            vos besoins et lancez votre projet dès aujourd'hui.
+          <span className="process__label">Comment ça marche</span>
+          <h2 className="process__title">Un projet en 4 étapes</h2>
+          <p className="process__subtitle">
+            Chaque projet est unique. On s'adapte à vos besoins pour livrer un
+            résultat sur-mesure.
           </p>
         </motion.div>
 
         <motion.div
-          className="pricing__grid"
+          className="process__grid"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {plans.map((plan) => (
-            <PricingCard
-              key={plan.name}
-              plan={plan}
-              variants={cardVariants}
-              onContactClick={scrollToContact}
+          {steps.map((step) => (
+            <ProcessStep
+              key={step.number}
+              step={step}
+              variants={stepVariants}
             />
           ))}
         </motion.div>
 
         <motion.div
-          className="pricing__guarantee"
-          initial={{ opacity: 0, y: 40 }}
+          className="process__cta"
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 1 }}
         >
-          <p className="pricing__guarantee-text">
-            <strong>Exigence & excellence</strong> — Chaque prestation est
-            ajustée avec soin afin de garantir un résultat à la hauteur de vos
-            attentes.
+          <motion.a
+            href="#contact"
+            className="process__cta-btn"
+            onClick={scrollToContact}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Demander un devis gratuit
+          </motion.a>
+          <p className="process__cta-note">
+            Sans engagement · Réponse sous 24h
           </p>
         </motion.div>
       </div>
@@ -168,4 +140,4 @@ const Pricing = () => {
   );
 };
 
-export default memo(Pricing);
+export default memo(Process);

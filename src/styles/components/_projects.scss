@@ -102,6 +102,24 @@
   &__list {
     display: flex;
     flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      gap: $space-lg;
+      padding-bottom: $space-lg;
+      margin: 0 calc(-1 * $space-lg);
+      padding-left: $space-lg;
+      padding-right: $space-lg;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   // ---- List Item ----
@@ -140,15 +158,28 @@
     }
 
     @include tablet {
-      grid-template-columns: 140px 1fr auto;
-      gap: $space-lg;
-      padding: $space-lg 0;
-    }
-
-    @include mobile {
       grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
       gap: $space-md;
-      padding: $space-lg 0;
+      padding: 0;
+      border: 1px solid var(--glass-border);
+      border-radius: $radius-lg;
+      background: var(--glass-bg);
+      min-width: 280px;
+      max-width: 300px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      overflow: hidden;
+
+      &:first-child {
+        border-top: 1px solid var(--glass-border);
+      }
+
+      &:hover {
+        padding-left: 0;
+        padding-right: 0;
+        border-color: rgba($color-accent-primary, 0.3);
+      }
     }
   }
 
@@ -162,12 +193,9 @@
     flex-shrink: 0;
 
     @include tablet {
-      width: 140px;
-    }
-
-    @include mobile {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16 / 10;
+      border-radius: 0;
     }
   }
 
@@ -203,6 +231,10 @@
     flex-direction: column;
     gap: $space-sm;
     min-width: 0;
+
+    @include tablet {
+      padding: 0 $space-lg;
+    }
   }
 
   &__item-tags {
@@ -240,7 +272,7 @@
     line-height: 1.5;
     max-width: 500px;
 
-    @include mobile {
+    @include tablet {
       max-width: 100%;
     }
   }
@@ -255,8 +287,9 @@
     flex-shrink: 0;
     transition: all $transition-base;
 
-    @include mobile {
+    @include tablet {
       align-self: flex-end;
+      margin: 0 $space-lg $space-lg 0;
     }
   }
 
@@ -264,6 +297,20 @@
     font-size: $font-size-xl;
     color: var(--color-text-secondary);
     transition: all $transition-fast;
+  }
+
+  // ---- Show More Button ----
+  &__show-more {
+    text-align: center;
+    margin-top: $space-2xl;
+
+    @include tablet {
+      display: none;
+    }
+
+    &-btn {
+      @include button-secondary;
+    }
   }
 }
 

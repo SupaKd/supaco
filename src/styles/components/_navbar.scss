@@ -136,7 +136,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: $z-overlay - 1;
+    z-index: $z-modal - 1;
     animation: fadeIn 0.3s ease-out;
 
     @include tablet {
@@ -156,7 +156,7 @@
     background: var(--color-bg-primary);
     flex-direction: column;
     padding: $space-xl;
-    z-index: $z-overlay;
+    z-index: $z-modal;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
     animation: slideInRight 0.3s ease-out;
 
