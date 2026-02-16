@@ -33,10 +33,14 @@ const Contact = () => {
 
   const [formState, setFormState] = useState({
     name: '',
+    company: '',
     email: '',
     phone: '',
     service: '',
+    hasSite: '',
+    siteUrl: '',
     budget: '',
+    deadline: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,6 +75,15 @@ const Contact = () => {
     return budgets[value] || value || 'Non spécifié';
   }, []);
 
+  const getDeadlineLabel = useCallback((value) => {
+    const deadlines = {
+      'urgent': "Moins d'1 mois",
+      'normal': '1 à 3 mois',
+      'flexible': 'Pas de rush',
+    };
+    return deadlines[value] || value || 'Non spécifié';
+  }, []);
+
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -79,10 +92,13 @@ const Contact = () => {
 
     const templateParams = {
       from_name: formState.name,
+      company: formState.company || 'Non renseigné',
       from_email: formState.email,
       phone: formState.phone || 'Non renseigné',
       service: getServiceLabel(formState.service),
+      has_site: formState.hasSite === 'oui' ? `Oui — ${formState.siteUrl || 'URL non renseignée'}` : formState.hasSite === 'non' ? 'Non (création)' : 'Non spécifié',
       budget: getBudgetLabel(formState.budget),
+      deadline: getDeadlineLabel(formState.deadline),
       message: formState.message,
       reply_to: formState.email,
     };
@@ -98,10 +114,14 @@ const Contact = () => {
       setSubmitStatus('success');
       setFormState({
         name: '',
+        company: '',
         email: '',
         phone: '',
         service: '',
+        hasSite: '',
+        siteUrl: '',
         budget: '',
+        deadline: '',
         message: '',
       });
     } catch (error) {
@@ -113,7 +133,7 @@ const Contact = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [formState, getServiceLabel, getBudgetLabel]);
+  }, [formState, getServiceLabel, getBudgetLabel, getDeadlineLabel]);
 
   const resetForm = useCallback(() => {
     setSubmitStatus(null);
@@ -228,6 +248,18 @@ const Contact = () => {
                   </div>
 
                   <div className="contact__form-group">
+                    <label className="contact__form-label">Entreprise / Activité</label>
+                    <input
+                      type="text"
+                      name="company"
+                      value={formState.company}
+                      onChange={handleChange}
+                      className="contact__form-input"
+                      placeholder="Nom de votre entreprise ou activité"
+                    />
+                  </div>
+
+                  <div className="contact__form-group">
                     <label className="contact__form-label">Email</label>
                     <input
                       type="email"
@@ -269,7 +301,35 @@ const Contact = () => {
                     </select>
                   </div>
 
-                  <div className="contact__form-group contact__form-group--full">
+                  <div className="contact__form-group">
+                    <label className="contact__form-label">Avez-vous déjà un site ?</label>
+                    <select
+                      name="hasSite"
+                      value={formState.hasSite}
+                      onChange={handleChange}
+                      className="contact__form-select"
+                    >
+                      <option value="">Sélectionnez</option>
+                      <option value="non">Non, c'est une création</option>
+                      <option value="oui">Oui, c'est une refonte</option>
+                    </select>
+                  </div>
+
+                  {formState.hasSite === 'oui' && (
+                    <div className="contact__form-group contact__form-group--full">
+                      <label className="contact__form-label">URL de votre site actuel</label>
+                      <input
+                        type="url"
+                        name="siteUrl"
+                        value={formState.siteUrl}
+                        onChange={handleChange}
+                        className="contact__form-input"
+                        placeholder="https://www.monsite.com"
+                      />
+                    </div>
+                  )}
+
+                  <div className="contact__form-group">
                     <label className="contact__form-label">Budget estimé</label>
                     <select
                       name="budget"
@@ -285,6 +345,21 @@ const Contact = () => {
                     </select>
                   </div>
 
+                  <div className="contact__form-group">
+                    <label className="contact__form-label">Délai souhaité</label>
+                    <select
+                      name="deadline"
+                      value={formState.deadline}
+                      onChange={handleChange}
+                      className="contact__form-select"
+                    >
+                      <option value="">Sélectionnez un délai</option>
+                      <option value="urgent">Moins d'1 mois</option>
+                      <option value="normal">1 à 3 mois</option>
+                      <option value="flexible">Pas de rush</option>
+                    </select>
+                  </div>
+
                   <div className="contact__form-group contact__form-group--full">
                     <label className="contact__form-label">Votre message</label>
                     <textarea
@@ -292,7 +367,7 @@ const Contact = () => {
                       value={formState.message}
                       onChange={handleChange}
                       className="contact__form-textarea"
-                      placeholder="Décrivez votre projet, vos besoins, vos délais..."
+                      placeholder="Décrivez votre projet, vos besoins..."
                       required
                     />
                   </div>

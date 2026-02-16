@@ -3,6 +3,7 @@ import Cursor from "./components/Cursor";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import CookieConsent from "./components/CookieConsent";
+import WhatsAppButton from "./components/WhatsAppButton";
 import LegalModalsProvider from "./components/LegalModals";
 
 // Lazy load les composants below-the-fold
@@ -10,6 +11,7 @@ const Services = lazy(() => import("./components/Service"));
 const Technologies = lazy(() => import("./components/Technologies"));
 const Projects = lazy(() => import("./components/Projects"));
 const Pricing = lazy(() => import("./components/Pricing"));
+const Testimonials = lazy(() => import("./components/Testimonials"));
 const Contact = lazy(() => import("./components/Contact"));
 const Footer = lazy(() => import("./components/Footer"));
 
@@ -77,6 +79,9 @@ function App() {
           <Pricing />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
+          <Testimonials />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
           <Contact />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
@@ -84,6 +89,7 @@ function App() {
         </Suspense>
       </main>
       <CookieConsent />
+      <WhatsAppButton />
     </LegalModalsProvider>
   );
 }
