@@ -1,5 +1,7 @@
-@use '../variables' as *;
-@use '../mixins' as *;
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// ---- Bannière Cookie Consent ----
 
 .cookie-consent {
   position: fixed;
@@ -21,9 +23,21 @@
     flex-direction: column;
     align-items: stretch;
     bottom: $space-md;
-    width: calc(100% - #{$space-md * 2});
-    padding: $space-lg;
+    left: $space-md;
+    right: $space-md;
+    transform: none;
+    width: auto;
+    padding: $space-md;
     gap: $space-md;
+    border-radius: $radius-md;
+  }
+
+  @include mobile {
+    bottom: $space-sm;
+    left: $space-sm;
+    right: $space-sm;
+    padding: $space-sm $space-md;
+    gap: $space-sm;
   }
 
   &__content {
@@ -31,6 +45,10 @@
     align-items: flex-start;
     gap: $space-md;
     flex: 1;
+
+    @include mobile {
+      gap: $space-sm;
+    }
   }
 
   &__icon {
@@ -45,7 +63,11 @@
       font-size: $font-size-sm;
       color: var(--color-text-secondary);
       line-height: 1.5;
-      margin: 0;
+      margin: 1em;
+
+      @include mobile {
+        font-size: $font-size-xs;
+      }
     }
   }
 
@@ -80,6 +102,11 @@
     padding: $space-sm $space-lg;
     font-size: $font-size-sm;
     border-radius: $radius-full;
+
+    @include mobile {
+      padding: $space-xs $space-md;
+      font-size: $font-size-xs;
+    }
 
     &--decline {
       background: transparent;
@@ -132,11 +159,19 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  @include flex-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: $space-xl;
 
   @include tablet {
     padding: $space-md;
+    align-items: flex-end;
+  }
+
+  @include mobile {
+    padding: 0;
+    align-items: flex-end;
   }
 }
 
@@ -150,10 +185,38 @@
   flex-direction: column;
   box-shadow: var(--shadow-lg);
 
+  @include tablet {
+    max-height: calc(100vh - #{$space-md * 2});
+    border-radius: $radius-md;
+
+    @supports (height: 1dvh) {
+      max-height: calc(100dvh - #{$space-md * 2});
+    }
+  }
+
+  @include mobile {
+    max-height: 100vh;
+    max-width: 100%;
+    border-radius: $radius-md $radius-md 0 0;
+
+    @supports (height: 1dvh) {
+      max-height: 100dvh;
+    }
+  }
+
   &__header {
     @include flex-between;
     padding: $space-xl $space-xl $space-lg;
     border-bottom: 1px solid var(--glass-border);
+    flex-shrink: 0;
+
+    @include tablet {
+      padding: $space-lg;
+    }
+
+    @include mobile {
+      padding: $space-md;
+    }
 
     h2 {
       font-family: $font-display;
@@ -161,6 +224,10 @@
       font-weight: 600;
       color: var(--color-text-primary);
       margin: 0;
+
+      @include tablet {
+        font-size: $font-size-lg;
+      }
     }
   }
 
@@ -173,6 +240,7 @@
     border-radius: $radius-sm;
     transition: color $transition-fast;
     @include flex-center;
+    flex-shrink: 0;
 
     &:hover {
       color: var(--color-text-primary);
@@ -182,10 +250,24 @@
   &__body {
     padding: $space-xl;
     overflow-y: auto;
-    flex: 1;
+    flex: 1 1 0;
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
+
+    @include tablet {
+      padding: $space-lg;
+    }
+
+    @include mobile {
+      padding: $space-md;
+    }
 
     section {
       margin-bottom: $space-xl;
+
+      @include tablet {
+        margin-bottom: $space-lg;
+      }
 
       &:last-child {
         margin-bottom: 0;
@@ -198,6 +280,10 @@
       font-weight: 600;
       color: var(--color-text-primary);
       margin: 0 0 $space-sm;
+
+      @include mobile {
+        font-size: $font-size-sm;
+      }
     }
 
     p {
@@ -206,6 +292,10 @@
       color: var(--color-text-secondary);
       line-height: 1.6;
       margin: 0 0 $space-sm;
+
+      @include mobile {
+        font-size: $font-size-xs;
+      }
 
       &:last-child {
         margin-bottom: 0;
@@ -229,5 +319,14 @@
     border-top: 1px solid var(--glass-border);
     display: flex;
     justify-content: flex-end;
+    flex-shrink: 0;
+
+    @include tablet {
+      padding: $space-md $space-lg;
+    }
+
+    @include mobile {
+      padding: $space-sm $space-md;
+    }
   }
 }
