@@ -2,6 +2,8 @@ import { useEffect, lazy, Suspense } from "react";
 import Cursor from "./components/Cursor";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import CookieConsent from "./components/CookieConsent";
+import LegalModalsProvider from "./components/LegalModals";
 
 // Lazy load les composants below-the-fold
 const Services = lazy(() => import("./components/Service"));
@@ -57,7 +59,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <LegalModalsProvider>
       <Cursor />
       <Navbar />
       <main>
@@ -81,7 +83,8 @@ function App() {
           <Footer />
         </Suspense>
       </main>
-    </>
+      <CookieConsent />
+    </LegalModalsProvider>
   );
 }
 

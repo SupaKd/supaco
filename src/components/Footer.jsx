@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useLegalModals } from './LegalModals';
 
 const FooterLink = memo(({ link, onClick }) => (
   <a
@@ -15,6 +16,7 @@ FooterLink.displayName = 'FooterLink';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { openMentionsLegales, openConfidentialite, openCookieConsent } = useLegalModals();
 
   const footerLinks = useMemo(() => ({
     services: [
@@ -30,11 +32,11 @@ const Footer = () => {
       { label: 'Contact', href: '#contact' },
     ],
     legal: [
-      { label: 'Mentions légales', href: '#' },
-      { label: 'CGV', href: '#' },
-      { label: 'Politique de confidentialité', href: '#' },
+      { label: 'Mentions légales', action: openMentionsLegales },
+      { label: 'Politique de confidentialité', action: openConfidentialite },
+      { label: 'Gérer mes cookies', action: openCookieConsent },
     ],
-  }), []);
+  }), [openMentionsLegales, openConfidentialite, openCookieConsent]);
 
   const scrollToSection = useCallback((e, href) => {
     if (href.startsWith('#') && href.length > 1) {
@@ -100,9 +102,14 @@ const Footer = () => {
           <div className="footer__column">
             <h4 className="footer__column-title">Légal</h4>
             {footerLinks.legal.map((link) => (
-              <a key={link.label} href={link.href} className="footer__link">
+              <button
+                key={link.label}
+                className="footer__link footer__link--btn"
+                onClick={link.action}
+                type="button"
+              >
                 {link.label}
-              </a>
+              </button>
             ))}
           </div>
         </div>
