@@ -1,9 +1,13 @@
 // ============================================
-// Custom Cursor - OPTIMIZED
+// Custom Cursor - Trail Effect
 // ============================================
 
 @use '../variables' as *;
 @use '../mixins' as *;
+
+* {
+  cursor: none !important;
+}
 
 .cursor {
   position: fixed;
@@ -11,66 +15,74 @@
   left: 0;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference;
-  // Optimisation: contient le layout
   contain: layout style;
 
   @include tablet {
     display: none;
   }
 
+  // Dot principal — blanc avec bordure accent, toujours visible
   &__dot {
     position: fixed;
     top: 0;
     left: 0;
-    width: 8px;
-    height: 8px;
-    background: var(--color-accent-primary);
+    width: 14px;
+    height: 14px;
+    background: #ffffff;
+    border: 2px solid var(--color-accent-primary);
     border-radius: 50%;
-    // Optimisation GPU
     will-change: transform;
     transform: translate3d(0, 0, 0);
     transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.4),
+      0 0 12px var(--color-accent-primary);
+    z-index: 10;
   }
 
-  &__ring {
+  // Points de la traîne — accent pur, visibles par contraste
+  &__trail {
     position: fixed;
     top: 0;
     left: 0;
-    width: 40px;
-    height: 40px;
-    margin-left: -16px;
-    margin-top: -16px;
-    border: 1px solid var(--color-accent-primary);
+    width: 6px;
+    height: 6px;
+    background: var(--color-accent-primary);
     border-radius: 50%;
-    // Optimisation GPU
-    will-change: transform;
+    will-change: transform, opacity;
     transform: translate3d(0, 0, 0);
-    transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease, border 0.2s ease;
-    opacity: 0.5;
+    transition: width 0.15s ease, height 0.15s ease;
+    pointer-events: none;
+    box-shadow: 0 0 4px var(--color-accent-primary);
   }
 
+  // Hover : dot se remplit de la couleur accent
   &--hover {
     .cursor__dot {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
+      background: var(--color-accent-primary);
+      border-color: #ffffff;
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 0 20px var(--color-accent-primary);
     }
 
-    .cursor__ring {
-      width: 60px;
-      height: 60px;
-      margin-left: -26px;
-      margin-top: -26px;
-      opacity: 0.8;
+    .cursor__trail {
+      width: 8px;
+      height: 8px;
     }
   }
 
+  // Click : dot compressé + flash
   &--clicking {
-    .cursor__ring {
-      width: 32px;
-      height: 32px;
-      margin-left: -12px;
-      margin-top: -12px;
+    .cursor__dot {
+      width: 8px;
+      height: 8px;
+      background: var(--color-accent-primary);
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 0 24px var(--color-accent-primary);
     }
   }
 }
