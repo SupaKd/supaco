@@ -520,62 +520,48 @@
     }
   }
 
-  // Stats — intégrées dans la card photo
-  &__stats {
+  // Contacts — intégrés dans la card photo
+  &__contacts {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: $space-sm;
     padding-top: $space-lg;
     border-top: 1px solid var(--glass-border);
     width: 100%;
     box-sizing: border-box;
   }
 
-  &__stat {
+  &__contact-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 2px;
-    flex: 1;
-    min-width: 0;
-    padding: 0rem 1rem;
+    gap: $space-sm;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: $space-xs $space-sm;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
 
-    strong {
-      font-family: $font-display;
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      font-weight: 700;
-      @include gradient-text;
-      line-height: 1.2;
-
-      [data-theme="light"] & {
-        background: linear-gradient(
-          135deg,
-          var(--color-accent-primary) 0%,
-          var(--color-accent-secondary) 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
+    &:not(&--location):hover {
+      color: var(--color-accent-primary);
+      background: rgba($color-accent-primary, 0.06);
     }
 
-    span {
-      font-size: 0.4rem;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.01em;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
+    &--location {
+      cursor: default;
     }
   }
 
-  &__stat-divider {
-    width: 1px;
-    height: 32px;
-    background: var(--glass-border);
+  &__contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: $radius-sm;
+    background: rgba($color-accent-primary, 0.08);
+    color: var(--color-accent-primary);
     flex-shrink: 0;
   }
 

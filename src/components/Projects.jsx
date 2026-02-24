@@ -1,6 +1,6 @@
-import { useState, useRef, memo, useCallback, useMemo } from "react";
+import { useState, useRef, memo, useCallback, useMemo, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { HiOutlineExternalLink } from "react-icons/hi";
+import { HiOutlineExternalLink, HiOutlineArrowRight } from "react-icons/hi";
 
 // Ajoute &fm=webp&auto=format aux URLs Unsplash pour forcer le format WebP
 const optimizeUnsplashUrl = (url) => {
@@ -23,7 +23,9 @@ const ProjectImage = memo(({ src, alt }) => {
       <img
         src={optimizedSrc}
         alt={alt}
-        className={`projects__item-image ${isLoaded ? "projects__item-image--loaded" : ""}`}
+        className={`projects__item-image ${
+          isLoaded ? "projects__item-image--loaded" : ""
+        }`}
         loading="lazy"
         decoding="async"
         onLoad={() => setIsLoaded(true)}
@@ -57,10 +59,10 @@ const ProjectItem = memo(({ project, index, variants, onProjectClick }) => {
       role="link"
       tabIndex={0}
       aria-label={`Voir le projet ${project.title}`}
-      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
     >
       <span className="projects__item-number">
-        {String(index + 1).padStart(2, '0')}
+        {String(index + 1).padStart(2, "0")}
       </span>
 
       <ProjectImage src={project.image} alt={project.title} />
@@ -88,35 +90,25 @@ ProjectItem.displayName = "ProjectItem";
 
 const Projects = () => {
   const ref = useRef(null);
+  const listRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeFilter, setActiveFilter] = useState("all");
   const [showAll, setShowAll] = useState(false);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
   const INITIAL_COUNT = 3;
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      if (el.scrollLeft > 30) setShowSwipeHint(false);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
 
   const projects = useMemo(
     () => [
-      {
-        id: 6,
-        title: "Le Comptoir",
-        description:
-          "Site vitrine élégant pour un restaurant, avec présentation du menu et ambiance soignée",
-        image:
-          "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Restaurant"],
-        category: "vitrine",
-        url: "https://restaurant-t.vercel.app/",
-      },
-      {
-        id: 1,
-        title: "Restaurant Sabai",
-        description:
-          "Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry",
-        image:
-          "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=75",
-        tags: ["Application Web", "Restaurant"],
-        category: "app",
-        url: "https://sabai-thoiry.com/",
-      },
       {
         id: 2,
         title: "Bellifood",
@@ -127,16 +119,6 @@ const Projects = () => {
         tags: ["Site Vitrine", "Restaurant"],
         category: "vitrine",
         url: "https://bellifood.com/",
-      },
-      {
-        id: 3,
-        title: "Optical Store",
-        description:
-          "Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon",
-        image: "/optical.webp",
-        tags: ["Site Vitrine", "Lunettes"],
-        category: "vitrine",
-        url: "https://cms-xi-self.vercel.app/",
       },
       {
         id: 4,
@@ -150,6 +132,17 @@ const Projects = () => {
         url: "https://depannage-gemeaux.fr/",
       },
       {
+        id: 6,
+        title: "Le Comptoir",
+        description:
+          "Site vitrine élégant pour un restaurant, avec présentation du menu et ambiance soignée",
+        image:
+          "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=75",
+        tags: ["Site Vitrine", "Restaurant"],
+        category: "vitrine",
+        url: "https://restaurant-t.vercel.app/",
+      },
+      {
         id: 5,
         title: "Yojeme",
         description:
@@ -159,6 +152,29 @@ const Projects = () => {
         tags: ["Site Vitrine", "Services"],
         category: "vitrine",
         url: "https://www.yojeme.fr/",
+      },
+
+      {
+        id: 3,
+        title: "Optical Store",
+        description:
+          "Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon",
+        image: "/optical.webp",
+        tags: ["Site Vitrine", "Lunettes"],
+        category: "vitrine",
+        url: "https://cms-xi-self.vercel.app/",
+      },
+
+      {
+        id: 1,
+        title: "Restaurant Sabai",
+        description:
+          "Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry",
+        image:
+          "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=75",
+        tags: ["Application Web", "Restaurant"],
+        category: "app",
+        url: "https://sabai-thoiry.com/",
       },
     ],
     []
@@ -238,7 +254,11 @@ const Projects = () => {
             {filters.map((filter) => (
               <button
                 key={filter.id}
-                className={`projects__filter-btn${activeFilter === filter.id ? " projects__filter-btn--active" : ""}`}
+                className={`projects__filter-btn${
+                  activeFilter === filter.id
+                    ? " projects__filter-btn--active"
+                    : ""
+                }`}
                 onClick={() => handleFilterChange(filter.id)}
               >
                 {filter.label}
@@ -247,24 +267,43 @@ const Projects = () => {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          className="projects__list"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.25, delay: 0.1 }}
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
-              <ProjectItem
-                key={project.id}
-                project={project}
-                index={index}
-                variants={itemVariants}
-                onProjectClick={handleProjectClick}
-              />
-            ))}
+        <div className="projects__list-wrapper">
+          <motion.div
+            className="projects__list"
+            ref={listRef}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.25, delay: 0.1 }}
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project, index) => (
+                <ProjectItem
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  variants={itemVariants}
+                  onProjectClick={handleProjectClick}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Indicateur swipe — mobile uniquement */}
+          <AnimatePresence>
+            {showSwipeHint && (
+              <motion.div
+                className="projects__swipe-hint"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ delay: 0.5, duration: 0.3 }}
+              >
+                <HiOutlineArrowRight className="projects__swipe-hint-icon" />
+                <span>Glissez pour voir plus</span>
+              </motion.div>
+            )}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {totalFiltered > INITIAL_COUNT && (
           <div className="projects__show-more">

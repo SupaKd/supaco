@@ -60,14 +60,14 @@ const Stats = () => {
     () => [
       {
         icon: <HiOutlineRocketLaunch size={28} />,
-        value: 15,
+        value: 9,
         suffix: "+",
         prefix: "",
         label: "Projets livrés",
       },
       {
         icon: <HiOutlineFaceSmile size={28} />,
-        value: 98,
+        value: 100,
         suffix: "%",
         prefix: "",
         label: "Clients satisfaits",

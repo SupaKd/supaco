@@ -60,11 +60,12 @@ function App() {
           <Services />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
-          <Responsive />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
           <Projects />
         </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <Responsive />
+        </Suspense>
+
         <Suspense fallback={<SectionLoader />}>
           <Contact />
         </Suspense>

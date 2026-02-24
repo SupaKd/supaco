@@ -98,6 +98,11 @@
     }
   }
 
+  // ---- List Wrapper (relatif pour le fade + hint) ----
+  &__list-wrapper {
+    position: relative;
+  }
+
   // ---- List Container ----
   &__list {
     display: flex;
@@ -121,6 +126,28 @@
         display: none;
       }
     }
+  }
+
+  // ---- Swipe hint — mobile uniquement ----
+  &__swipe-hint {
+    display: none;
+
+    @include tablet {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $space-sm;
+      margin-top: $space-lg;
+      font-size: $font-size-sm;
+      color: var(--color-text-muted);
+    }
+  }
+
+  &__swipe-hint-icon {
+    width: 16px;
+    height: 16px;
+    animation: swipe-nudge 1.4s ease-in-out infinite;
+    flex-shrink: 0;
   }
 
   // ---- List Item ----
@@ -368,6 +395,11 @@
       @include button-secondary;
     }
   }
+}
+
+@keyframes swipe-nudge {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(5px); }
 }
 
 @keyframes pulse-bg {

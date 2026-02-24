@@ -5,6 +5,7 @@ import {
   HiOutlineShoppingCart,
   HiOutlineLightningBolt,
   HiOutlineCheckCircle,
+  HiOutlineChartBar,
 } from "react-icons/hi";
 
 const SERVICES = [
@@ -14,7 +15,7 @@ const SERVICES = [
     label: "Site Vitrine",
     title: "Site Vitrine",
     description:
-      "Un site web professionnel qui présente votre activité et convertit vos visiteurs en clients.",
+      "Je conçois votre site de A à Z pour refléter votre image et convaincre vos visiteurs de vous contacter.",
     features: [
       "Design sur-mesure",
       "Responsive mobile",
@@ -30,14 +31,14 @@ const SERVICES = [
     label: "E-Commerce",
     title: "E-Commerce",
     description:
-      "Vendez vos produits en ligne avec une boutique moderne, rapide et sécurisée.",
+      "Je construis votre boutique en ligne pour que vos clients achètent facilement — même pendant que vous dormez.",
     features: [
       "Catalogue produits",
       "Paiement sécurisé",
       "Gestion des stocks",
       "Suivi commandes",
     ],
-    stat: { value: "+40%", label: "Ventes en ligne" },
+    stat: { value: "14j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
   {
@@ -46,14 +47,30 @@ const SERVICES = [
     label: "App Web",
     title: "Application Web",
     description:
-      "Des applications sur-mesure pour digitaliser et automatiser votre activité.",
+      "Quand un outil standard ne suffit plus, je développe exactement ce dont vous avez besoin — rien de plus, rien de moins.",
     features: [
       "Développement React",
       "Base de données",
       "API sur-mesure",
       "Dashboard admin",
     ],
-    stat: { value: "100%", label: "Sur-mesure" },
+    stat: { value: "30j", label: "Livraison moyenne" },
+    color: "var(--color-accent-primary)",
+  },
+  {
+    id: "crm-erp",
+    icon: HiOutlineChartBar,
+    label: "CRM / ERP",
+    title: "CRM / ERP",
+    description:
+      "Je centralise tout ce qui compte pour vous : vos clients, vos ventes, votre activité — dans un seul outil pensé pour vous.",
+    features: [
+      "Gestion des contacts",
+      "Suivi des ventes",
+      "Gestion des stocks",
+      "Tableaux de bord",
+    ],
+    stat: { value: "30j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
 ];
@@ -62,7 +79,8 @@ function getPosition(idx, active, total) {
   const diff = (idx - active + total) % total;
   if (diff === 0) return "center";
   if (diff === 1) return "right";
-  return "left";
+  if (diff === total - 1) return "left";
+  return "far-left";
 }
 
 const cardVariants = {
@@ -85,6 +103,13 @@ const cardVariants = {
     scale: 0.82,
     opacity: 0.55,
     zIndex: 5,
+    transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] },
+  },
+  "far-left": {
+    x: "-130%",
+    scale: 0.68,
+    opacity: 0,
+    zIndex: 1,
     transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] },
   },
 };
@@ -128,16 +153,16 @@ const ServiceCard = memo(({ service, position, active, onClick }) => {
       {/* Description — visible sur toutes les cards */}
       <p className="services__card-description">{service.description}</p>
 
-      {/* Corps — visible uniquement sur la card centrale, disparaît instantanément sinon */}
+      {/* Corps — visible sur toutes les cards */}
       <div
         className="services__card-body"
-        aria-hidden={!isCenter}
-        style={{ visibility: isCenter ? "visible" : "hidden" }}
+        aria-hidden={false}
+        style={{ visibility: "visible" }}
       >
         <motion.div
           key={active}
           initial={isCenter ? { opacity: 0 } : false}
-          animate={isCenter ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
           className="services__card-body-inner"
         >
@@ -231,7 +256,7 @@ const Services = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           <span className="services__label">Services</span>
-          <h2 className="services__title">Ce que nous proposons</h2>
+          <h2 className="services__title">Ce que je propose</h2>
           <p className="services__subtitle">
             Des solutions web adaptées à vos besoins et à votre budget, livrées
             rapidement avec un accompagnement personnalisé.

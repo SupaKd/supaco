@@ -163,7 +163,9 @@
     position: absolute;
     width: 360px;
     padding: $space-2xl;
-    background: var(--color-bg-tertiary);
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border);
     border-radius: $radius-xl;
     overflow: hidden;
@@ -176,7 +178,8 @@
       max-width: 420px;
 
       &--left,
-      &--right {
+      &--right,
+      &--far-left {
         display: none;
       }
     }
@@ -192,6 +195,10 @@
       &:hover {
         opacity: 0.72 !important;
       }
+    }
+
+    &--far-left {
+      pointer-events: none;
     }
   }
 

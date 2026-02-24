@@ -52,7 +52,7 @@ const badges = [
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
       </svg>
     ),
-    label: "98% de satisfaction",
+    label: "100% de satisfaction",
   },
 ];
 
@@ -140,21 +140,66 @@ const Hero = memo(() => {
               </div>
             </div>
 
-            {/* Stats sous la photo */}
-            <div className="hero__stats">
-              <div className="hero__stat">
-                <strong>+15</strong>
-                <span>Projets livrés</span>
-              </div>
-              <div className="hero__stat-divider"></div>
-              <div className="hero__stat">
-                <strong>7j</strong>
-                <span>Livraison express</span>
-              </div>
-              <div className="hero__stat-divider"></div>
-              <div className="hero__stat">
-                <strong>98%</strong>
-                <span>Satisfaction</span>
+            {/* Contacts */}
+            <div className="hero__contacts">
+              <a href="tel:+33600000000" className="hero__contact-item">
+                <span className="hero__contact-icon">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </span>
+                <span>+33 7 83 05 24 12</span>
+              </a>
+              <a
+                href="https://www.instagram.com/supa_c0/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero__contact-item"
+              >
+                <span className="hero__contact-icon">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                </span>
+                <span>@supa_c0</span>
+              </a>
+              <div className="hero__contact-item hero__contact-item--location">
+                <span className="hero__contact-icon">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </span>
+                <span>Pays de Gex &amp; Genève</span>
               </div>
             </div>
           </div>
