@@ -72,7 +72,7 @@ const Hero = memo(() => {
       {/* Logos flottants en arrière-plan */}
       <div className="hero__bg-logos">
         <img
-          src="/android-chrome-512x512.png"
+          src="/logo2026.png"
           alt=""
           width="300"
           height="300"
@@ -81,7 +81,7 @@ const Hero = memo(() => {
           className="hero__bg-logo hero__bg-logo--1"
         />
         <img
-          src="/android-chrome-512x512.png"
+          src="/logo2026.png"
           alt=""
           width="250"
           height="250"
@@ -90,7 +90,7 @@ const Hero = memo(() => {
           className="hero__bg-logo hero__bg-logo--2"
         />
         <img
-          src="/newlogo.png"
+          src="/logo2026.png"
           alt=""
           width="200"
           height="60"
@@ -99,7 +99,7 @@ const Hero = memo(() => {
           className="hero__bg-logo hero__bg-logo--3"
         />
         <img
-          src="/newlogo.png"
+          src="/logo2026.png"
           alt=""
           width="200"
           height="60"

@@ -112,7 +112,7 @@ const Navbar = () => {
       >
         <div className="navbar__container">
           <a href="/" className="navbar__logo">
-            <img src="/newlogo.png" alt="logo" loading="eager" />
+            <img src="/logo2026.png" alt="logo" loading="eager" />
           </a>
 
           <div className="navbar__menu">

@@ -64,13 +64,13 @@
     pointer-events: none;
 
     @media (prefers-reduced-motion: no-preference) {
-      animation: float 20s ease-in-out infinite;
+      animation: float 10s ease-in-out infinite;
     }
 
     &--1 {
       top: 10%;
       right: 5%;
-      width: 300px;
+      width: 250px;
       height: auto;
       animation-delay: 0s;
 
@@ -80,15 +80,15 @@
 
       @include mobile {
         width: 150px;
-        top: 5%;
-        right: -10%;
+        top: 40%;
+        right: 10%;
       }
     }
 
     &--2 {
-      bottom: 15%;
-      left: 8%;
-      width: 250px;
+      bottom: 1%;
+      left: 15%;
+      width: 200px;
       height: auto;
       animation-delay: -7s;
 
@@ -98,16 +98,16 @@
 
       @include mobile {
         width: 120px;
-        bottom: 10%;
-        left: -5%;
+        bottom: 1%;
+        left: 15%;
       }
     }
 
     &--3 {
-      top: 50%;
-      left: 65%;
+      bottom: 10%;
+      right: 5%;
       transform: translate(-50%, -50%);
-      width: 400px;
+      width: 150px;
       height: auto;
       opacity: 0.2;
       animation-delay: -14s;
@@ -118,12 +118,14 @@
 
       @include mobile {
         width: 200px;
+        bottom: 20%;
+        width: 100px;
       }
     }
     &--4 {
-      top: 20%;
-      left: 10%;
-      width: 200px;
+      top: 25%;
+      left: 20%;
+      width: 100px;
       height: auto;
       animation-delay: -10s;
 
