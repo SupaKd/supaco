@@ -1,0 +1,166 @@
+// ============================================
+// Announcement Banner
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+$banner-height: 44px;
+
+.announcement-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-sticky + 1;
+  height: $banner-height;
+  display: flex;
+  align-items: center;
+  padding: 0 $space-md;
+  background: $color-accent-gradient;
+  animation: bannerSlideDown 0.4s ease-out;
+  overflow: hidden;
+
+  // ---- Desktop : layout centré ----
+  &__desktop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-md;
+    flex: 1;
+    min-width: 0;
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  // ---- Mobile / Tablette : badge + ticker ----
+  &__mobile {
+    display: none;
+    align-items: center;
+    gap: $space-sm;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+
+    @include tablet {
+      display: flex;
+    }
+  }
+
+  // Badge partagé
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 2px $space-sm;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: $radius-full;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  // Texte desktop
+  &__text {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    white-space: nowrap;
+
+    strong {
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  // Lien partagé
+  &__link {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+    transition: opacity $transition-fast;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  // ---- Ticker (mobile/tablette) ----
+  &__ticker {
+    overflow: hidden;
+    flex: 1;
+    min-width: 0;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+  }
+
+  &__ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 18s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &__ticker-item {
+    font-size: $font-size-xs;
+    color: rgba(255, 255, 255, 0.95);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  // ---- Bouton fermer ----
+  &__close {
+    @include flex-center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: background $transition-fast;
+    margin-left: $space-sm;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+@keyframes bannerSlideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    // Défile exactement la largeur du premier item (50% du track dupliqué)
+    transform: translateX(-50%);
+  }
+}

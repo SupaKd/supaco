@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Google Analytics 4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-GTM-WF8X5CFT"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-GTM-WF8X5CFT", {
+        page_title: document.title,
+        page_location: window.location.href,
+        anonymize_ip: true,
+        cookie_flags: "SameSite=None;Secure",
+      });
+    </script>
+
+    <!-- Preconnect pour optimiser le chargement -->
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://api.fontshare.com" />
+
+    <!-- Preload fonts critiques pour éviter le FOUT -->
+    <link
+      rel="preload"
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap"
+      />
+    </noscript>
+
+    <!-- Favicon Multi-format -->
+    <link rel="icon" type="image/svg+xml" href="/supaco.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Viewport & Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#00d4ff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- SEO Primary Meta Tags -->
+    <title>Supaco Digital | Création de Sites Web Pro en 72h - Dès 500€ | Pays de Gex &amp; Genève</title>
+    <meta name="title" content="Supaco Digital | Création de Sites Web Pro en 72h - Dès 500€ | Pays de Gex &amp; Genève" />
+    <meta
+      name="description"
+      content="Agence web à Saint-Genis-Pouilly (Pays de Gex) spécialisée dans la création de sites vitrines, e-commerce et applications web. Livraison en 72h, prix transparents dès 500€. Clients dans l'Ain et à Genève. Devis gratuit !"
+    />
+    <meta
+      name="keywords"
+      content="création site web, agence web Pays de Gex, site vitrine, e-commerce, développeur web Genève, site internet professionnel, création site 72h, webdesign Saint-Genis-Pouilly, SEO, application web, Gex, Ferney-Voltaire, Saint-Genis-Pouilly, Divonne-les-Bains, agence web Ain, création site Genève, développeur web Ain 01, agence digitale frontalier"
+    />
+    <meta name="author" content="Supaco Digital" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <link rel="canonical" href="https://supaco-digital.com/" />
+
+    <!-- Ciblage linguistique et géographique -->
+    <link rel="alternate" hreflang="fr-FR" href="https://supaco-digital.com/" />
+    <link rel="alternate" hreflang="fr-CH" href="https://supaco-digital.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://supaco-digital.com/" />
+
+    <!-- Géolocalisation -->
+    <meta name="language" content="French" />
+    <meta name="geo.region" content="FR-01" />
+    <meta name="geo.placename" content="Saint-Genis-Pouilly, Pays de Gex" />
+    <meta name="geo.position" content="46.2431;6.0239" />
+    <meta name="ICBM" content="46.2431, 6.0239" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://supaco-digital.com/" />
+    <meta property="og:title" content="Supaco Digital | Création de Sites Web Pro en 72h - Dès 500€" />
+    <meta
+      property="og:description"
+      content="Agence web à Saint-Genis-Pouilly (Pays de Gex) : sites vitrines, e-commerce et applications web. Livraison rapide, prix transparents. Clients dans l'Ain et à Genève. Devis gratuit !"
+    />
+    <meta property="og:image" content="https://supaco-digital.com/newlogo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Supaco Digital - Création de sites web professionnels" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Supaco Digital" />
+
+    <!-- Structured Data - LocalBusiness -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://supaco-digital.com/#organization",
+        "name": "Supaco Digital",
+        "alternateName": "Supaco",
+        "description": "Agence web spécialisée dans la création de sites web professionnels livrés en 72h. Sites vitrines, e-commerce et applications web sur-mesure. Basée à Saint-Genis-Pouilly, nous intervenons dans le Pays de Gex, l'Ain et la région de Genève.",
+        "url": "https://supaco-digital.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://supaco-digital.com/newlogo.png",
+          "width": 180,
+          "height": 60
+        },
+        "image": "https://supaco-digital.com/newlogo.png",
+        "email": "contact@supaco-digital.com",
+        "telephone": "+33783052412",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Saint-Genis-Pouilly",
+          "addressLocality": "Saint-Genis-Pouilly",
+          "postalCode": "01630",
+          "addressRegion": "Ain",
+          "addressCountry": "FR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 46.2431,
+          "longitude": 6.0239
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Saint-Genis-Pouilly" },
+          { "@type": "City", "name": "Gex" },
+          { "@type": "City", "name": "Ferney-Voltaire" },
+          { "@type": "City", "name": "Divonne-les-Bains" },
+          { "@type": "City", "name": "Genève" },
+          { "@type": "AdministrativeArea", "name": "Canton de Genève" },
+          { "@type": "AdministrativeArea", "name": "Pays de Gex" },
+          { "@type": "AdministrativeArea", "name": "Ain" }
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+33783052412",
+          "contactType": "customer service",
+          "areaServed": ["FR", "CH"],
+          "availableLanguage": "French"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        "priceRange": "€€",
+        "currenciesAccepted": "EUR, CHF",
+        "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+        "sameAs": [
+          "https://www.instagram.com/supacodigital",
+          "https://www.linkedin.com/company/supaco-digital"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Services Web",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Site Vitrine",
+                "description": "Site web professionnel one-page responsive avec design moderne, livraison en 72h"
+              },
+              "price": "500",
+              "priceCurrency": "EUR"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Site Professionnel",
+                "description": "Site multi-pages avec design premium et blog intégré, livraison en 5 jours"
+              },
+              "price": "1200",
+              "priceCurrency": "EUR"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "E-Commerce",
+                "description": "Boutique en ligne complète avec paiement sécurisé, livraison en 10 jours"
+              },
+              "price": "2500",
+              "priceCurrency": "EUR"
+            }
+          ]
+        }
+      }
+    </script>
+
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Supaco Digital",
+        "url": "https://supaco-digital.com",
+        "description": "Agence web Pays de Gex — création de sites web pro en 72h dès 500€",
+        "inLanguage": "fr-FR",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Supaco Digital",
+          "@id": "https://supaco-digital.com/#organization"
+        }
+      }
+    </script>
+
+    <!-- Structured Data - FAQ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "En combien de temps est livré mon site web ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nous livrons votre site web en 72 heures pour les sites vitrines essentiels, 5 jours pour les sites professionnels multi-pages, et 10 jours pour les boutiques e-commerce complètes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quel est le prix d'un site web ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nos tarifs commencent à 500€ pour un site vitrine one-page, 1200€ pour un site professionnel multi-pages, et 2500€ pour une boutique e-commerce complète. Tous nos prix sont transparents et sans frais cachés."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Dans quelles zones intervenez-vous ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Basés à Saint-Genis-Pouilly (01630), nous intervenons dans tout le Pays de Gex (Gex, Ferney-Voltaire, Divonne-les-Bains), dans le département de l'Ain, et dans la région de Genève et du Canton de Genève. Nous travaillons également à distance avec des clients dans toute la France et en Suisse."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Créez-vous des sites web pour des clients à Genève ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui, nous créons des sites web pour des entreprises et indépendants à Genève et dans le Canton de Genève. Étant situés à Saint-Genis-Pouilly, à quelques minutes de la frontière, nous pouvons intervenir facilement côté suisse."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Proposez-vous le référencement SEO avec la création de site ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui, chaque site livré est optimisé pour le référencement naturel (SEO) : balises meta, structure sémantique, performance, schema.org et optimisation locale pour votre zone géographique (Pays de Gex, Ain, Genève)."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Structured Data - BreadcrumbList -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://supaco-digital.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://supaco-digital.com/#services" },
+          { "@type": "ListItem", "position": 3, "name": "Portfolio", "item": "https://supaco-digital.com/#projects" },
+          { "@type": "ListItem", "position": 4, "name": "Tarifs", "item": "https://supaco-digital.com/#pricing" },
+          { "@type": "ListItem", "position": 5, "name": "Contact", "item": "https://supaco-digital.com/#contact" }
+        ]
+      }
+    </script>
+
+    <!-- Inline critical CSS pour le loader -->
+    <style>
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0a0e1a;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+      #app-loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loader-spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(0, 212, 255, 0.1);
+        border-top-color: #00d4ff;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loader affiché pendant le chargement de React -->
+    <div id="app-loader">
+      <div class="loader-spinner"></div>
+    </div>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Noscript fallback pour le SEO -->
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: sans-serif">
+        <h1>Supaco Digital - Création de Sites Web Professionnels à Saint-Genis-Pouilly</h1>
+        <p>Agence web basée à Saint-Genis-Pouilly (Pays de Gex, Ain 01630) spécialisée dans la création de sites vitrines, e-commerce et applications web. Clients dans le Pays de Gex, l'Ain et la région de Genève.</p>
+        <p>Livraison en 72h — Prix dès 500€ — Devis gratuit</p>
+        <p>Contact : <a href="mailto:contact@supaco-digital.com">contact@supaco-digital.com</a> — <a href="tel:+33783052412">07 83 05 24 12</a></p>
+      </div>
+    </noscript>
+  </body>
+</html>

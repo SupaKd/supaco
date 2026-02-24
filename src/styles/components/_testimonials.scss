@@ -1,0 +1,154 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.testimonials {
+  position: relative;
+  padding: $space-5xl 0;
+  background: var(--color-bg-primary);
+
+  &__container {
+    @include container;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: $space-md;
+  }
+
+  &__title {
+    @include heading-lg;
+    color: var(--color-text-primary);
+    margin-bottom: $space-lg;
+  }
+
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto;
+    @include body-text;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+
+  &__stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: $space-lg;
+  }
+
+  &__star {
+    &--filled {
+      color: #f59e0b;
+    }
+
+    &--empty {
+      color: var(--color-text-muted);
+      opacity: 0.3;
+    }
+  }
+
+  &__card {
+    @include card;
+    padding: $space-2xl;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      transform: translateY(-8px);
+      border-color: rgba($color-accent-primary, 0.3);
+    }
+
+    &-text {
+      flex: 1;
+      font-size: $font-size-base;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      font-style: italic;
+      margin-bottom: $space-xl;
+    }
+
+    &-author {
+      display: flex;
+      align-items: center;
+      gap: $space-md;
+      padding-top: $space-lg;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    &-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: $radius-full;
+      background: $color-accent-gradient;
+      @include flex-center;
+      font-family: $font-display;
+      font-weight: 600;
+      font-size: $font-size-lg;
+      color: var(--color-bg-primary);
+      flex-shrink: 0;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    &-name {
+      font-family: $font-display;
+      font-weight: 500;
+      font-size: $font-size-base;
+      color: var(--color-text-primary);
+    }
+
+    &-role {
+      font-size: $font-size-sm;
+      color: var(--color-text-muted);
+    }
+  }
+
+  &__google {
+    margin-top: $space-3xl;
+    text-align: center;
+
+    &-link {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-md;
+      padding: $space-md $space-xl;
+      @include glass;
+      border-radius: $radius-full;
+      font-family: $font-body;
+      font-size: $font-size-base;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      text-decoration: none;
+      transition: all $transition-base;
+
+      &:hover {
+        background: var(--glass-hover);
+        border-color: var(--color-accent-primary);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}

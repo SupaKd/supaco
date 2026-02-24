@@ -1,0 +1,67 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.stats {
+  position: relative;
+  padding: $space-3xl 0;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  margin: 0 1.5rem 0rem 1.5rem;
+  border-radius: 4rem 4rem 0 0;
+
+  &__container {
+    @include container;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-xl;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $space-lg;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__item {
+    text-align: center;
+    padding: $space-xl $space-md;
+
+    &-icon {
+      @include flex-center;
+      width: 56px;
+      height: 56px;
+      margin: 0 auto $space-lg;
+      border-radius: $radius-full;
+      background: color-mix(in srgb, var(--color-accent-primary) 10%, transparent);
+      color: var(--color-accent-primary);
+    }
+
+    &-value {
+      font-family: $font-display;
+      font-size: $font-size-4xl;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: $space-sm;
+
+      @include tablet {
+        font-size: $font-size-3xl;
+      }
+    }
+
+    &-label {
+      font-size: $font-size-sm;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+  }
+}

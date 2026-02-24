@@ -1,0 +1,381 @@
+// ============================================
+// Projects Section - HORIZONTAL LIST LAYOUT
+// ============================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.projects {
+  position: relative;
+  padding: $space-5xl 0;
+  background: var(--color-bg-primary);
+  contain: content;
+
+  &__container {
+    @include container;
+  }
+
+  // ---- Header ----
+  &__header {
+    @include flex-between;
+    margin-bottom: $space-4xl;
+
+    @include tablet {
+      flex-direction: column;
+      text-align: center;
+      gap: $space-xl;
+    }
+
+    @include mobile {
+      overflow: hidden;
+    }
+  }
+
+  &__header-content {
+    max-width: 600px;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: $space-md;
+  }
+
+  &__title {
+    @include heading-lg;
+    color: var(--color-text-primary);
+  }
+
+  // ---- Filters ----
+  &__filter {
+    display: flex;
+    gap: $space-sm;
+
+    @include mobile {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      // Empêcher le wrap et forcer les éléments à rester sur une ligne
+      flex-wrap: nowrap;
+
+      // Padding pour que les boutons ne soient pas collés aux bords
+      padding: $space-xs $space-lg;
+      margin: 0 calc(-1 * $space-lg);
+    }
+  }
+
+  &__filter-btn {
+    padding: $space-sm $space-lg;
+    @include glass;
+    border-radius: $radius-full;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all $transition-fast;
+
+    &:hover,
+    &--active {
+      background: var(--color-accent-primary);
+      color: var(--color-bg-primary);
+      border-color: var(--color-accent-primary);
+    }
+
+    @include mobile {
+      // Empêcher le rétrécissement des boutons
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+  }
+
+  // ---- List Container ----
+  &__list {
+    display: flex;
+    flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      gap: $space-lg;
+      padding-bottom: $space-lg;
+      // Padding symétrique pour centrer la première et la dernière card
+      margin: 0;
+      padding-left: calc(50vw - 150px);
+      padding-right: calc(50vw - 150px);
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  // ---- List Item ----
+  &__item {
+    display: grid;
+    grid-template-columns: 40px 200px 1fr auto;
+    align-items: center;
+    gap: $space-2xl;
+    padding: $space-xl 0;
+    border-bottom: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: background $transition-base, padding $transition-base;
+    will-change: transform;
+
+    &:first-child {
+      border-top: 1px solid var(--glass-border);
+    }
+
+    &:hover {
+      background: var(--glass-bg);
+      padding-left: $space-lg;
+      padding-right: $space-lg;
+
+      .projects__item-image {
+        transform: scale(1.06);
+      }
+
+      .projects__item-overlay {
+        opacity: 1;
+      }
+
+      .projects__item-title {
+        color: var(--color-accent-primary);
+      }
+
+      .projects__item-arrow {
+        background: var(--color-accent-primary);
+        border-color: var(--color-accent-primary);
+      }
+
+      .projects__item-arrow-icon {
+        color: var(--color-bg-primary);
+      }
+
+      .projects__item-number {
+        color: var(--color-accent-primary);
+      }
+    }
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: $space-md;
+      padding: 0;
+      border: 1px solid var(--glass-border);
+      border-radius: $radius-lg;
+      background: var(--glass-bg);
+      min-width: 280px;
+      max-width: 300px;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      overflow: hidden;
+
+      &:first-child {
+        border-top: 1px solid var(--glass-border);
+      }
+
+      &:hover {
+        padding-left: 0;
+        padding-right: 0;
+        border-color: rgba($color-accent-primary, 0.3);
+      }
+    }
+  }
+
+  // ---- Numéro ----
+  &__item-number {
+    font-family: $font-display;
+    font-size: $font-size-sm;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    transition: color $transition-base;
+    flex-shrink: 0;
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  // ---- Image Wrapper ----
+  &__item-image-wrapper {
+    position: relative;
+    width: 200px;
+    aspect-ratio: 16 / 10;
+    border-radius: $radius-md;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    @include tablet {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 0;
+    }
+  }
+
+  // ---- Overlay hover ----
+  &__item-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    @include flex-center;
+    opacity: 0;
+    transition: opacity $transition-base;
+    backdrop-filter: blur(2px);
+    border-radius: $radius-md;
+
+    @include tablet {
+      border-radius: 0;
+    }
+  }
+
+  &__item-overlay-text {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  // ---- Image Placeholder ----
+  &__item-placeholder {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg-tertiary);
+    border-radius: $radius-md;
+    animation: pulse-bg 1.5s ease-in-out infinite;
+  }
+
+  // ---- Image ----
+  &__item-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-slow;
+    will-change: transform;
+    opacity: 0;
+
+    &--loaded {
+      opacity: 1;
+      transition: transform $transition-slow, opacity 0.3s ease;
+    }
+  }
+
+  // ---- Content ----
+  &__item-content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+    min-width: 0;
+
+    @include tablet {
+      padding: 0 $space-lg;
+    }
+  }
+
+  &__item-tags {
+    display: flex;
+    gap: $space-sm;
+    flex-wrap: wrap;
+  }
+
+  &__item-tag {
+    padding: $space-xs $space-sm;
+    background: rgba($color-accent-primary, 0.1);
+    border-radius: $radius-sm;
+    font-size: $font-size-xs;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__item-title {
+    font-family: $font-display;
+    font-size: $font-size-2xl;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    transition: color $transition-fast;
+
+    @include tablet {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__item-description {
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    max-width: 500px;
+
+    @include tablet {
+      max-width: 100%;
+    }
+  }
+
+  // ---- Arrow ----
+  &__item-arrow {
+    @include flex-center;
+    width: 44px;
+    height: 44px;
+    @include glass;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all $transition-base;
+
+    @include tablet {
+      align-self: flex-end;
+      margin: 0 $space-lg $space-lg;
+    }
+  }
+
+  &__item-arrow-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-secondary);
+    transition: color $transition-fast;
+  }
+
+  // ---- Show More Button ----
+  &__show-more {
+    text-align: center;
+    margin-top: $space-2xl;
+
+    @include tablet {
+      display: none;
+    }
+
+    &-btn {
+      @include button-secondary;
+    }
+  }
+}
+
+@keyframes pulse-bg {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

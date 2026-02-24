@@ -1,0 +1,288 @@
+// ============================================
+// Navbar Styles - OPTIMIZED
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.navbar {
+  position: fixed;
+  top: var(--banner-height, 0px);
+  left: 0;
+  right: 0;
+  z-index: $z-sticky;
+  padding: $space-lg 0;
+  transition: padding $transition-base, background-color $transition-base;
+  // Optimisation: force GPU layer
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform 0.35s ease, padding $transition-base, background-color $transition-base;
+  animation: slideDown 0.4s ease-out;
+
+  &--hidden {
+    transform: translateY(-100%);
+  }
+
+  &--scrolled {
+    padding: 0;
+    background: var(--navbar-scrolled-bg);
+    border-bottom: 1px solid var(--glass-border);
+
+    // Backdrop-filter uniquement sur desktop (coûteux en GPU)
+    @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: var(--navbar-scrolled-backdrop);
+    }
+  }
+
+  &__container {
+    @include container;
+    @include flex-between;
+  }
+
+  img {
+    width: 90px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: $space-2xl;
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  &__link {
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    @include animated-underline;
+    transition: color $transition-base;
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+
+    &--active {
+      color: var(--color-accent-primary);
+
+      &::after {
+        transform: scaleX(1) !important;
+        background: var(--color-accent-primary);
+      }
+    }
+  }
+
+  &__cta {
+    @include button-primary;
+    padding: $space-sm $space-lg;
+    font-size: $font-size-sm;
+  }
+
+  &__theme-toggle {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    @include glass;
+    border-radius: 50%;
+    color: var(--color-text-primary);
+    transition: all $transition-base;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--glass-hover);
+      color: var(--color-accent-primary);
+    }
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  &__mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: $space-sm;
+    cursor: pointer;
+
+    @include tablet {
+      display: flex;
+    }
+
+    span {
+      width: 24px;
+      height: 2px;
+      background: var(--color-text-primary);
+      transition: all $transition-base;
+    }
+
+    &--active {
+      span:first-child {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:last-child {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+  }
+
+  // Mobile Overlay (fond sombre cliquable)
+  &__mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-modal - 1;
+    animation: fadeIn 0.3s ease-out;
+
+    @include tablet {
+      display: block;
+    }
+  }
+
+  // Mobile Menu - Style slide-in depuis la droite
+  &__mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    max-width: 85vw;
+    background: var(--color-bg-primary);
+    flex-direction: column;
+    padding: $space-xl;
+    z-index: $z-modal;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    animation: slideInRight 0.3s ease-out;
+
+    @include tablet {
+      &--open {
+        display: flex;
+      }
+    }
+  }
+
+  // Bouton fermer
+  &__mobile-close {
+    position: absolute;
+    top: $space-lg;
+    right: $space-lg;
+    @include flex-center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background: var(--glass-hover);
+    }
+  }
+
+  // Container des liens
+  &__mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    margin-top: $space-3xl;
+    flex: 1;
+
+    .navbar__link {
+      font-size: $font-size-lg;
+      color: var(--color-text-primary);
+      padding: $space-sm 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+  }
+
+  // CTA dans le menu mobile
+  &__mobile-menu .navbar__cta {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: $space-md;
+  }
+
+  // Toggle thème dans le menu mobile
+  &__mobile-theme {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: $radius-md;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: $font-size-sm;
+    transition: all $transition-base;
+
+    &:hover {
+      background: var(--glass-hover);
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}

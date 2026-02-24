@@ -1,0 +1,174 @@
+// ============================================
+// Footer
+// ============================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.footer {
+  position: relative;
+  padding: $space-4xl 0 $space-xl;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--glass-border);
+  margin: 0 1.5rem 1.5rem 1.5rem;
+  border-radius: 0 0 4rem 4rem;
+
+  &__container {
+    @include container;
+  }
+
+  &__main {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: $space-4xl;
+    padding-bottom: $space-4xl;
+    border-bottom: 1px solid var(--glass-border);
+
+    @include tablet {
+      grid-template-columns: 1fr 1fr;
+      gap: $space-2xl;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__brand {
+    @include tablet {
+      grid-column: span 2;
+    }
+
+    @include mobile {
+      grid-column: span 1;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-family: $font-display;
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: $space-lg;
+
+    &-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--color-accent-primary);
+      border-radius: 50%;
+    }
+  }
+
+  &__tagline {
+    @include body-text;
+    font-size: $font-size-base;
+    max-width: 300px;
+    margin-bottom: $space-xl;
+  }
+
+  &__newsletter {
+    display: flex;
+    gap: $space-sm;
+
+    @include mobile {
+      flex-direction: column;
+    }
+
+    &-input {
+      flex: 1;
+      padding: $space-md $space-lg;
+      @include glass;
+      border-radius: $radius-full;
+      font-size: $font-size-sm;
+      color: var(--color-text-primary);
+      min-width: 200px;
+
+      &:focus {
+        border-color: var(--color-accent-primary);
+      }
+    }
+
+    &-btn {
+      @include button-primary;
+      padding: $space-md $space-lg;
+      white-space: nowrap;
+    }
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__column-title {
+    font-family: $font-display;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: $space-sm;
+  }
+
+  &__link {
+    font-size: $font-size-sm;
+    color: var(--color-text-muted);
+    transition: color $transition-fast;
+    @include animated-underline;
+    width: fit-content;
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+
+    &--btn {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+  }
+
+  // Bottom
+  &__bottom {
+    @include flex-between;
+    padding-top: $space-xl;
+
+    @include tablet {
+      flex-direction: column;
+      gap: $space-lg;
+      text-align: center;
+    }
+  }
+
+  &__copyright {
+    font-size: $font-size-sm;
+    color: var(--color-text-muted);
+  }
+
+  &__bottom-links {
+    display: flex;
+    gap: $space-xl;
+
+    @include mobile {
+      flex-direction: column;
+      gap: $space-md;
+    }
+  }
+
+  &__bottom-link {
+    font-size: $font-size-sm;
+    color: var(--color-text-muted);
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-accent-primary);
+    }
+  }
+}

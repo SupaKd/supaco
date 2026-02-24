@@ -1,0 +1,722 @@
+// ============================================
+// SUPACO DIGITAL - Responsive Section
+// ============================================
+
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// ---- Section ----
+
+.responsive {
+  position: relative;
+  padding: $space-5xl 0;
+  background: var(--color-bg-primary);
+  overflow: hidden;
+
+  @include grid-pattern;
+
+  @include tablet {
+    padding: $space-4xl 0;
+  }
+
+  &__container {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: $space-5xl;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: $space-3xl;
+    }
+  }
+
+  &__visual {
+    @include flex-center;
+    position: relative;
+  }
+
+  &__desktop-only {
+    display: block;
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__mobile-only {
+    display: none;
+    @include mobile {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &__content {
+    @include flex-column;
+    gap: $space-xl;
+  }
+
+  &__label {
+    display: inline-block;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-primary);
+    padding: $space-xs $space-md;
+    border: 1px solid
+      color-mix(in srgb, var(--color-accent-primary) 20%, transparent);
+    border-radius: $radius-full;
+    background: color-mix(in srgb, var(--color-accent-primary) 5%, transparent);
+    width: fit-content;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: $font-size-4xl;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+    margin: 0;
+
+    @include tablet {
+      font-size: $font-size-3xl;
+      text-align: center;
+    }
+  }
+
+  &__description {
+    @include body-text;
+    margin: 0;
+    max-width: 480px;
+
+    @include tablet {
+      text-align: center;
+    }
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    @include flex-column;
+    gap: $space-md;
+  }
+
+  &__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-md;
+    font-family: $font-body;
+    font-size: $font-size-base;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  &__feature-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-accent-primary);
+    margin-top: 2px;
+  }
+}
+
+// ---- Téléphone CSS ----
+
+.responsive__phone {
+  position: relative;
+  width: 260px;
+  filter: drop-shadow(
+      0 40px 80px
+        color-mix(in srgb, var(--color-accent-primary) 15%, transparent)
+    )
+    drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+
+  @include tablet {
+    width: 220px;
+    margin: 0 auto;
+  }
+}
+
+.responsive__phone-frame {
+  position: relative;
+  width: 100%;
+  padding-bottom: 210%;
+  background: #1a1a1e;
+  border-radius: 44px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08);
+  overflow: visible;
+}
+
+// Boutons latéraux
+.responsive__phone-btn {
+  position: absolute;
+  background: #2a2a2e;
+  border-radius: 2px;
+
+  &--vol-up {
+    left: -4px;
+    top: 22%;
+    width: 3px;
+    height: 7%;
+  }
+  &--vol-down {
+    left: -4px;
+    top: 32%;
+    width: 3px;
+    height: 7%;
+  }
+  &--power {
+    right: -4px;
+    top: 25%;
+    width: 3px;
+    height: 10%;
+  }
+}
+
+// Écran
+.responsive__phone-screen {
+  position: absolute;
+  inset: 8px;
+  border-radius: 38px;
+  background: #0a0a0a;
+  overflow: hidden;
+  @include flex-column;
+}
+
+// Notch
+.responsive__phone-notch {
+  width: 100px;
+  height: 28px;
+  background: #1a1a1e;
+  border-radius: 0 0 20px 20px;
+  margin: 0 auto;
+  flex-shrink: 0;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #2a2a2e;
+    border-radius: 50%;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    box-shadow: 0 0 4px
+      color-mix(in srgb, var(--color-accent-primary) 40%, transparent);
+  }
+}
+
+// ---- Navbar interne cliquable ----
+
+.responsive__ui-navbar {
+  @include flex-between;
+  padding: 6px 10px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.responsive__ui-logo {
+  height: 16px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.responsive__ui-nav-links {
+  display: flex;
+  gap: 4px;
+}
+
+.responsive__ui-nav-link {
+  font-family: $font-body;
+  font-size: 7px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  background: none;
+  border: none;
+  padding: 3px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color $transition-fast, background $transition-fast;
+  line-height: 1;
+
+  &--active {
+    color: var(--color-accent-primary);
+    background: color-mix(
+      in srgb,
+      var(--color-accent-primary) 10%,
+      transparent
+    );
+  }
+
+  &:hover:not(&--active) {
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+// ---- Zone de contenu (slide) ----
+
+.responsive__ui-content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.responsive__ui-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+// ---- Dots ----
+
+.responsive__ui-bottombar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+.responsive__ui-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &--active {
+    width: 16px;
+    border-radius: $radius-full;
+    background: var(--color-accent-primary);
+  }
+}
+
+// ---- Écran 1 : Accueil ----
+
+.phone-screen__home {
+  @include flex-column;
+  gap: 8px;
+  padding: 10px 10px 6px;
+  height: 100%;
+
+  // Bloc hero
+  &-hero {
+    @include flex-column;
+    gap: 5px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  &-badge {
+    width: 52px;
+    height: 5px;
+    background: color-mix(
+      in srgb,
+      var(--color-accent-primary) 40%,
+      transparent
+    );
+    border-radius: $radius-full;
+  }
+
+  &-title {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: $radius-full;
+
+    &--short {
+      width: 58%;
+      background: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &-sub {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: $radius-full;
+    width: 80%;
+  }
+
+  &-cta {
+    width: fit-content;
+    font-family: $font-body;
+    font-size: 7px;
+    font-weight: 700;
+    color: var(--color-bg-primary);
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-primary) 0%,
+      var(--color-accent-secondary) 100%
+    );
+    padding: 4px 10px;
+    border-radius: $radius-full;
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  // Stats
+  &-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  &-stat {
+    @include flex-column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 4px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+  }
+
+  &-stat-value {
+    font-family: $font-display;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--color-accent-primary);
+    line-height: 1;
+  }
+
+  &-stat-label {
+    font-family: $font-body;
+    font-size: 6px;
+    color: rgba(255, 255, 255, 0.3);
+    line-height: 1;
+  }
+
+  // Label section
+  &-section-label {
+    font-family: $font-body;
+    font-size: 7px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+
+  // Projets
+  &-projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &-project {
+    @include flex-column;
+    justify-content: flex-end;
+    gap: 4px;
+    padding: 7px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+    }
+
+    &--cyan {
+      background: color-mix(
+        in srgb,
+        var(--color-accent-primary) 7%,
+        transparent
+      );
+      border-color: color-mix(
+        in srgb,
+        var(--color-accent-primary) 15%,
+        transparent
+      );
+      &::before {
+        background: linear-gradient(
+          135deg,
+          var(--color-accent-primary),
+          transparent
+        );
+      }
+    }
+
+    &--blue {
+      background: color-mix(
+        in srgb,
+        var(--color-accent-secondary) 7%,
+        transparent
+      );
+      border-color: color-mix(
+        in srgb,
+        var(--color-accent-secondary) 15%,
+        transparent
+      );
+      &::before {
+        background: linear-gradient(
+          135deg,
+          var(--color-accent-secondary),
+          transparent
+        );
+      }
+    }
+  }
+
+  &-project-tag {
+    font-family: $font-body;
+    font-size: 6px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1;
+  }
+
+  &-project-line {
+    height: 4px;
+    width: 70%;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: $radius-full;
+  }
+}
+
+// ---- Écran 2 : Services ----
+
+.phone-screen__services {
+  @include flex-column;
+  gap: 6px;
+  padding: 10px 10px 6px;
+  height: 100%;
+}
+
+.phone-screen__section-label {
+  font-family: $font-body;
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.phone-screen__service-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  transition: background $transition-fast, border-color $transition-fast;
+  cursor: default;
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-accent-primary) 5%, transparent);
+    border-color: color-mix(
+      in srgb,
+      var(--color-accent-primary) 15%,
+      transparent
+    );
+  }
+}
+
+.phone-screen__service-icon {
+  width: 20px;
+  height: 20px;
+  background: color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.phone-screen__service-text {
+  @include flex-column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.phone-screen__service-name {
+  font-family: $font-body;
+  font-size: 8px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.phone-screen__service-line {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: $radius-full;
+
+  &--short {
+    width: 55%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.phone-screen__service-arrow {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+// ---- Écran 3 : Contact ----
+
+.phone-screen__contact {
+  @include flex-column;
+  gap: 8px;
+  padding: 10px 10px 6px;
+  height: 100%;
+}
+
+.phone-screen__input {
+  @include flex-column;
+  gap: 3px;
+}
+
+.phone-screen__input-label {
+  font-family: $font-body;
+  font-size: 7px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.phone-screen__input-field {
+  height: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+
+  &--textarea {
+    height: 36px;
+  }
+}
+
+.phone-screen__contact-btn {
+  font-family: $font-body;
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--color-bg-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-primary) 0%,
+    var(--color-accent-secondary) 100%
+  );
+  padding: 6px 0;
+  border-radius: $radius-full;
+  text-align: center;
+  margin-top: 2px;
+}
+
+// ---- Reflet lumineux ----
+
+.responsive__phone-glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-accent-primary) 12%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+// ---- Illustration statique mobile ----
+
+.responsive__mobile-illustration {
+  width: 220px;
+  @include flex-center;
+}
+
+.responsive__mobile-devices {
+  display: flex;
+  align-items: flex-end;
+  gap: $space-md;
+}
+
+.responsive__mobile-device {
+  background: #1a1a1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 40px color-mix(in srgb, var(--color-accent-primary) 8%, transparent);
+
+  &--phone {
+    width: 72px;
+    height: 120px;
+    border-radius: 14px;
+  }
+
+  &--tablet {
+    width: 110px;
+    height: 90px;
+    border-radius: 10px;
+  }
+}
+
+.responsive__mobile-device-screen {
+  @include flex-column;
+  gap: 6px;
+  padding: 10px 8px;
+  height: 100%;
+  background: #0a0a0a;
+}
+
+.responsive__mobile-device-line {
+  height: 5px;
+  background: color-mix(in srgb, var(--color-accent-primary) 30%, transparent);
+  border-radius: $radius-full;
+
+  &--short {
+    width: 70%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  &--shorter {
+    width: 45%;
+    background: rgba(255, 255, 255, 0.07);
+  }
+}
+
+// ---- Responsive tablet ----
+
+@include tablet {
+  .responsive {
+    &__visual {
+      order: -1;
+    }
+
+    &__content {
+      align-items: center;
+      text-align: center;
+    }
+
+    &__feature {
+      text-align: left;
+    }
+  }
+}

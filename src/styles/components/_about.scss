@@ -1,0 +1,204 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+.about {
+  position: relative;
+  padding: $space-5xl 0;
+  background: var(--color-bg-secondary);
+  overflow: hidden;
+
+  // Orbe décoratif en arrière-plan
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(
+      circle,
+      rgba($color-accent-primary, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  &__container {
+    @include container;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: $space-4xl;
+    align-items: center;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: $space-3xl;
+    }
+  }
+
+  // ---- Colonne photo ----
+  &__photo-col {
+    @include tablet {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &__photo-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+
+    @include tablet {
+      max-width: 280px;
+    }
+  }
+
+  &__photo-placeholder {
+    @include glass;
+    aspect-ratio: 1 / 1;
+    border-radius: $radius-xl;
+    @include flex-center;
+    flex-direction: column;
+    gap: $space-md;
+    transition: all $transition-base;
+
+    &:hover {
+      border-color: rgba($color-accent-primary, 0.4);
+      box-shadow: 0 0 60px rgba($color-accent-primary, 0.12);
+    }
+  }
+
+  &__photo-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+  }
+
+  &__photo-hint {
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  // Badge "Disponible"
+  &__badge-available {
+    position: absolute;
+    top: -$space-md;
+    right: -$space-md;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm $space-md;
+    @include glass;
+    border-radius: $radius-full;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    z-index: 1;
+
+    @include mobile {
+      top: -$space-sm;
+      right: -$space-sm;
+    }
+  }
+
+  &__badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: $radius-full;
+    background: #22c55e;
+    flex-shrink: 0;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  // ---- Colonne texte ----
+  &__text-col {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  &__title {
+    @include heading-lg;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  &__bio {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+
+    p {
+      font-family: $font-body;
+      font-size: $font-size-lg;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      margin: 0;
+
+      strong {
+        color: var(--color-text-primary);
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Badges valeurs
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+  }
+
+  &__value-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm $space-md;
+    @include glass;
+    border-radius: $radius-full;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    transition: all $transition-base;
+
+    &:hover {
+      border-color: rgba($color-accent-primary, 0.4);
+      color: var(--color-accent-primary);
+      background: var(--glass-hover);
+    }
+
+    &-icon {
+      @include flex-center;
+      color: var(--color-accent-primary);
+      flex-shrink: 0;
+    }
+  }
+
+  // CTA
+  &__cta {
+    @include button-primary;
+    align-self: flex-start;
+  }
+}

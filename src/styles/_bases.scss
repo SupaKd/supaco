@@ -1,0 +1,134 @@
+// ============================================
+// SUPACO DIGITAL - Base Styles & Reset
+// ============================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Reset
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-primary) var(--color-bg-secondary);
+
+  @include tablet {
+    font-size: 15px;
+  }
+}
+
+body {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-primary);
+  border-radius: $radius-full;
+}
+
+// Selection
+::selection {
+  background: var(--color-accent-primary);
+  color: var(--color-bg-primary);
+}
+
+// Links
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color $transition-fast;
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Lists
+ul, ol {
+  list-style: none;
+}
+
+// Buttons
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+// Inputs
+input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+// Section Base
+section {
+  position: relative;
+}
+
+// Container
+.container {
+  @include container;
+}
+
+// Utility Classes
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.gradient-text {
+  @include gradient-text;
+}

@@ -1,0 +1,213 @@
+// ============================================
+// Technologies Section
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.technologies {
+  position: relative;
+  padding: $space-5xl 0;
+  background: var(--color-bg-primary);
+  overflow: hidden;
+
+  // Background gradient orb
+  &::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: var(--color-accent-secondary);
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.08;
+    top: 50%;
+    left: -200px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  &__container {
+    @include container;
+    position: relative;
+    z-index: $z-base;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: $space-md;
+  }
+
+  &__title {
+    @include heading-lg;
+    color: var(--color-text-primary);
+    margin-bottom: $space-lg;
+  }
+
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto;
+    @include body-text;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: $space-lg;
+    margin-bottom: $space-4xl;
+
+    @include tablet {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include mobile {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__card {
+    @include card;
+    padding: $space-xl;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--tech-color, $color-accent-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform $transition-base;
+    }
+
+    &:hover {
+      border-color: var(--tech-color, $color-accent-primary);
+
+      &::before {
+        transform: scaleX(1);
+      }
+
+      .technologies__card-icon {
+        transform: scale(1.2) rotate(10deg);
+      }
+
+      .technologies__card-glow {
+        opacity: 1;
+      }
+    }
+
+    &-icon {
+      font-size: $font-size-4xl;
+      margin-bottom: $space-md;
+      display: block;
+      transition: transform $transition-spring;
+    }
+
+    &-name {
+      font-family: $font-display;
+      font-size: $font-size-lg;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: $space-xs;
+    }
+
+    &-description {
+      font-size: $font-size-xs;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    &-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at center,
+        var(--tech-color, $color-accent-primary) 0%,
+        transparent 70%
+      );
+      opacity: 0;
+      transition: opacity $transition-base;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(40px);
+    }
+  }
+
+  // Banner with guarantees
+  &__banner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+    padding: $space-2xl;
+    @include glass;
+    border-radius: $radius-lg;
+    position: relative;
+    overflow: hidden;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: $space-lg;
+    }
+
+    // Decorative gradient line
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: $color-accent-gradient;
+    }
+
+    &-content {
+      display: flex;
+      align-items: center;
+      gap: $space-lg;
+
+      @include tablet {
+        justify-content: center;
+        text-align: left;
+      }
+    }
+
+    &-icon {
+      font-size: $font-size-3xl;
+      flex-shrink: 0;
+    }
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      gap: $space-xs;
+
+      strong {
+        font-family: $font-display;
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: var(--color-text-primary);
+      }
+
+      span {
+        font-size: $font-size-sm;
+        color: var(--color-text-muted);
+      }
+    }
+  }
+}

@@ -1,0 +1,154 @@
+// ============================================
+// SUPACO DIGITAL - Design System Variables
+// ============================================
+
+// ---- SCSS Variables (kept for mixins that need compile-time values) ----
+
+// Accent Colors (used by glow mixin, gradient-text, etc.)
+$color-accent-primary: #077bd9;
+$color-accent-secondary: #0099ff;
+$color-accent-gradient: linear-gradient(
+  135deg,
+  $color-accent-primary 0%,
+  $color-accent-secondary 100%
+);
+
+// Static references (used in SCSS functions like rgba())
+$color-bg-primary: #0a0a0a;
+$color-bg-secondary: #111111;
+$color-bg-tertiary: #1a1a1a;
+$color-text-primary: #ffffff;
+$color-text-secondary: #a0a0a0;
+$color-text-muted: #666666;
+
+$glass-bg: rgba(255, 255, 255, 0.03);
+$glass-border: rgba(255, 255, 255, 0.08);
+$glass-hover: rgba(255, 255, 255, 0.06);
+
+// Typography Scale
+$font-display: "Clash Display", "Helvetica Neue", sans-serif;
+$font-body: "Satoshi", "Inter", sans-serif;
+$font-mono: "JetBrains Mono", monospace;
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 2rem;
+$font-size-4xl: 2.5rem;
+$font-size-5xl: 3.5rem;
+$font-size-6xl: 5rem;
+$font-size-7xl: 7rem;
+
+// Spacing
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 1rem;
+$space-lg: 1.5rem;
+$space-xl: 2rem;
+$space-2xl: 3rem;
+$space-3xl: 4rem;
+$space-4xl: 6rem;
+$space-5xl: 8rem;
+
+// Layout
+$container-max: 1400px;
+$container-padding: 2rem;
+
+// Border Radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;
+$radius-xl: 24px;
+$radius-full: 9999px;
+
+// Transitions
+$transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// Shadows
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+$shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+$shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+$shadow-glow: 0 0 60px rgba($color-accent-primary, 0.3);
+
+// Z-Index Scale
+$z-base: 1;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-overlay: 300;
+$z-modal: 400;
+$z-toast: 500;
+
+// ============================================
+// CSS Custom Properties - Theme System
+// ============================================
+
+:root {
+  // Dark theme (default)
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #111111;
+  --color-bg-tertiary: #1a1a1a;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #666666;
+
+  --color-accent-primary: #077bd9;
+  --color-accent-secondary: #0099ff;
+
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.06);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+
+  --navbar-scrolled-bg: rgba(17, 17, 17, 0.95);
+  --navbar-scrolled-backdrop: rgba(17, 17, 17, 0.85);
+
+  --grid-line-color: rgba(255, 255, 255, 0.02);
+}
+
+[data-theme="light"] {
+  --color-bg-primary: #faf7f2;
+  --color-bg-secondary: #f0ebe0;
+  --color-bg-tertiary: #e5ddd0;
+
+  --color-text-primary: #1c1612;
+  --color-text-secondary: #5c4f3d;
+  --color-text-muted: #9c8c78;
+
+  --color-accent-primary: #1e3a5f;
+  --color-accent-secondary: #2d5282;
+
+  --glass-bg: rgba(30, 58, 95, 0.04);
+  --glass-border: rgba(30, 58, 95, 0.12);
+  --glass-hover: rgba(30, 58, 95, 0.07);
+
+  --shadow-sm: 0 1px 4px rgba(20, 40, 70, 0.08),
+    0 2px 8px rgba(20, 40, 70, 0.05);
+  --shadow-md: 0 2px 12px rgba(20, 40, 70, 0.1),
+    0 4px 24px rgba(20, 40, 70, 0.07);
+  --shadow-lg: 0 4px 24px rgba(20, 40, 70, 0.12),
+    0 8px 48px rgba(20, 40, 70, 0.08);
+
+  --navbar-scrolled-bg: rgba(250, 247, 242, 0.95);
+  --navbar-scrolled-backdrop: rgba(250, 247, 242, 0.88);
+
+  --grid-line-color: rgba(30, 58, 95, 0.04);
+
+  // Surcharge du gradient-text pour tous les éléments qui utilisent la classe
+  .gradient-text,
+  &.gradient-text {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5282 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

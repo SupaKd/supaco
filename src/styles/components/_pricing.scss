@@ -1,0 +1,127 @@
+// ============================================
+// Process Section (replaces Pricing)
+// ============================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.process {
+  position: relative;
+  padding: $space-5xl 0;
+  background: var(--color-bg-secondary);
+  @include grid-pattern;
+
+  &__container {
+    @include container;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: $space-md;
+  }
+
+  &__title {
+    @include heading-lg;
+    color: var(--color-text-primary);
+    margin-bottom: $space-lg;
+  }
+
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto;
+    @include body-text;
+  }
+
+  // ---- Grid ----
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-xl;
+    position: relative;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  // ---- Step Card ----
+  &__step {
+    @include card;
+    padding: $space-2xl;
+    text-align: center;
+    position: relative;
+
+    &:hover {
+      transform: translateY(-8px);
+      border-color: rgba($color-accent-primary, 0.3);
+    }
+
+    &-number {
+      font-family: $font-display;
+      font-size: $font-size-5xl;
+      font-weight: 700;
+      @include gradient-text;
+      line-height: 1;
+      margin-bottom: $space-lg;
+      opacity: 0.3;
+    }
+
+    &-icon {
+      @include flex-center;
+      width: 56px;
+      height: 56px;
+      margin: 0 auto $space-lg;
+      border-radius: $radius-full;
+      background: rgba($color-accent-primary, 0.1);
+      color: var(--color-accent-primary);
+    }
+
+    &-title {
+      font-family: $font-display;
+      font-size: $font-size-xl;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: $space-sm;
+    }
+
+    &-description {
+      font-size: $font-size-sm;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+  }
+
+  // ---- CTA ----
+  &__cta {
+    text-align: center;
+    margin-top: $space-3xl;
+
+    &-btn {
+      @include button-primary;
+      font-size: $font-size-lg;
+      padding: $space-lg $space-2xl;
+    }
+
+    &-note {
+      margin-top: $space-md;
+      font-size: $font-size-sm;
+      color: var(--color-text-muted);
+    }
+  }
+}
