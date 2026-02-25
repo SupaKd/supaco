@@ -121,6 +121,17 @@ const Projects = () => {
         url: "https://bellifood.com/",
       },
       {
+        id: 7,
+        title: "Lucie Conseil",
+        description:
+          "Site vitrine professionnel pour une conseillère en investissements, avec présentation des services et prise de contact",
+        image:
+          "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&h=400&fit=crop&q=75",
+        tags: ["Site Vitrine", "Finance"],
+        category: "vitrine",
+        url: "https://bea-gamma.vercel.app/",
+      },
+      {
         id: 4,
         title: "Dépannage Gémeaux",
         description:
