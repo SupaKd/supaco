@@ -12,7 +12,7 @@ const optimizeUnsplashUrl = (url) => {
   return u.toString();
 };
 
-// Composant Image avec lazy loading + overlay hover
+// Composant Image avec lazy loading + overlay hover (mobile/tablet)
 const ProjectImage = memo(({ src, alt }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const optimizedSrc = optimizeUnsplashUrl(src);
@@ -41,6 +41,56 @@ const ProjectImage = memo(({ src, alt }) => {
 });
 
 ProjectImage.displayName = "ProjectImage";
+
+// Carte bento desktop avec image en fond
+const BentoCard = memo(({ project, variants, onProjectClick }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const optimizedSrc = optimizeUnsplashUrl(project.image);
+
+  const handleClick = useCallback(() => {
+    onProjectClick(project.url);
+  }, [project.url, onProjectClick]);
+
+  return (
+    <motion.article
+      className="projects__bento-card"
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      data-cursor-hover
+      onClick={handleClick}
+      role="link"
+      tabIndex={0}
+      aria-label={`Voir le projet ${project.title}`}
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
+    >
+      {/* Image de fond */}
+      {!isLoaded && <div className="projects__bento-placeholder" />}
+      <img
+        src={optimizedSrc}
+        alt={project.title}
+        className={`projects__bento-bg${
+          isLoaded ? " projects__bento-bg--loaded" : ""
+        }`}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setIsLoaded(true)}
+      />
+
+      {/* Gradient permanent en bas */}
+      <div className="projects__bento-gradient" />
+
+      {/* Titre */}
+      <div className="projects__bento-content">
+        <h3 className="projects__bento-title">{project.title}</h3>
+      </div>
+
+    </motion.article>
+  );
+});
+
+BentoCard.displayName = "BentoCard";
 
 const ProjectItem = memo(({ project, index, variants, onProjectClick }) => {
   const handleClick = useCallback(() => {
@@ -92,10 +142,7 @@ const Projects = () => {
   const ref = useRef(null);
   const listRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [showAll, setShowAll] = useState(false);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
-  const INITIAL_COUNT = 3;
 
   useEffect(() => {
     const el = listRef.current;
@@ -122,14 +169,14 @@ const Projects = () => {
       },
       {
         id: 7,
-        title: "Lucie Conseil",
+        title: "MB - Patrimoine & Finance",
         description:
           "Site vitrine professionnel pour une conseillère en investissements, avec présentation des services et prise de contact",
         image:
           "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&h=400&fit=crop&q=75",
         tags: ["Site Vitrine", "Finance"],
         category: "vitrine",
-        url: "https://bea-gamma.vercel.app/",
+        url: "https://mb-beige-six.vercel.app/",
       },
       {
         id: 4,
@@ -170,7 +217,7 @@ const Projects = () => {
         title: "Optical Store",
         description:
           "Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon",
-        image: "/optical.webp",
+        image: "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=400&fit=crop&q=75",
         tags: ["Site Vitrine", "Lunettes"],
         category: "vitrine",
         url: "https://cms-xi-self.vercel.app/",
@@ -191,31 +238,7 @@ const Projects = () => {
     []
   );
 
-  const filters = useMemo(
-    () => [
-      { id: "all", label: "Tous" },
-      { id: "vitrine", label: "Sites Vitrine" },
-      { id: "ecommerce", label: "E-Commerce" },
-      { id: "app", label: "Applications" },
-    ],
-    []
-  );
 
-  const filteredProjects = useMemo(() => {
-    const filtered =
-      activeFilter === "all"
-        ? projects
-        : projects.filter((p) => p.category === activeFilter);
-    return showAll ? filtered : filtered.slice(0, INITIAL_COUNT);
-  }, [activeFilter, projects, showAll, INITIAL_COUNT]);
-
-  const totalFiltered = useMemo(
-    () =>
-      activeFilter === "all"
-        ? projects.length
-        : projects.filter((p) => p.category === activeFilter).length,
-    [activeFilter, projects]
-  );
 
   const itemVariants = useMemo(
     () => ({
@@ -237,11 +260,6 @@ const Projects = () => {
     if (url) window.open(url, "_blank", "noopener,noreferrer");
   }, []);
 
-  const handleFilterChange = useCallback((filterId) => {
-    setActiveFilter(filterId);
-    setShowAll(false);
-  }, []);
-
   return (
     <section className="projects" id="projects" ref={ref}>
       <div className="projects__container">
@@ -255,29 +273,28 @@ const Projects = () => {
             <span className="projects__label">Portfolio</span>
             <h2 className="projects__title">Nos réalisations</h2>
           </div>
-
-          <motion.div
-            className="projects__filter"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.1 }}
-          >
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                className={`projects__filter-btn${
-                  activeFilter === filter.id
-                    ? " projects__filter-btn--active"
-                    : ""
-                }`}
-                onClick={() => handleFilterChange(filter.id)}
-              >
-                {filter.label}
-              </button>
-            ))}
-          </motion.div>
         </motion.div>
 
+        {/* ---- Bento Grid — desktop uniquement ---- */}
+        <motion.div
+          className="projects__bento"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.35, delay: 0.1 }}
+        >
+          <AnimatePresence mode="popLayout">
+            {projects.map((project) => (
+              <BentoCard
+                key={project.id}
+                project={project}
+                variants={itemVariants}
+                onProjectClick={handleProjectClick}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* ---- Liste + swipe — tablet/mobile uniquement ---- */}
         <div className="projects__list-wrapper">
           <motion.div
             className="projects__list"
@@ -287,7 +304,7 @@ const Projects = () => {
             transition={{ duration: 0.25, delay: 0.1 }}
           >
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, index) => (
+              {projects.map((project, index) => (
                 <ProjectItem
                   key={project.id}
                   project={project}
@@ -316,18 +333,6 @@ const Projects = () => {
           </AnimatePresence>
         </div>
 
-        {totalFiltered > INITIAL_COUNT && (
-          <div className="projects__show-more">
-            <button
-              className="projects__show-more-btn"
-              onClick={() => setShowAll((prev) => !prev)}
-            >
-              {showAll
-                ? "Voir moins"
-                : `Voir plus (${totalFiltered - INITIAL_COUNT} projets)`}
-            </button>
-          </div>
-        )}
       </div>
     </section>
   );

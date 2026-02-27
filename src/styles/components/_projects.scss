@@ -98,9 +98,147 @@
     }
   }
 
+  // ============================================
+  // BENTO GRID — desktop uniquement (>768px)
+  // ============================================
+
+  &__bento {
+    display: none;
+
+    @media (min-width: 769px) {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 340px 240px 240px;
+      gap: $space-md;
+      margin: 1rem;
+    }
+  }
+
+  // Carte bento de base
+  &__bento-card {
+    position: relative;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    cursor: pointer;
+
+    // 1ère carte : grande (colonne 1, occupe 2 lignes)
+    &:nth-child(1) {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+
+    // 2ème carte : moyenne haute
+    &:nth-child(2) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    // 3ème carte : moyenne haute
+    &:nth-child(3) {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    // 4ème carte
+    &:nth-child(4) {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    // 5ème carte
+    &:nth-child(5) {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    // 6ème carte
+    &:nth-child(6) {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    // 7ème carte
+    &:nth-child(7) {
+      grid-column: 2 / 4;
+      grid-row: 3;
+    }
+
+    // Hover : zoom image
+    &:hover {
+      .projects__bento-bg {
+        transform: scale(1.04);
+      }
+    }
+  }
+
+  // Image de fond
+  &__bento-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-slow;
+    will-change: transform;
+    opacity: 0;
+
+    &--loaded {
+      opacity: 1;
+      transition: transform $transition-slow, opacity 0.4s ease;
+    }
+  }
+
+  // Placeholder chargement
+  &__bento-placeholder {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg-tertiary);
+    animation: pulse-bg 1.5s ease-in-out infinite;
+  }
+
+  // Gradient permanent bas de carte
+  &__bento-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.2) 45%,
+      transparent 70%
+    );
+  }
+
+  // Contenu positionné en bas
+  &__bento-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: $space-xl;
+    z-index: 1;
+  }
+
+  // Titre
+  &__bento-title {
+    font-family: $font-display;
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.2;
+
+    .projects__bento-card:nth-child(1) & {
+      font-size: $font-size-2xl;
+    }
+  }
+
   // ---- List Wrapper (relatif pour le fade + hint) ----
   &__list-wrapper {
     position: relative;
+
+    // Masqué en desktop
+    @media (min-width: 769px) {
+      display: none;
+    }
   }
 
   // ---- List Container ----
@@ -387,6 +525,11 @@
     text-align: center;
     margin-top: $space-2xl;
 
+    // Masqué en desktop (bento affiche tout) et tablet (scroll horizontal)
+    @media (min-width: 769px) {
+      display: none;
+    }
+
     @include tablet {
       display: none;
     }
@@ -398,8 +541,13 @@
 }
 
 @keyframes swipe-nudge {
-  0%, 100% { transform: translateX(0); }
-  50%       { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
 }
 
 @keyframes pulse-bg {

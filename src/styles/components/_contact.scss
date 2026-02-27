@@ -180,8 +180,12 @@
     display: flex;
     flex-direction: column;
 
+    @include tablet {
+      border-radius: $radius-xl;
+    }
+
     @include mobile {
-      padding: 0.5rem;
+      padding: $space-lg;
       border-radius: $radius-xl;
     }
   }
@@ -220,11 +224,10 @@
     white-space: nowrap;
 
     @include mobile {
-      font-size: 0.5rem;
-      padding: 0.5rem 0.5rem;
-      gap: 4px;
+      font-size: $font-size-xs;
+      padding: $space-sm $space-md;
+      gap: $space-xs;
 
-      // Cacher le texte sur très petit écran, garder l'icône
       svg {
         flex-shrink: 0;
       }
@@ -366,7 +369,7 @@
     gap: $space-lg;
     margin-bottom: $space-lg;
 
-    @include mobile {
+    @include tablet {
       grid-template-columns: 1fr;
     }
   }
@@ -424,7 +427,7 @@
     &--full {
       grid-column: span 2;
 
-      @include mobile {
+      @include tablet {
         grid-column: span 1;
       }
     }
@@ -448,6 +451,11 @@
     font-size: $font-size-base;
     color: var(--color-text-primary);
     transition: all $transition-fast;
+
+    @include mobile {
+      padding: $space-md;
+      font-size: $font-size-sm;
+    }
 
     &:focus {
       border-color: var(--color-accent-primary);
@@ -481,6 +489,11 @@
     font-size: $font-size-lg;
     margin-top: $space-md;
 
+    @include mobile {
+      padding: $space-md $space-xl;
+      font-size: $font-size-base;
+    }
+
     &:disabled {
       opacity: 0.7;
       cursor: not-allowed;
@@ -503,6 +516,10 @@
     gap: $space-lg;
     padding: $space-4xl;
     text-align: center;
+
+    @include mobile {
+      padding: $space-2xl $space-lg;
+    }
 
     &-icon {
       width: 80px;

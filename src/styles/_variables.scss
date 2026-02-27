@@ -14,7 +14,7 @@ $color-accent-gradient: linear-gradient(
 );
 
 // Static references (used in SCSS functions like rgba())
-$color-bg-primary: #0a0a0a;
+$color-bg-primary: #1a1f26;
 $color-bg-secondary: #111111;
 $color-bg-tertiary: #1a1a1a;
 $color-text-primary: #ffffff;
@@ -116,7 +116,7 @@ $z-toast: 500;
 }
 
 [data-theme="light"] {
-  --color-bg-primary: #faf7f2;
+  --color-bg-primary: #e5dad0;
   --color-bg-secondary: #f0ebe0;
   --color-bg-tertiary: #e5ddd0;
 
@@ -138,8 +138,8 @@ $z-toast: 500;
   --shadow-lg: 0 4px 24px rgba(20, 40, 70, 0.12),
     0 8px 48px rgba(20, 40, 70, 0.08);
 
-  --navbar-scrolled-bg: rgba(250, 247, 242, 0.95);
-  --navbar-scrolled-backdrop: rgba(250, 247, 242, 0.88);
+  --navbar-scrolled-bg: #e5dad0;
+  --navbar-scrolled-backdrop: #e5dad0;
 
   --grid-line-color: rgba(30, 58, 95, 0.04);
 

@@ -225,8 +225,29 @@ const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [active, setActive] = useState(1);
+  const touchStartX = useRef(null);
 
   const handleSelect = useCallback((idx) => setActive(idx), []);
+
+  const handleTouchStart = useCallback((e) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e) => {
+      if (touchStartX.current === null) return;
+      const diff = touchStartX.current - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        setActive((prev) =>
+          diff > 0
+            ? (prev + 1) % SERVICES.length
+            : (prev - 1 + SERVICES.length) % SERVICES.length
+        );
+      }
+      touchStartX.current = null;
+    },
+    []
+  );
 
   const headerVariants = useMemo(
     () => ({
@@ -279,6 +300,8 @@ const Services = () => {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.15 }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           {SERVICES.map((service, idx) => {
             const position = getPosition(idx, active, SERVICES.length);
