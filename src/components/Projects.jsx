@@ -1,6 +1,6 @@
 import { useState, useRef, memo, useCallback, useMemo, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { HiOutlineExternalLink, HiOutlineArrowRight } from "react-icons/hi";
+import { HiOutlineExternalLink, HiOutlineArrowRight, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
 // Ajoute &fm=webp&auto=format aux URLs Unsplash pour forcer le format WebP
 const optimizeUnsplashUrl = (url) => {
@@ -143,15 +143,32 @@ const Projects = () => {
   const listRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const updateArrows = useCallback(() => {
+    const el = listRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  }, []);
 
   useEffect(() => {
     const el = listRef.current;
     if (!el) return;
     const onScroll = () => {
       if (el.scrollLeft > 30) setShowSwipeHint(false);
+      updateArrows();
     };
     el.addEventListener("scroll", onScroll, { passive: true });
+    updateArrows();
     return () => el.removeEventListener("scroll", onScroll);
+  }, [updateArrows]);
+
+  const scrollBy = useCallback((dir) => {
+    const el = listRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 300, behavior: "smooth" });
   }, []);
 
   const projects = useMemo(
@@ -296,6 +313,23 @@ const Projects = () => {
 
         {/* ---- Liste + swipe — tablet/mobile uniquement ---- */}
         <div className="projects__list-wrapper">
+          {/* Flèche gauche */}
+          <AnimatePresence>
+            {canScrollLeft && (
+              <motion.button
+                className="projects__nav-arrow projects__nav-arrow--left"
+                onClick={() => scrollBy(-1)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                aria-label="Projets précédents"
+              >
+                <HiChevronLeft />
+              </motion.button>
+            )}
+          </AnimatePresence>
+
           <motion.div
             className="projects__list"
             ref={listRef}
@@ -315,6 +349,23 @@ const Projects = () => {
               ))}
             </AnimatePresence>
           </motion.div>
+
+          {/* Flèche droite */}
+          <AnimatePresence>
+            {canScrollRight && (
+              <motion.button
+                className="projects__nav-arrow projects__nav-arrow--right"
+                onClick={() => scrollBy(1)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                aria-label="Projets suivants"
+              >
+                <HiChevronRight />
+              </motion.button>
+            )}
+          </AnimatePresence>
 
           {/* Indicateur swipe — mobile uniquement */}
           <AnimatePresence>

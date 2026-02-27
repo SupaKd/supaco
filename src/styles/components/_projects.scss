@@ -241,6 +241,50 @@
     }
   }
 
+  // ---- Nav Arrows — tablet/mobile ----
+  &__nav-arrow {
+    display: none;
+
+    @include tablet {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--glass-border);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+      transition: background $transition-fast, border-color $transition-fast;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      &:hover {
+        background: var(--color-accent-primary);
+        border-color: var(--color-accent-primary);
+        color: var(--color-bg-primary);
+      }
+
+      &--left {
+        left: -8px;
+      }
+
+      &--right {
+        right: -8px;
+      }
+    }
+  }
+
   // ---- List Container ----
   &__list {
     display: flex;
