@@ -23,7 +23,7 @@
     min-height: 100svh;
     padding: $space-2xl $space-md $space-3xl;
     align-items: flex-start;
-    padding-top: calc($space-3xl + 60px);
+    padding-top: calc($space-3xl + 0px);
   }
 
   // Grille de fond moderne
@@ -392,15 +392,29 @@
     color: var(--color-text-primary);
     line-height: 1.6;
     margin: 0;
+
+    @include mobile {
+      font-size: clamp($font-size-sm, 3vw, $font-size-base);
+    }
   }
 
   // Bio
   &__bio {
     font-family: $font-body;
-    font-size: clamp($font-size-sm, 1.5vw, $font-size-base);
-    color: var(--color-text-secondary);
-    line-height: 1.7;
+    font-size: clamp($font-size-base, 1.8vw, $font-size-lg);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.6;
     margin: 0;
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__span {
+    color: var(--color-accent-primary);
+    font-weight: 600;
   }
 
   // Badges valeurs

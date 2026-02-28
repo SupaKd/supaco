@@ -212,16 +212,22 @@ const Hero = memo(() => {
           </h1>
 
           <p className="hero__subtitle">
-            J’accompagne les PME et les indépendants du Pays de Gex dans la
-            création de sites web sur-mesure. Avec moi, vous échangez toujours
-            avec la même personne — du premier rendez-vous jusqu’à la mise en
-            ligne.
+            J'accompagne les PME et les indépendants du Pays de Gex dans la
+            création de sites web sur-mesure, pensés pour générer des résultats
+            concrets. <br />
+            Mon approche est stratégique : Comprendre votre activité, vos enjeux
+            et vos objectifs pour concevoir un site qui attire, rassure et{" "}
+            <span className="hero__span">
+              convertit vos prospects en clients.
+            </span>{" "}
+            <br />
           </p>
 
           <p className="hero__bio">
-            Je prends le temps de comprendre votre métier, vos enjeux et vos
-            objectifs. Mon rôle est de transformer votre vision en un site web
-            utile, performant et simple à gérer au quotidien.
+            {" "}
+            Un site internet renforce votre crédibilité et créer un canal
+            d’acquisition disponible 24h/24. Si vos prospects ne vous trouvent
+            pas en ligne, ils choisissent vos concurrents!
           </p>
 
           {/* Badges valeurs */}
