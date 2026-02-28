@@ -1,48 +1,48 @@
-import { memo, useCallback, useMemo } from 'react';
-import { useLegalModals } from './LegalModals';
+import { memo, useCallback, useMemo } from "react";
+import { useLegalModals } from "./LegalModals";
 
 const FooterLink = memo(({ link, onClick }) => (
-  <a
-    href={link.href}
-    className="footer__link"
-    onClick={onClick}
-  >
+  <a href={link.href} className="footer__link" onClick={onClick}>
     {link.label}
   </a>
 ));
 
-FooterLink.displayName = 'FooterLink';
+FooterLink.displayName = "FooterLink";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const { openMentionsLegales, openConfidentialite, openCookieConsent } = useLegalModals();
+  const { openMentionsLegales, openConfidentialite, openCookieConsent } =
+    useLegalModals();
 
-  const footerLinks = useMemo(() => ({
-    services: [
-      { label: 'Site Vitrine', href: '#services' },
-      { label: 'E-Commerce', href: '#services' },
-      { label: 'Application Web', href: '#services' },
-      { label: 'Maintenance', href: '#contact' },
-    ],
-    company: [
-      { label: 'À propos', href: '#' },
-      { label: 'Portfolio', href: '#projects' },
-      { label: 'Tarifs', href: '#pricing' },
-      { label: 'Contact', href: '#contact' },
-    ],
-    legal: [
-      { label: 'Mentions légales', action: openMentionsLegales },
-      { label: 'Politique de confidentialité', action: openConfidentialite },
-      { label: 'Gérer mes cookies', action: openCookieConsent },
-    ],
-  }), [openMentionsLegales, openConfidentialite, openCookieConsent]);
+  const footerLinks = useMemo(
+    () => ({
+      services: [
+        { label: "Site Vitrine", href: "#services" },
+        { label: "E-Commerce", href: "#services" },
+        { label: "Application Web", href: "#services" },
+        { label: "Maintenance", href: "#contact" },
+      ],
+      company: [
+        { label: "À propos", href: "#" },
+        { label: "Portfolio", href: "#projects" },
+        { label: "Tarifs", href: "#pricing" },
+        { label: "Contact", href: "#contact" },
+      ],
+      legal: [
+        { label: "Mentions légales", action: openMentionsLegales },
+        { label: "Politique de confidentialité", action: openConfidentialite },
+        { label: "Gérer mes cookies", action: openCookieConsent },
+      ],
+    }),
+    [openMentionsLegales, openConfidentialite, openCookieConsent]
+  );
 
   const scrollToSection = useCallback((e, href) => {
-    if (href.startsWith('#') && href.length > 1) {
+    if (href.startsWith("#") && href.length > 1) {
       e.preventDefault();
       const element = document.querySelector(href);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
   }, []);
@@ -57,8 +57,8 @@ const Footer = () => {
               Supaco Digital
             </a>
             <p className="footer__tagline">
-              Votre partenaire pour une présence web professionnelle.
-              Sites livrés en 72h, prix transparents, satisfaction garantie.
+              Votre partenaire pour une présence web professionnelle. Sites
+              livrés en 5 jours, prix transparents, satisfaction garantie.
             </p>
             <div className="footer__newsletter">
               <input
@@ -66,9 +66,7 @@ const Footer = () => {
                 className="footer__newsletter-input"
                 placeholder="Votre email"
               />
-              <button className="footer__newsletter-btn">
-                S'abonner
-              </button>
+              <button className="footer__newsletter-btn">S'abonner</button>
             </div>
           </div>
 

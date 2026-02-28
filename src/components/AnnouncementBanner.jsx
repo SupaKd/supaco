@@ -10,11 +10,7 @@ const AnnouncementBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const dismissed = localStorage.getItem(STORAGE_KEY);
-    if (!dismissed) {
-      setIsVisible(true);
-      document.documentElement.style.setProperty("--banner-height", "44px");
-    }
+    // Bannière temporairement masquée
   }, []);
 
   const handleDismiss = () => {
@@ -26,12 +22,16 @@ const AnnouncementBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="announcement-banner" role="banner" aria-label="Offre spéciale">
+    <div
+      className="announcement-banner"
+      role="banner"
+      aria-label="Offre spéciale"
+    >
       {/* Desktop : layout centré classique */}
       <div className="announcement-banner__desktop">
         <span className="announcement-banner__badge">Offre de bienvenue</span>
         <p className="announcement-banner__text">
-          Bénéficiez de <strong>-15% sur votre premier site web</strong> — Offre
+          Bénéficiez de <strong>-5% sur votre premier site web</strong> — Offre
           réservée aux nouveaux clients.{" "}
           <a
             href="#contact"
@@ -60,7 +60,10 @@ const AnnouncementBanner = () => {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>
             {/* Duplication pour la boucle fluide */}
-            <span className="announcement-banner__ticker-item" aria-hidden="true">
+            <span
+              className="announcement-banner__ticker-item"
+              aria-hidden="true"
+            >
               {TICKER_TEXT}&nbsp;&nbsp;·&nbsp;&nbsp;
               <a
                 href="#contact"

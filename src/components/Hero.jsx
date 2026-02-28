@@ -128,7 +128,7 @@ const Hero = memo(() => {
             <div className="hero__photo-wrapper">
               <div className="hero__photo">
                 <img
-                  src="/supa.jpeg"
+                  src="/kevin.png"
                   alt="Kevin - Développeur web Supaco Digital"
                   width="200"
                   height="200"

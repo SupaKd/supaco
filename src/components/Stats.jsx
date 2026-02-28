@@ -81,8 +81,8 @@ const Stats = () => {
       },
       {
         icon: <HiOutlineBolt size={28} />,
-        value: 72,
-        suffix: "h",
+        value: 5,
+        suffix: "j",
         prefix: "",
         label: "Livraison express",
       },

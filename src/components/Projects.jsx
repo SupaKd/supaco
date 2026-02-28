@@ -1,6 +1,11 @@
 import { useState, useRef, memo, useCallback, useMemo, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { HiOutlineExternalLink, HiOutlineArrowRight, HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import {
+  HiOutlineExternalLink,
+  HiOutlineArrowRight,
+  HiChevronLeft,
+  HiChevronRight,
+} from "react-icons/hi";
 
 // Ajoute &fm=webp&auto=format aux URLs Unsplash pour forcer le format WebP
 const optimizeUnsplashUrl = (url) => {
@@ -85,7 +90,6 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
       <div className="projects__bento-content">
         <h3 className="projects__bento-title">{project.title}</h3>
       </div>
-
     </motion.article>
   );
 });
@@ -234,7 +238,8 @@ const Projects = () => {
         title: "Optical Store",
         description:
           "Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon",
-        image: "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=400&fit=crop&q=75",
+        image:
+          "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=400&fit=crop&q=75",
         tags: ["Site Vitrine", "Lunettes"],
         category: "vitrine",
         url: "https://cms-xi-self.vercel.app/",
@@ -254,8 +259,6 @@ const Projects = () => {
     ],
     []
   );
-
-
 
   const itemVariants = useMemo(
     () => ({
@@ -280,7 +283,6 @@ const Projects = () => {
   return (
     <section className="projects" id="projects" ref={ref}>
       <div className="projects__container">
-
         {/* ---- Layout desktop : texte gauche + bento droite ---- */}
         <div className="projects__desktop-layout">
           <motion.div
@@ -292,10 +294,15 @@ const Projects = () => {
             <span className="projects__label">Portfolio</span>
             <h2 className="projects__title">Mes réalisations</h2>
             <p className="projects__subtitle">
-              Des projets livrés pour de vraies entreprises — du site vitrine à l'application web sur-mesure.
+              Des projets livrés pour de vraies entreprises — du site vitrine à
+              l'application web sur-mesure.
             </p>
             <p className="projects__description">
-              Chaque projet est pensé pour convertir vos visiteurs en clients, avec un design soigné et des performances optimisées.
+              Chaque réalisation est conçue avec une approche stratégique :
+              comprendre votre activité, analyser vos objectifs et créer une
+              expérience utilisateur claire et efficace. L’objectif n’est pas
+              seulement d’avoir un beau site, mais un outil performant, rapide
+              et optimisé pour transformer vos visiteurs en clients.
             </p>
           </motion.div>
 
@@ -402,7 +409,6 @@ const Projects = () => {
             )}
           </AnimatePresence>
         </div>
-
       </div>
     </section>
   );

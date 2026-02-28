@@ -6,6 +6,7 @@ import CookieConsent from "./components/CookieConsent";
 import WhatsAppButton from "./components/WhatsAppButton";
 import BackToTop from "./components/ui/BackToTop";
 import LegalModalsProvider from "./components/LegalModals";
+import Testimonials from "./components/Testimonials";
 
 // Lazy load les composants below-the-fold
 const Services = lazy(() => import("./components/Service"));
@@ -63,9 +64,8 @@ function App() {
           <Projects />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
-          <Responsive />
+          <Testimonials />
         </Suspense>
-
         <Suspense fallback={<SectionLoader />}>
           <Contact />
         </Suspense>

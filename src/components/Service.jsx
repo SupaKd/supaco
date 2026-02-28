@@ -17,10 +17,10 @@ const SERVICES = [
     description:
       "Je conçois votre site de A à Z pour refléter votre image et convaincre vos visiteurs de vous contacter.",
     features: [
-      "Design sur-mesure",
+      "Identité visuelle unique",
       "Responsive mobile",
       "Optimisation SEO",
-      "Formulaire de contact",
+      "Intégration réseaux sociaux",
     ],
     price: "890€",
     stat: { value: "5j", label: "Livraison moyenne" },
@@ -39,7 +39,7 @@ const SERVICES = [
       "Gestion des stocks",
       "Suivi commandes",
     ],
-    price: "1 490€",
+    price: "1 990€",
     stat: { value: "14j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
@@ -51,29 +51,12 @@ const SERVICES = [
     description:
       "Quand un outil standard ne suffit plus, je développe exactement ce dont vous avez besoin — rien de plus, rien de moins.",
     features: [
-      "Développement React",
-      "Base de données",
-      "API sur-mesure",
+      "CRM / ERP",
+      "Portail professionnel",
+      "Interface clients",
       "Dashboard admin",
     ],
-    price: "2 990€",
-    stat: { value: "30j", label: "Livraison moyenne" },
-    color: "var(--color-accent-primary)",
-  },
-  {
-    id: "crm-erp",
-    icon: HiOutlineChartBar,
-    label: "CRM / ERP",
-    title: "CRM / ERP",
-    description:
-      "Je centralise tout ce qui compte pour vous : vos clients, vos ventes, votre activité — dans un seul outil pensé pour vous.",
-    features: [
-      "Gestion des contacts",
-      "Suivi des ventes",
-      "Gestion des stocks",
-      "Tableaux de bord",
-    ],
-    price: "3 990€",
+    price: "Sur devis",
     stat: { value: "30j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
@@ -192,9 +175,6 @@ const ServiceCard = memo(({ service, position, active, onClick }) => {
                 {service.price}
               </span>
             </div>
-            <span className="services__card-installment">
-              Possibilité de paiement en 3 ou 4 fois sans frais
-            </span>
           </div>
 
           <div className="services__card-stat">
