@@ -280,35 +280,54 @@ const Projects = () => {
   return (
     <section className="projects" id="projects" ref={ref}>
       <div className="projects__container">
+
+        {/* ---- Layout desktop : texte gauche + bento droite ---- */}
+        <div className="projects__desktop-layout">
+          <motion.div
+            className="projects__sidebar"
+            initial={{ opacity: 0, x: -24 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="projects__label">Portfolio</span>
+            <h2 className="projects__title">Mes réalisations</h2>
+            <p className="projects__subtitle">
+              Des projets livrés pour de vraies entreprises — du site vitrine à l'application web sur-mesure.
+            </p>
+            <p className="projects__description">
+              Chaque projet est pensé pour convertir vos visiteurs en clients, avec un design soigné et des performances optimisées.
+            </p>
+          </motion.div>
+
+          {/* ---- Bento Grid — desktop uniquement ---- */}
+          <motion.div
+            className="projects__bento"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.35, delay: 0.1 }}
+          >
+            <AnimatePresence mode="popLayout">
+              {projects.map((project) => (
+                <BentoCard
+                  key={project.id}
+                  project={project}
+                  variants={itemVariants}
+                  onProjectClick={handleProjectClick}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+
+        {/* ---- Header mobile (caché en desktop) ---- */}
         <motion.div
-          className="projects__header"
+          className="projects__header-mobile"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.35 }}
         >
-          <div className="projects__header-content">
-            <span className="projects__label">Portfolio</span>
-            <h2 className="projects__title">Nos réalisations</h2>
-          </div>
-        </motion.div>
-
-        {/* ---- Bento Grid — desktop uniquement ---- */}
-        <motion.div
-          className="projects__bento"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.35, delay: 0.1 }}
-        >
-          <AnimatePresence mode="popLayout">
-            {projects.map((project) => (
-              <BentoCard
-                key={project.id}
-                project={project}
-                variants={itemVariants}
-                onProjectClick={handleProjectClick}
-              />
-            ))}
-          </AnimatePresence>
+          <span className="projects__label">Portfolio</span>
+          <h2 className="projects__title">Mes réalisations</h2>
         </motion.div>
 
         {/* ---- Liste + swipe — tablet/mobile uniquement ---- */}

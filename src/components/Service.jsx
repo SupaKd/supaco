@@ -22,6 +22,7 @@ const SERVICES = [
       "Optimisation SEO",
       "Formulaire de contact",
     ],
+    price: "890€",
     stat: { value: "5j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
@@ -38,6 +39,7 @@ const SERVICES = [
       "Gestion des stocks",
       "Suivi commandes",
     ],
+    price: "1 490€",
     stat: { value: "14j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
@@ -54,6 +56,7 @@ const SERVICES = [
       "API sur-mesure",
       "Dashboard admin",
     ],
+    price: "2 990€",
     stat: { value: "30j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
@@ -70,6 +73,7 @@ const SERVICES = [
       "Gestion des stocks",
       "Tableaux de bord",
     ],
+    price: "3 990€",
     stat: { value: "30j", label: "Livraison moyenne" },
     color: "var(--color-accent-primary)",
   },
@@ -139,21 +143,23 @@ const ServiceCard = memo(({ service, position, active, onClick }) => {
         }}
       />
 
-      <div
-        className={`services__card-icon${
-          isCenter ? " services__card-icon--center" : ""
-        }`}
-        style={{ color: service.color }}
-      >
-        <Icon />
+      {/* Icône + titre sur la même ligne */}
+      <div className="services__card-header">
+        <div
+          className={`services__card-icon${
+            isCenter ? " services__card-icon--center" : ""
+          }`}
+          style={{ color: service.color }}
+        >
+          <Icon />
+        </div>
+        <h3 className="services__card-title">{service.title}</h3>
       </div>
 
-      <h3 className="services__card-title">{service.title}</h3>
-
-      {/* Description — visible sur toutes les cards */}
+      {/* Description */}
       <p className="services__card-description">{service.description}</p>
 
-      {/* Corps — visible sur toutes les cards */}
+      {/* Corps */}
       <div
         className="services__card-body"
         aria-hidden={false}
@@ -174,6 +180,22 @@ const ServiceCard = memo(({ service, position, active, onClick }) => {
               </li>
             ))}
           </ul>
+
+          {/* Prix + paiement */}
+          <div className="services__card-pricing">
+            <div className="services__card-price">
+              <span className="services__card-price-from">À partir de</span>
+              <span
+                className="services__card-price-value"
+                style={{ color: service.color }}
+              >
+                {service.price}
+              </span>
+            </div>
+            <span className="services__card-installment">
+              Possibilité de paiement en 3 ou 4 fois sans frais
+            </span>
+          </div>
 
           <div className="services__card-stat">
             <span
@@ -224,7 +246,7 @@ ServiceTabs.displayName = "ServiceTabs";
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const touchStartX = useRef(null);
 
   const handleSelect = useCallback((idx) => setActive(idx), []);
@@ -233,21 +255,18 @@ const Services = () => {
     touchStartX.current = e.touches[0].clientX;
   }, []);
 
-  const handleTouchEnd = useCallback(
-    (e) => {
-      if (touchStartX.current === null) return;
-      const diff = touchStartX.current - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) {
-        setActive((prev) =>
-          diff > 0
-            ? (prev + 1) % SERVICES.length
-            : (prev - 1 + SERVICES.length) % SERVICES.length
-        );
-      }
-      touchStartX.current = null;
-    },
-    []
-  );
+  const handleTouchEnd = useCallback((e) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      setActive((prev) =>
+        diff > 0
+          ? (prev + 1) % SERVICES.length
+          : (prev - 1 + SERVICES.length) % SERVICES.length
+      );
+    }
+    touchStartX.current = null;
+  }, []);
 
   const headerVariants = useMemo(
     () => ({
@@ -276,7 +295,6 @@ const Services = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span className="services__label">Services</span>
           <h2 className="services__title">Ce que je propose</h2>
           <p className="services__subtitle">
             Des solutions web adaptées à vos besoins et à votre budget, livrées

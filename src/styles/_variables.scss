@@ -90,7 +90,7 @@ $z-toast: 500;
 
 :root {
   // Dark theme (default)
-  --color-bg-primary: #1a1f26;
+  --color-bg-primary: #00171f;
   --color-bg-secondary: rgba(255, 255, 255, 0.03);
   --color-bg-tertiary: #1a1a1a;
 
@@ -116,9 +116,9 @@ $z-toast: 500;
 }
 
 [data-theme="light"] {
-  --color-bg-primary: #e5dad0;
-  --color-bg-secondary: rgba(255, 255, 255, 0.1);
-  --color-bg-tertiary: #e5ddd0;
+  --color-bg-primary: #f0efeb;
+  --color-bg-secondary: #f9f9f9;
+  --color-bg-tertiary: #f9f9f9;
 
   --color-text-primary: #1c1612;
   --color-text-secondary: #5c4f3d;
@@ -138,8 +138,8 @@ $z-toast: 500;
   --shadow-lg: 0 4px 24px rgba(20, 40, 70, 0.12),
     0 8px 48px rgba(20, 40, 70, 0.08);
 
-  --navbar-scrolled-bg: #e5dad0;
-  --navbar-scrolled-backdrop: #e5dad0;
+  --navbar-scrolled-bg: #f0efeb;
+  --navbar-scrolled-backdrop: #f0efeb;
 
   --grid-line-color: rgba(30, 58, 95, 0.04);
 

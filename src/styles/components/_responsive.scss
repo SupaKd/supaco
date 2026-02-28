@@ -130,11 +130,6 @@
 .responsive__phone {
   position: relative;
   width: 260px;
-  filter: drop-shadow(
-      0 40px 80px
-        color-mix(in srgb, var(--color-accent-primary) 15%, transparent)
-    )
-    drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
 
   @include tablet {
     width: 220px;

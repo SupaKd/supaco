@@ -15,24 +15,51 @@
     @include container;
   }
 
-  // ---- Header ----
-  &__header {
-    @include flex-between;
-    margin-bottom: $space-4xl;
+  // ---- Layout desktop 2 colonnes ----
+  &__desktop-layout {
+    display: none;
 
-    @include tablet {
-      flex-direction: column;
-      text-align: center;
-      gap: $space-xl;
-    }
-
-    @include mobile {
-      overflow: hidden;
+    @media (min-width: 769px) {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: $space-3xl;
+      align-items: start;
     }
   }
 
-  &__header-content {
-    max-width: 600px;
+  // ---- Sidebar texte (desktop) ----
+  &__sidebar {
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  // ---- Header mobile (caché en desktop) ----
+  &__header-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+    margin-bottom: $space-2xl;
+    text-align: center;
+
+    @media (min-width: 769px) {
+      display: none;
+    }
   }
 
   &__label {
@@ -107,10 +134,10 @@
 
     @media (min-width: 769px) {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      grid-template-rows: 340px 240px 240px;
-      gap: $space-md;
-      margin: 1rem;
+      // 3 colonnes inégales : étroite | large | étroite
+      grid-template-columns: 1fr 1.6fr 1fr;
+      grid-template-rows: 200px 200px 160px 160px;
+      gap: $space-sm;
     }
   }
 
@@ -121,46 +148,46 @@
     overflow: hidden;
     cursor: pointer;
 
-    // 1ère carte : grande (colonne 1, occupe 2 lignes)
+    // Carte 1 : colonne gauche, 2 lignes
     &:nth-child(1) {
       grid-column: 1;
       grid-row: 1 / 3;
     }
 
-    // 2ème carte : moyenne haute
+    // Carte 2 : colonne centrale, tall (3 lignes)
     &:nth-child(2) {
       grid-column: 2;
-      grid-row: 1;
+      grid-row: 1 / 4;
     }
 
-    // 3ème carte : moyenne haute
+    // Carte 3 : colonne droite, ligne 1
     &:nth-child(3) {
       grid-column: 3;
       grid-row: 1;
     }
 
-    // 4ème carte
+    // Carte 4 : colonne droite, ligne 2
     &:nth-child(4) {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
-    // 5ème carte
-    &:nth-child(5) {
       grid-column: 3;
       grid-row: 2;
     }
 
-    // 6ème carte
-    &:nth-child(6) {
+    // Carte 5 : colonne gauche, ligne 3
+    &:nth-child(5) {
       grid-column: 1;
       grid-row: 3;
     }
 
-    // 7ème carte
+    // Carte 6 : colonne droite, lignes 3-4
+    &:nth-child(6) {
+      grid-column: 3;
+      grid-row: 3 / 5;
+    }
+
+    // Carte 7 : colonne gauche + centrale, ligne 4
     &:nth-child(7) {
-      grid-column: 2 / 4;
-      grid-row: 3;
+      grid-column: 1 / 3;
+      grid-row: 4;
     }
 
     // Hover : zoom image
@@ -226,7 +253,8 @@
     color: #fff;
     line-height: 1.2;
 
-    .projects__bento-card:nth-child(1) & {
+    // Carte centrale (tall) : titre plus grand
+    .projects__bento-card:nth-child(2) & {
       font-size: $font-size-2xl;
     }
   }

@@ -159,7 +159,7 @@ const Contact = () => {
       {
         icon: <HiOutlineMail size={24} />,
         label: "Email",
-        value: "contact@supaco.digital.com",
+        value: "contact@supaco-digital.com",
       },
       {
         icon: <HiOutlineLocationMarker size={24} />,

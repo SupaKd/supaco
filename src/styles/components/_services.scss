@@ -10,49 +10,13 @@
 .services {
   position: relative;
   padding: $space-5xl 0 $space-4xl;
-  background:var(--color-bg-primary) ;
+  background: var(--color-bg-primary);
   overflow: hidden;
 
   &__container {
     @include container;
     position: relative;
     z-index: $z-base;
-  }
-
-  // ---- Fond animé ----
-
-  &__bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  &__bg-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.12;
-    animation: orbFloat 8s ease-in-out infinite;
-
-    &--1 {
-      width: 500px;
-      height: 500px;
-      background: $color-accent-primary;
-      top: 180px;
-      left: 33%;
-      animation-delay: 0s;
-    }
-  }
-
-  @keyframes orbFloat {
-    0%,
-    100% {
-      transform: translateY(0) scale(1);
-    }
-    50% {
-      transform: translateY(-30px) scale(1.05);
-    }
   }
 
   // ---- Header ----
@@ -146,7 +110,7 @@
 
   &__carousel {
     position: relative;
-    height: 480px;
+    height: 560px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -184,12 +148,6 @@
       }
     }
 
-    &--center {
-      border-color: var(--glass-border);
-      box-shadow: var(--shadow-lg),
-        0 0 60px color-mix(in srgb, var(--color-accent-primary) 8%, transparent);
-    }
-
     &--left,
     &--right {
       &:hover {
@@ -210,15 +168,22 @@
     height: 3px;
   }
 
+  // Icône + titre alignés horizontalement
+  &__card-header {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    margin-bottom: $space-md;
+  }
+
   &__card-icon {
-    width: 56px;
-    height: 56px;
+    width: 44px;
+    height: 44px;
     @include flex-center;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: $radius-lg;
-    margin-bottom: $space-md;
-    font-size: $font-size-2xl;
+    border-radius: $radius-md;
+    font-size: $font-size-xl;
     flex-shrink: 0;
 
     &--center {
@@ -240,7 +205,7 @@
     font-size: $font-size-xl;
     font-weight: 600;
     color: var(--color-text-primary);
-    margin: 0 0 $space-sm;
+    margin: 0;
     line-height: 1.2;
   }
 
@@ -288,6 +253,44 @@
     height: 16px;
     color: var(--color-accent-primary);
     flex-shrink: 0;
+  }
+
+  // ---- Prix ----
+  &__card-pricing {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    padding: $space-md;
+    background: color-mix(in srgb, var(--color-accent-primary) 5%, transparent);
+    border: 1px solid
+      color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
+    border-radius: $radius-md;
+  }
+
+  &__card-price {
+    display: flex;
+    align-items: baseline;
+    gap: $space-sm;
+  }
+
+  &__card-price-from {
+    font-size: $font-size-xs;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__card-price-value {
+    font-family: $font-display;
+    font-size: $font-size-2xl;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__card-installment {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    font-style: italic;
   }
 
   &__card-stat {
