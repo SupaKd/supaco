@@ -1,5 +1,5 @@
 import { useState, useRef, memo, useCallback, useMemo, useEffect } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import {
   HiOutlineExternalLink,
   HiOutlineArrowRight,
@@ -47,10 +47,31 @@ const ProjectImage = memo(({ src, alt }) => {
 
 ProjectImage.displayName = "ProjectImage";
 
-// Carte bento desktop avec image en fond
+// Carte bento desktop avec image en fond + tilt 3D
 const BentoCard = memo(({ project, variants, onProjectClick }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const optimizedSrc = optimizeUnsplashUrl(project.image);
+  const cardRef = useRef(null);
+
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const springX = useSpring(rotateX, { stiffness: 150, damping: 20 });
+  const springY = useSpring(rotateY, { stiffness: 150, damping: 20 });
+
+  const handleMouseMove = useCallback((e) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const { left, top, width, height } = card.getBoundingClientRect();
+    const x = (e.clientX - left) / width - 0.5;  // -0.5 à 0.5
+    const y = (e.clientY - top) / height - 0.5;
+    rotateY.set(x * 14);
+    rotateX.set(-y * 14);
+  }, [rotateX, rotateY]);
+
+  const handleMouseLeave = useCallback(() => {
+    rotateX.set(0);
+    rotateY.set(0);
+  }, [rotateX, rotateY]);
 
   const handleClick = useCallback(() => {
     onProjectClick(project.url);
@@ -58,6 +79,7 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
 
   return (
     <motion.article
+      ref={cardRef}
       className="projects__bento-card"
       variants={variants}
       initial="hidden"
@@ -69,6 +91,14 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
       tabIndex={0}
       aria-label={`Voir le projet ${project.title}`}
       onKeyDown={(e) => e.key === "Enter" && handleClick()}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX: springX,
+        rotateY: springY,
+        transformStyle: "preserve-3d",
+        transformPerspective: 800,
+      }}
     >
       {/* Image de fond */}
       {!isLoaded && <div className="projects__bento-placeholder" />}

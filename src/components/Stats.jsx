@@ -7,35 +7,47 @@ import {
   HiOutlineBolt,
 } from "react-icons/hi2";
 
-const useCountUp = (target, isInView, duration = 2000) => {
-  const [count, setCount] = useState(0);
+const useScrambleCount = (target, isInView, duration = 2000) => {
+  const [display, setDisplay] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
 
-    let start = 0;
     const startTime = performance.now();
+    // Phase scramble : 40% du temps ; phase settle : 60%
+    const scrambleDuration = duration * 0.45;
 
     const animate = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
+      const settled = Math.round(eased * target);
 
-      setCount(Math.round(eased * target));
+      if (elapsed < scrambleDuration) {
+        // Chiffre aléatoire dans la plage [0, target]
+        setDisplay(Math.floor(Math.random() * (target + 1)));
+      } else {
+        // Converge vers la valeur finale avec un léger bruit qui diminue
+        const noise = Math.round((1 - progress) * target * 0.3);
+        const jitter = Math.random() < 0.5 ? noise : -noise;
+        setDisplay(Math.max(0, Math.min(target, settled + (progress < 0.9 ? jitter : 0))));
+      }
 
       if (progress < 1) {
         requestAnimationFrame(animate);
+      } else {
+        setDisplay(target);
       }
     };
 
     requestAnimationFrame(animate);
   }, [isInView, target, duration]);
 
-  return count;
+  return display;
 };
 
 const StatItem = memo(({ stat, isInView, variants }) => {
-  const count = useCountUp(stat.value, isInView);
+  const count = useScrambleCount(stat.value, isInView);
 
   return (
     <motion.div className="stats__item" variants={variants}>

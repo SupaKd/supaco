@@ -1,5 +1,7 @@
 import { memo, useCallback } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useMagnet } from "../hooks/useMagnet";
 
 const badges = [
   {
@@ -57,6 +59,13 @@ const badges = [
 ];
 
 const Hero = memo(() => {
+  const magnet = useMagnet(0.35);
+  const { scrollY } = useScroll();
+  // Fond et particules scrollent plus lentement
+  const bgY = useTransform(scrollY, [0, 600], [0, 120]);
+  // Contenu principal remonte légèrement
+  const contentY = useTransform(scrollY, [0, 600], [0, -60]);
+
   const scrollToContact = useCallback((e) => {
     e.preventDefault();
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
@@ -70,7 +79,7 @@ const Hero = memo(() => {
   return (
     <section className="hero" id="hero">
       {/* Logos flottants en arrière-plan */}
-      <div className="hero__bg-logos">
+      <motion.div className="hero__bg-logos" style={{ y: bgY }}>
         <img
           src="/logo2026.png"
           alt=""
@@ -107,18 +116,18 @@ const Hero = memo(() => {
           decoding="async"
           className="hero__bg-logo hero__bg-logo--4"
         />
-      </div>
+      </motion.div>
 
       {/* Particules décoratives */}
-      <div className="hero__particles">
+      <motion.div className="hero__particles" style={{ y: bgY }}>
         <div className="hero__particle"></div>
         <div className="hero__particle"></div>
         <div className="hero__particle"></div>
         <div className="hero__particle"></div>
         <div className="hero__particle"></div>
-      </div>
+      </motion.div>
 
-      <div className="hero__container">
+      <motion.div className="hero__container" style={{ y: contentY }}>
         {/* Colonne gauche — photo */}
         <div className="hero__left">
           <div className="hero__profile-card">
@@ -133,10 +142,9 @@ const Hero = memo(() => {
                   width="200"
                   height="200"
                   loading="eager"
-                  fetchpriority="high"
+                  fetchPriority="high"
                   decoding="async"
                 />
-                <circle cx="12" cy="7" r="4" />
               </div>
             </div>
 
@@ -242,10 +250,18 @@ const Hero = memo(() => {
 
           {/* CTAs */}
           <div className="hero__actions">
-            <a href="#contact" className="hero__cta" onClick={scrollToContact}>
+            <motion.a
+              ref={magnet.ref}
+              href="#contact"
+              className="hero__cta"
+              onClick={scrollToContact}
+              onMouseMove={magnet.handleMouseMove}
+              onMouseLeave={magnet.handleMouseLeave}
+              style={{ x: magnet.springX, y: magnet.springY }}
+            >
               Lancer mon projet
               <ArrowRight size={20} strokeWidth={2.5} />
-            </a>
+            </motion.a>
             <a
               href="#projects"
               className="hero__secondary"
@@ -255,7 +271,7 @@ const Hero = memo(() => {
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Gradient décoratif */}
       <div className="hero__gradient"></div>
