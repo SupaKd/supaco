@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import RevealText from './ui/RevealText';
 import { 
   Atom, 
   Server, 
@@ -87,7 +88,7 @@ const Technologies = () => {
           transition={{ duration: 0.35 }}
         >
           <span className="technologies__label">Stack Technique</span>
-          <h2 className="technologies__title">Technologies utilisées</h2>
+          <RevealText className="technologies__title">Technologies utilisées</RevealText>
           <p className="technologies__subtitle">
             Nous utilisons les technologies les plus modernes et performantes
             pour créer des sites web rapides, sécurisés et évolutifs.

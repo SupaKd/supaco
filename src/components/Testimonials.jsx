@@ -1,5 +1,6 @@
 import { useRef, memo, useMemo, useState, useCallback, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import RevealText from './ui/RevealText';
 import { HiStar } from "react-icons/hi2";
 import { FcGoogle } from "react-icons/fc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
@@ -207,7 +208,7 @@ const Testimonials = () => {
           transition={{ duration: 0.35 }}
         >
           <span className="testimonials__label">Témoignages</span>
-          <h2 className="testimonials__title">Ce que disent nos clients</h2>
+          <RevealText className="testimonials__title">Ce que disent nos clients</RevealText>
           <p className="testimonials__subtitle">
             La satisfaction de nos clients est notre meilleure carte de visite.
           </p>

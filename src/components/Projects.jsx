@@ -1,5 +1,6 @@
 import { useState, useRef, memo, useCallback, useMemo, useEffect } from "react";
 import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import RevealText from './ui/RevealText';
 import {
   HiOutlineExternalLink,
   HiOutlineArrowRight,
@@ -329,7 +330,7 @@ const Projects = () => {
             transition={{ duration: 0.4 }}
           >
             <span className="projects__label">Portfolio</span>
-            <h2 className="projects__title">Mes réalisations</h2>
+            <RevealText className="projects__title">Mes réalisations</RevealText>
             <p className="projects__subtitle">
               Des projets livrés pour de vraies entreprises — du site vitrine à
               l'application web sur-mesure.

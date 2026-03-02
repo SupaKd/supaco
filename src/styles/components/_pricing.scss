@@ -42,34 +42,64 @@
     @include body-text;
   }
 
-  // ---- Grid ----
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: $space-xl;
+  // ---- Sticky scroll container ----
+  &__scroll-container {
     position: relative;
+    // Hauteur = 4 étapes × 100vh pour le défilement sticky
+    height: calc(4 * 55vh);
+    max-width: 760px;
+    margin: 0 auto;
 
     @include tablet {
-      grid-template-columns: repeat(2, 1fr);
+      height: auto;
     }
+  }
 
-    @include mobile {
-      grid-template-columns: 1fr;
-      max-width: 400px;
-      margin: 0 auto;
+  &__sticky-slot {
+    position: sticky;
+    top: 120px;
+    height: 55vh;
+    display: flex;
+    align-items: center;
+
+    @include tablet {
+      position: relative;
+      top: auto;
+      height: auto;
+      margin-bottom: $space-xl;
     }
   }
 
   // ---- Step Card ----
   &__step {
     @include card;
-    padding: $space-2xl;
-    text-align: center;
-    position: relative;
+    padding: $space-2xl $space-3xl;
+    width: 100%;
+    transform-origin: top center;
+    will-change: transform, opacity;
 
-    &:hover {
-      transform: translateY(-8px);
-      border-color: rgba($color-accent-primary, 0.3);
+    &-inner {
+      display: flex;
+      align-items: center;
+      gap: $space-3xl;
+
+      @include mobile {
+        flex-direction: column;
+        gap: $space-xl;
+        text-align: center;
+      }
+    }
+
+    &-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $space-md;
+      flex-shrink: 0;
+    }
+
+    &-right {
+      flex: 1;
     }
 
     &-number {
@@ -78,15 +108,13 @@
       font-weight: 700;
       @include gradient-text;
       line-height: 1;
-      margin-bottom: $space-lg;
-      opacity: 0.3;
+      opacity: 0.25;
     }
 
     &-icon {
       @include flex-center;
       width: 56px;
       height: 56px;
-      margin: 0 auto $space-lg;
       border-radius: $radius-full;
       background: rgba($color-accent-primary, 0.1);
       color: var(--color-accent-primary);
@@ -94,16 +122,17 @@
 
     &-title {
       font-family: $font-display;
-      font-size: $font-size-xl;
+      font-size: $font-size-2xl;
       font-weight: 600;
       color: var(--color-text-primary);
-      margin-bottom: $space-sm;
+      margin-bottom: $space-md;
     }
 
     &-description {
-      font-size: $font-size-sm;
+      font-size: $font-size-base;
       color: var(--color-text-secondary);
-      line-height: 1.6;
+      line-height: 1.7;
+      max-width: 480px;
     }
   }
 

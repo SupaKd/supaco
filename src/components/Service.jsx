@@ -1,5 +1,6 @@
 import { memo, useRef, useMemo, useState, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import RevealText from './ui/RevealText';
 import {
   HiOutlineGlobeAlt,
   HiOutlineShoppingCart,
@@ -275,7 +276,7 @@ const Services = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <h2 className="services__title">Ce que je propose</h2>
+          <RevealText className="services__title">Ce que je propose</RevealText>
           <p className="services__subtitle">
             Des solutions web adaptées à vos besoins et à votre budget, livrées
             rapidement avec un accompagnement personnalisé.

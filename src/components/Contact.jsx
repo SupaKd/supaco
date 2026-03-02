@@ -1,5 +1,6 @@
 import { useState, useRef, memo, useCallback, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
+import RevealText from './ui/RevealText';
 import emailjs from "@emailjs/browser";
 import {
   HiOutlineMail,
@@ -186,7 +187,7 @@ const Contact = () => {
             transition={{ duration: 0.35 }}
           >
             <span className="contact__label">Contact</span>
-            <h2 className="contact__title">Parlons de votre projet</h2>
+            <RevealText className="contact__title">Parlons de votre projet</RevealText>
             <p className="contact__description">
               Une idée ? Un projet ? Contactez-nous pour un devis gratuit et
               sans engagement. Réponse garantie sous 24 heures.

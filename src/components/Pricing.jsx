@@ -1,5 +1,6 @@
-import { useRef, memo, useMemo, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, memo, useCallback } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import RevealText from './ui/RevealText';
 import {
   HiOutlineChatBubbleLeftRight,
   HiOutlinePaintBrush,
@@ -38,46 +39,56 @@ const steps = [
   },
 ];
 
-const ProcessStep = memo(({ step, variants }) => (
-  <motion.div className="process__step" variants={variants}>
-    <div className="process__step-number">{step.number}</div>
-    <div className="process__step-icon">{step.icon}</div>
-    <h3 className="process__step-title">{step.title}</h3>
-    <p className="process__step-description">{step.description}</p>
-  </motion.div>
-));
+// Carte sticky individuelle — scale + opacity pilotés par le scroll
+const StickyStep = memo(({ step, index, total, containerRef }) => {
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
 
-ProcessStep.displayName = "ProcessStep";
+  // Chaque carte occupe 1/total de la progression
+  const start = index / total;
+  const end = (index + 1) / total;
+
+  // La carte en cours passe de 1 → 0.88 (se réduit quand la suivante arrive)
+  const scale = useTransform(
+    scrollYProgress,
+    [start, end - 0.02, end],
+    index < total - 1 ? [1, 1, 0.88] : [1, 1, 1]
+  );
+  const opacity = useTransform(
+    scrollYProgress,
+    [start, end - 0.02, end],
+    index < total - 1 ? [1, 1, 0.5] : [1, 1, 1]
+  );
+
+  return (
+    <div className="process__sticky-slot">
+      <motion.div
+        className="process__step"
+        style={{ scale, opacity }}
+      >
+        <div className="process__step-inner">
+          <div className="process__step-left">
+            <span className="process__step-number">{step.number}</span>
+            <div className="process__step-icon">{step.icon}</div>
+          </div>
+          <div className="process__step-right">
+            <h3 className="process__step-title">{step.title}</h3>
+            <p className="process__step-description">{step.description}</p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+});
+
+StickyStep.displayName = "StickyStep";
 
 const Process = () => {
   const ref = useRef(null);
+  const containerRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const containerVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.2 },
-      },
-    }),
-    []
-  );
-
-  const stepVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 40 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 0.6,
-          ease: [0.25, 0.46, 0.45, 0.94],
-        },
-      },
-    }),
-    []
-  );
 
   const scrollToContact = useCallback((e) => {
     e.preventDefault();
@@ -91,36 +102,34 @@ const Process = () => {
           className="process__header"
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
           <span className="process__label">Comment ça marche</span>
-          <h2 className="process__title">Un projet en 4 étapes</h2>
+          <RevealText className="process__title">Un projet en 4 étapes</RevealText>
           <p className="process__subtitle">
             Chaque projet est unique. On s'adapte à vos besoins pour livrer un
             résultat sur-mesure.
           </p>
         </motion.div>
 
-        <motion.div
-          className="process__grid"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {steps.map((step) => (
-            <ProcessStep
+        {/* Zone sticky scroll */}
+        <div className="process__scroll-container" ref={containerRef}>
+          {steps.map((step, i) => (
+            <StickyStep
               key={step.number}
               step={step}
-              variants={stepVariants}
+              index={i}
+              total={steps.length}
+              containerRef={containerRef}
             />
           ))}
-        </motion.div>
+        </div>
 
         <motion.div
           className="process__cta"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 1 }}
+          transition={{ delay: 0.4 }}
         >
           <motion.a
             href="#contact"
