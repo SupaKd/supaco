@@ -86,9 +86,16 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
       {/* Gradient permanent en bas */}
       <div className="projects__bento-gradient" />
 
-      {/* Titre */}
+      {/* Titre + Badge */}
       <div className="projects__bento-content">
         <h3 className="projects__bento-title">{project.title}</h3>
+        <span className={`projects__bento-badge projects__bento-badge--${project.category}`}>
+          {project.category === "app"
+            ? "Application Web"
+            : project.category === "ecommerce"
+            ? "E-Commerce"
+            : "Site Vitrine"}
+        </span>
       </div>
     </motion.article>
   );
@@ -178,15 +185,15 @@ const Projects = () => {
   const projects = useMemo(
     () => [
       {
-        id: 2,
-        title: "Bellifood",
+        id: 1,
+        title: "Restaurant Sabai",
         description:
-          "Site vitrine avec menu digital pour un restaurant de tacos et burgers à Oyonnax",
+          "Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry",
         image:
-          "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Restaurant"],
-        category: "vitrine",
-        url: "https://bellifood.com/",
+          "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=75",
+        tags: ["Application Web", "Restaurant"],
+        category: "app",
+        url: "https://sabai-thoiry.com/",
       },
       {
         id: 7,
@@ -199,6 +206,18 @@ const Projects = () => {
         category: "vitrine",
         url: "https://mb-beige-six.vercel.app/",
       },
+      {
+        id: 2,
+        title: "Bellifood",
+        description:
+          "Site vitrine avec menu digital pour un restaurant de tacos et burgers à Oyonnax",
+        image:
+          "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&q=75",
+        tags: ["Site Vitrine", "Restaurant"],
+        category: "vitrine",
+        url: "https://bellifood.com/",
+      },
+
       {
         id: 4,
         title: "Dépannage Gémeaux",
@@ -243,18 +262,6 @@ const Projects = () => {
         tags: ["Site Vitrine", "Lunettes"],
         category: "vitrine",
         url: "https://cms-xi-self.vercel.app/",
-      },
-
-      {
-        id: 1,
-        title: "Restaurant Sabai",
-        description:
-          "Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry",
-        image:
-          "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=75",
-        tags: ["Application Web", "Restaurant"],
-        category: "app",
-        url: "https://sabai-thoiry.com/",
       },
     ],
     []

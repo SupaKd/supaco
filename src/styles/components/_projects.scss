@@ -235,8 +235,10 @@
     position: absolute;
     inset: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: $space-sm;
     padding: $space-md;
     z-index: 1;
     text-align: center;
@@ -253,6 +255,35 @@
     // Carte centrale (tall) : titre plus grand
     .projects__bento-card:nth-child(2) & {
       font-size: $font-size-2xl;
+    }
+  }
+
+  // Badge catégorie
+  &__bento-badge {
+    display: inline-block;
+    padding: 2px $space-sm;
+    border-radius: $radius-full;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
+
+    &--vitrine {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+
+    &--app {
+      background: rgba($color-accent-primary, 0.25);
+      color: #fff;
+      border: 1px solid rgba($color-accent-primary, 0.5);
+    }
+
+    &--ecommerce {
+      background: rgba(255, 180, 50, 0.22);
+      color: #ffd97d;
+      border: 1px solid rgba(255, 180, 50, 0.4);
     }
   }
 
