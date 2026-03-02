@@ -1,5 +1,5 @@
-import { memo, useCallback, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { memo, useCallback, useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useMagnet } from "../hooks/useMagnet";
 import HighlightText from "./ui/HighlightText";
@@ -8,16 +8,19 @@ const SWAP_WORDS = ["sites web", "boutiques en ligne", "applications web"];
 
 const WordSwap = memo(() => {
   const [index, setIndex] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false });
 
   useEffect(() => {
+    if (!isInView) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % SWAP_WORDS.length);
     }, 2400);
     return () => clearInterval(id);
-  }, []);
+  }, [isInView]);
 
   return (
-    <span className="hero__word-swap" aria-live="polite">
+    <span ref={ref} className="hero__word-swap" aria-live="polite">
       <AnimatePresence mode="wait">
         <motion.span
           key={index}
