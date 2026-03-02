@@ -1,7 +1,39 @@
-import { memo, useCallback } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { memo, useCallback, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useMagnet } from "../hooks/useMagnet";
+import HighlightText from "./ui/HighlightText";
+
+const SWAP_WORDS = ["sites web", "boutiques en ligne", "applications web"];
+
+const WordSwap = memo(() => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % SWAP_WORDS.length);
+    }, 2400);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span className="hero__word-swap" aria-live="polite">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={index}
+          className="gradient-text"
+          initial={{ y: 28, opacity: 0, filter: "blur(6px)" }}
+          animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+          exit={{ y: -28, opacity: 0, filter: "blur(6px)" }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: "inline-block" }}
+        >
+          {SWAP_WORDS[index]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+});
 
 const badges = [
   {
@@ -148,6 +180,12 @@ const Hero = memo(() => {
               </div>
             </div>
 
+            {/* Description */}
+            <div className="hero__profile-desc">
+              <span className="hero__profile-name">Kevin</span>
+              <span className="hero__profile-role">Développeur web freelance</span>
+            </div>
+
             {/* Contacts */}
             <div className="hero__contacts">
               <a href="tel:+33600000000" className="hero__contact-item">
@@ -216,7 +254,7 @@ const Hero = memo(() => {
         {/* Colonne droite — description profil */}
         <div className="hero__right">
           <h1 className="hero__title">
-            Bonjour, je suis <span className="gradient-text">Kevin</span>{" "}
+            Je crée vos <WordSwap />
           </h1>
 
           <p className="hero__subtitle">
@@ -225,17 +263,15 @@ const Hero = memo(() => {
             concrets. <br />
             Mon approche est stratégique : Comprendre votre activité, vos enjeux
             et vos objectifs pour concevoir un site qui attire, rassure et{" "}
-            <span className="hero__span">
-              convertit vos prospects en clients.
-            </span>{" "}
+            <HighlightText delay={0.3}>convertit vos prospects en clients.</HighlightText>{" "}
             <br />
           </p>
 
           <p className="hero__bio">
             {" "}
-            Un site internet renforce votre crédibilité et créer un canal
+            Un site internet renforce votre crédibilité et crée un canal
             d’acquisition disponible 24h/24. Si vos prospects ne vous trouvent
-            pas en ligne, ils choisissent vos concurrents!
+            pas en ligne, <HighlightText delay={0.5}>ils choisissent vos concurrents.</HighlightText>
           </p>
 
           {/* Badges valeurs */}
