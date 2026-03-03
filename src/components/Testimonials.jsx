@@ -4,47 +4,63 @@ import RevealText from './ui/RevealText';
 import { HiStar } from "react-icons/hi2";
 import { FcGoogle } from "react-icons/fc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { useLanguage } from "../context/LanguageContext";
 
 const GOOGLE_REVIEWS_URL =
   "https://www.google.com/search?q=Supaco+Digital+%7C+Agence+Web";
 
 const AVATAR_COLORS = ["#1a73e8", "#ea4335", "#34a853", "#fbbc04", "#9334e6"];
 
-const TESTIMONIALS = [
+const TESTIMONIALS_DATA = [
   {
     name: "Sabai Thoiry",
     rating: 5,
-    date: "il y a 2 mois",
+    date: { fr: "il y a 2 mois", en: "2 months ago" },
     color: AVATAR_COLORS[0],
-    text: "Super expérience du début à la fin. À l'écoute, réactif et très pro, mon site correspond exactement à ce que je voulais. Je recommande les yeux fermés.",
+    text: {
+      fr: "Super expérience du début à la fin. À l'écoute, réactif et très pro, mon site correspond exactement à ce que je voulais. Je recommande les yeux fermés.",
+      en: "Great experience from start to finish. Attentive, responsive and very professional, my site is exactly what I wanted. I recommend without hesitation.",
+    },
   },
   {
     name: "Béatrice",
     rating: 5,
-    date: "il y a 3 mois",
+    date: { fr: "il y a 3 mois", en: "3 months ago" },
     color: AVATAR_COLORS[1],
-    text: "Très professionnel, rapide et rigoureux. Après un premier échange, il a tout de suite compris notre projet et a su nous accompagner sur la création de notre boutique en ligne avec beaucoup de créativité !",
+    text: {
+      fr: "Très professionnel, rapide et rigoureux. Après un premier échange, il a tout de suite compris notre projet et a su nous accompagner sur la création de notre boutique en ligne avec beaucoup de créativité !",
+      en: "Very professional, fast and thorough. After an initial chat, he immediately understood our project and guided us through creating our online store with a lot of creativity!",
+    },
   },
   {
     name: "Gémeaux",
     rating: 5,
-    date: "il y a 4 mois",
+    date: { fr: "il y a 4 mois", en: "4 months ago" },
     color: AVATAR_COLORS[2],
-    text: "Professionnel, disponible et réactif. Les prestations sont de qualités. Je recommande !",
+    text: {
+      fr: "Professionnel, disponible et réactif. Les prestations sont de qualités. Je recommande !",
+      en: "Professional, available and responsive. The services are of high quality. I recommend!",
+    },
   },
   {
     name: "Bellifood",
     rating: 5,
-    date: "il y a 5 mois",
+    date: { fr: "il y a 5 mois", en: "5 months ago" },
     color: AVATAR_COLORS[3],
-    text: "Je ne connaissais rien au web et l'équipe m'a accompagnée de A à Z. Depuis le lancement du site, j'ai de nouveaux clients chaque semaine.",
+    text: {
+      fr: "Je ne connaissais rien au web et l'équipe m'a accompagnée de A à Z. Depuis le lancement du site, j'ai de nouveaux clients chaque semaine.",
+      en: "I knew nothing about the web and the team guided me from A to Z. Since the site launched, I get new clients every week.",
+    },
   },
   {
     name: "Kenneth Lam",
     rating: 5,
-    date: "il y a 6 mois",
+    date: { fr: "il y a 6 mois", en: "6 months ago" },
     color: AVATAR_COLORS[4],
-    text: "Compétent et professionnel.",
+    text: {
+      fr: "Compétent et professionnel.",
+      en: "Competent and professional.",
+    },
   },
 ];
 
@@ -54,43 +70,37 @@ const StarRating = memo(({ rating }) => (
       <HiStar
         key={i}
         size={16}
-        className={
-          i < rating
-            ? "testimonials__star--filled"
-            : "testimonials__star--empty"
-        }
+        className={i < rating ? "testimonials__star--filled" : "testimonials__star--empty"}
       />
     ))}
   </div>
 ));
 StarRating.displayName = "StarRating";
 
-const TestimonialCard = memo(({ t }) => (
+const TestimonialCard = memo(({ t: testimonial, contributor }) => (
   <div className="testimonials__card">
     <div className="testimonials__card-header">
-      <div className="testimonials__card-avatar" style={{ background: t.color }}>
-        {t.name.charAt(0)}
+      <div className="testimonials__card-avatar" style={{ background: testimonial.color }}>
+        {testimonial.name.charAt(0)}
       </div>
       <div className="testimonials__card-info">
-        <span className="testimonials__card-name">{t.name}</span>
-        <span className="testimonials__card-contributions">Contributeur local</span>
+        <span className="testimonials__card-name">{testimonial.name}</span>
+        <span className="testimonials__card-contributions">{contributor}</span>
       </div>
       <FcGoogle size={24} className="testimonials__card-google" />
     </div>
     <div className="testimonials__card-meta">
-      <StarRating rating={t.rating} />
-      <span className="testimonials__card-date">{t.date}</span>
+      <StarRating rating={testimonial.rating} />
+      <span className="testimonials__card-date">{testimonial.date}</span>
     </div>
-    <p className="testimonials__card-text">{t.text}</p>
+    <p className="testimonials__card-text">{testimonial.text}</p>
   </div>
 ));
 TestimonialCard.displayName = "TestimonialCard";
 
-// ---- Desktop : carousel infini ----
-const InfiniteCarousel = memo(() => {
+const InfiniteCarousel = memo(({ items, contributor }) => {
   const [paused, setPaused] = useState(false);
-  // Dupliquer 3x pour un scroll sans accroc
-  const items = useMemo(() => [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS], []);
+  const tripled = useMemo(() => [...items, ...items, ...items], [items]);
 
   return (
     <div
@@ -99,9 +109,9 @@ const InfiniteCarousel = memo(() => {
       onMouseLeave={() => setPaused(false)}
     >
       <div className={`testimonials__carousel-track${paused ? " testimonials__carousel-track--paused" : ""}`}>
-        {items.map((t, i) => (
+        {tripled.map((t, i) => (
           <div className="testimonials__carousel-item" key={i}>
-            <TestimonialCard t={t} />
+            <TestimonialCard t={t} contributor={contributor} />
           </div>
         ))}
       </div>
@@ -110,8 +120,7 @@ const InfiniteCarousel = memo(() => {
 });
 InfiniteCarousel.displayName = "InfiniteCarousel";
 
-// ---- Mobile : slider 1 carte ----
-const MobileSlider = memo(({ testimonials }) => {
+const MobileSlider = memo(({ testimonials, prevLabel, nextLabel, contributor }) => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
 
@@ -133,7 +142,6 @@ const MobileSlider = memo(({ testimonials }) => {
     [current]
   );
 
-  // Auto-play mobile
   useEffect(() => {
     const id = setInterval(() => {
       setDirection(1);
@@ -156,7 +164,7 @@ const MobileSlider = memo(({ testimonials }) => {
 
   return (
     <div className="testimonials__slider">
-      <button className="testimonials__arrow testimonials__arrow--left" onClick={prev} aria-label="Avis précédent">
+      <button className="testimonials__arrow testimonials__arrow--left" onClick={prev} aria-label={prevLabel}>
         <HiChevronLeft />
       </button>
 
@@ -170,12 +178,12 @@ const MobileSlider = memo(({ testimonials }) => {
             animate="center"
             exit="exit"
           >
-            <TestimonialCard t={t} />
+            <TestimonialCard t={t} contributor={contributor} />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <button className="testimonials__arrow testimonials__arrow--right" onClick={next} aria-label="Avis suivant">
+      <button className="testimonials__arrow testimonials__arrow--right" onClick={next} aria-label={nextLabel}>
         <HiChevronRight />
       </button>
 
@@ -185,7 +193,7 @@ const MobileSlider = memo(({ testimonials }) => {
             key={i}
             className={`testimonials__dot${i === current ? " testimonials__dot--active" : ""}`}
             onClick={() => goTo(i)}
-            aria-label={`Aller à l'avis ${i + 1}`}
+            aria-label={`${i + 1}`}
           />
         ))}
       </div>
@@ -195,8 +203,18 @@ const MobileSlider = memo(({ testimonials }) => {
 MobileSlider.displayName = "MobileSlider";
 
 const Testimonials = () => {
+  const { lang, t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const testimonials = useMemo(
+    () => TESTIMONIALS_DATA.map((item) => ({
+      ...item,
+      text: item.text[lang],
+      date: item.date[lang],
+    })),
+    [lang]
+  );
 
   return (
     <section className="testimonials" id="testimonials" ref={ref}>
@@ -207,31 +225,32 @@ const Testimonials = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.35 }}
         >
-          <span className="testimonials__label">Témoignages</span>
-          <RevealText className="testimonials__title">Ce que disent nos clients</RevealText>
-          <p className="testimonials__subtitle">
-            La satisfaction de nos clients est notre meilleure carte de visite.
-          </p>
+          <span className="testimonials__label">{t.testimonials.label}</span>
+          <RevealText className="testimonials__title">{t.testimonials.title}</RevealText>
+          <p className="testimonials__subtitle">{t.testimonials.subtitle}</p>
         </motion.div>
 
-        {/* Desktop : carousel infini */}
         <motion.div
           className="testimonials__carousel-wrapper"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          <InfiniteCarousel />
+          <InfiniteCarousel items={testimonials} contributor={t.testimonials.contributor} />
         </motion.div>
 
-        {/* Mobile : slider 1 carte */}
         <motion.div
           className="testimonials__slider-wrapper"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          <MobileSlider testimonials={TESTIMONIALS} />
+          <MobileSlider
+            testimonials={testimonials}
+            prevLabel={t.testimonials.prevAriaLabel}
+            nextLabel={t.testimonials.nextAriaLabel}
+            contributor={t.testimonials.contributor}
+          />
         </motion.div>
 
         <motion.div
@@ -247,7 +266,7 @@ const Testimonials = () => {
             className="testimonials__google-link"
           >
             <FcGoogle size={24} />
-            <span>Voir tous nos avis sur Google</span>
+            <span>{t.testimonials.googleLink}</span>
           </a>
         </motion.div>
       </div>

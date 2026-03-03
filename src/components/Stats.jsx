@@ -6,6 +6,7 @@ import {
   HiOutlineClock,
   HiOutlineBolt,
 } from "react-icons/hi2";
+import { useLanguage } from "../context/LanguageContext";
 
 const useScrambleCount = (target, isInView, duration = 2000) => {
   const [display, setDisplay] = useState(0);
@@ -14,7 +15,6 @@ const useScrambleCount = (target, isInView, duration = 2000) => {
     if (!isInView) return;
 
     const startTime = performance.now();
-    // Phase scramble : 40% du temps ; phase settle : 60%
     const scrambleDuration = duration * 0.45;
 
     const animate = (currentTime) => {
@@ -24,10 +24,8 @@ const useScrambleCount = (target, isInView, duration = 2000) => {
       const settled = Math.round(eased * target);
 
       if (elapsed < scrambleDuration) {
-        // Chiffre aléatoire dans la plage [0, target]
         setDisplay(Math.floor(Math.random() * (target + 1)));
       } else {
-        // Converge vers la valeur finale avec un léger bruit qui diminue
         const noise = Math.round((1 - progress) * target * 0.3);
         const jitter = Math.random() < 0.5 ? noise : -noise;
         setDisplay(Math.max(0, Math.min(target, settled + (progress < 0.9 ? jitter : 0))));
@@ -65,41 +63,18 @@ const StatItem = memo(({ stat, isInView, variants }) => {
 StatItem.displayName = "StatItem";
 
 const Stats = () => {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   const stats = useMemo(
     () => [
-      {
-        icon: <HiOutlineRocketLaunch size={28} />,
-        value: 9,
-        suffix: "+",
-        prefix: "",
-        label: "Projets livrés",
-      },
-      {
-        icon: <HiOutlineFaceSmile size={28} />,
-        value: 100,
-        suffix: "%",
-        prefix: "",
-        label: "Clients satisfaits",
-      },
-      {
-        icon: <HiOutlineClock size={28} />,
-        value: 24,
-        suffix: "h",
-        prefix: "<",
-        label: "Temps de réponse",
-      },
-      {
-        icon: <HiOutlineBolt size={28} />,
-        value: 5,
-        suffix: "j",
-        prefix: "",
-        label: "Livraison express",
-      },
+      { icon: <HiOutlineRocketLaunch size={28} />, value: 9, suffix: "+", prefix: "", label: t.stats.projects },
+      { icon: <HiOutlineFaceSmile size={28} />, value: 100, suffix: "%", prefix: "", label: t.stats.clients },
+      { icon: <HiOutlineClock size={28} />, value: 24, suffix: "h", prefix: "<", label: t.stats.response },
+      { icon: <HiOutlineBolt size={28} />, value: 5, suffix: "j", prefix: "", label: t.stats.delivery },
     ],
-    []
+    [t.stats]
   );
 
   const containerVariants = useMemo(
@@ -119,10 +94,7 @@ const Stats = () => {
       visible: {
         opacity: 1,
         y: 0,
-        transition: {
-          duration: 0.28,
-          ease: "easeOut",
-        },
+        transition: { duration: 0.28, ease: "easeOut" },
       },
     }),
     []
@@ -137,12 +109,7 @@ const Stats = () => {
         animate={isInView ? "visible" : "hidden"}
       >
         {stats.map((stat) => (
-          <StatItem
-            key={stat.label}
-            stat={stat}
-            isInView={isInView}
-            variants={itemVariants}
-          />
+          <StatItem key={stat.label} stat={stat} isInView={isInView} variants={itemVariants} />
         ))}
       </motion.div>
     </section>

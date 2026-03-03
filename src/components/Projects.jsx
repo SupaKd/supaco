@@ -7,8 +7,38 @@ import {
   HiChevronLeft,
   HiChevronRight,
 } from "react-icons/hi";
+import { useLanguage } from "../context/LanguageContext";
 
-// Ajoute &fm=webp&auto=format aux URLs Unsplash pour forcer le format WebP
+const PROJECT_IMAGES = {
+  1: "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=75",
+  7: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&h=400&fit=crop&q=75",
+  2: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&q=75",
+  4: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=600&h=400&fit=crop&q=75",
+  6: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=75",
+  5: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&q=75",
+  3: "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=400&fit=crop&q=75",
+};
+
+const PROJECT_URLS = {
+  1: "https://sabai-thoiry.com/",
+  7: "https://mb-beige-six.vercel.app/",
+  2: "https://bellifood.com/",
+  4: "https://depannage-gemeaux.fr/",
+  6: "https://restaurant-t.vercel.app/",
+  5: "https://www.yojeme.fr/",
+  3: "https://cms-xi-self.vercel.app/",
+};
+
+const PROJECT_CATEGORIES = {
+  1: "app",
+  7: "vitrine",
+  2: "vitrine",
+  4: "vitrine",
+  6: "vitrine",
+  5: "vitrine",
+  3: "vitrine",
+};
+
 const optimizeUnsplashUrl = (url) => {
   if (!url.includes("unsplash.com")) return url;
   const u = new URL(url);
@@ -18,8 +48,7 @@ const optimizeUnsplashUrl = (url) => {
   return u.toString();
 };
 
-// Composant Image avec lazy loading + overlay hover (mobile/tablet)
-const ProjectImage = memo(({ src, alt }) => {
+const ProjectImage = memo(({ src, alt, overlayText }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const optimizedSrc = optimizeUnsplashUrl(src);
 
@@ -29,9 +58,7 @@ const ProjectImage = memo(({ src, alt }) => {
       <img
         src={optimizedSrc}
         alt={alt}
-        className={`projects__item-image ${
-          isLoaded ? "projects__item-image--loaded" : ""
-        }`}
+        className={`projects__item-image ${isLoaded ? "projects__item-image--loaded" : ""}`}
         loading="lazy"
         decoding="async"
         onLoad={() => setIsLoaded(true)}
@@ -39,7 +66,7 @@ const ProjectImage = memo(({ src, alt }) => {
       <div className="projects__item-overlay">
         <span className="projects__item-overlay-text">
           <HiOutlineExternalLink size={18} />
-          Voir le projet
+          {overlayText}
         </span>
       </div>
     </div>
@@ -48,8 +75,7 @@ const ProjectImage = memo(({ src, alt }) => {
 
 ProjectImage.displayName = "ProjectImage";
 
-// Carte bento desktop avec image en fond + tilt 3D
-const BentoCard = memo(({ project, variants, onProjectClick }) => {
+const BentoCard = memo(({ project, variants, onProjectClick, categoryLabels }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const optimizedSrc = optimizeUnsplashUrl(project.image);
   const cardRef = useRef(null);
@@ -63,7 +89,7 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
     const card = cardRef.current;
     if (!card) return;
     const { left, top, width, height } = card.getBoundingClientRect();
-    const x = (e.clientX - left) / width - 0.5;  // -0.5 à 0.5
+    const x = (e.clientX - left) / width - 0.5;
     const y = (e.clientY - top) / height - 0.5;
     rotateY.set(x * 14);
     rotateX.set(-y * 14);
@@ -90,7 +116,7 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
       onClick={handleClick}
       role="link"
       tabIndex={0}
-      aria-label={`Voir le projet ${project.title}`}
+      aria-label={`${project.title}`}
       onKeyDown={(e) => e.key === "Enter" && handleClick()}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -101,31 +127,22 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
         transformPerspective: 800,
       }}
     >
-      {/* Image de fond */}
       {!isLoaded && <div className="projects__bento-placeholder" />}
       <img
         src={optimizedSrc}
         alt={project.title}
-        className={`projects__bento-bg${
-          isLoaded ? " projects__bento-bg--loaded" : ""
-        }`}
+        className={`projects__bento-bg${isLoaded ? " projects__bento-bg--loaded" : ""}`}
         loading="lazy"
         decoding="async"
         onLoad={() => setIsLoaded(true)}
       />
 
-      {/* Gradient permanent en bas */}
       <div className="projects__bento-gradient" />
 
-      {/* Titre + Badge */}
       <div className="projects__bento-content">
         <h3 className="projects__bento-title">{project.title}</h3>
         <span className={`projects__bento-badge projects__bento-badge--${project.category}`}>
-          {project.category === "app"
-            ? "Application Web"
-            : project.category === "ecommerce"
-            ? "E-Commerce"
-            : "Site Vitrine"}
+          {categoryLabels[project.category]}
         </span>
       </div>
     </motion.article>
@@ -134,7 +151,7 @@ const BentoCard = memo(({ project, variants, onProjectClick }) => {
 
 BentoCard.displayName = "BentoCard";
 
-const ProjectItem = memo(({ project, index, variants, onProjectClick }) => {
+const ProjectItem = memo(({ project, index, variants, onProjectClick, overlayText }) => {
   const handleClick = useCallback(() => {
     onProjectClick(project.url);
   }, [project.url, onProjectClick]);
@@ -150,21 +167,19 @@ const ProjectItem = memo(({ project, index, variants, onProjectClick }) => {
       onClick={handleClick}
       role="link"
       tabIndex={0}
-      aria-label={`Voir le projet ${project.title}`}
+      aria-label={`${project.title}`}
       onKeyDown={(e) => e.key === "Enter" && handleClick()}
     >
       <span className="projects__item-number">
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      <ProjectImage src={project.image} alt={project.title} />
+      <ProjectImage src={project.image} alt={project.title} overlayText={overlayText} />
 
       <div className="projects__item-content">
         <div className="projects__item-tags">
           {project.tags.map((tag) => (
-            <span key={tag} className="projects__item-tag">
-              {tag}
-            </span>
+            <span key={tag} className="projects__item-tag">{tag}</span>
           ))}
         </div>
         <h3 className="projects__item-title">{project.title}</h3>
@@ -181,6 +196,7 @@ const ProjectItem = memo(({ project, index, variants, onProjectClick }) => {
 ProjectItem.displayName = "ProjectItem";
 
 const Projects = () => {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const listRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -214,88 +230,13 @@ const Projects = () => {
   }, []);
 
   const projects = useMemo(
-    () => [
-      {
-        id: 1,
-        title: "Restaurant Sabai",
-        description:
-          "Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry",
-        image:
-          "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=75",
-        tags: ["Application Web", "Restaurant"],
-        category: "app",
-        url: "https://sabai-thoiry.com/",
-      },
-      {
-        id: 7,
-        title: "MB - Patrimoine & Finance",
-        description:
-          "Site vitrine professionnel pour une conseillère en investissements, avec présentation des services et prise de contact",
-        image:
-          "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Finance"],
-        category: "vitrine",
-        url: "https://mb-beige-six.vercel.app/",
-      },
-      {
-        id: 2,
-        title: "Bellifood",
-        description:
-          "Site vitrine avec menu digital pour un restaurant de tacos et burgers à Oyonnax",
-        image:
-          "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Restaurant"],
-        category: "vitrine",
-        url: "https://bellifood.com/",
-      },
-
-      {
-        id: 4,
-        title: "Dépannage Gémeaux",
-        description:
-          "Site vitrine professionnel pour une entreprise de plomberie et chauffage avec formulaire de contact et présentation des services",
-        image:
-          "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Artisan"],
-        category: "vitrine",
-        url: "https://depannage-gemeaux.fr/",
-      },
-      {
-        id: 6,
-        title: "Le Comptoir",
-        description:
-          "Site vitrine élégant pour un restaurant, avec présentation du menu et ambiance soignée",
-        image:
-          "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Restaurant"],
-        category: "vitrine",
-        url: "https://restaurant-t.vercel.app/",
-      },
-      {
-        id: 5,
-        title: "Yojeme",
-        description:
-          "Site vitrine moderne et responsive avec design épuré et optimisation SEO",
-        image:
-          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Services"],
-        category: "vitrine",
-        url: "https://www.yojeme.fr/",
-      },
-
-      {
-        id: 3,
-        title: "Optical Store",
-        description:
-          "Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon",
-        image:
-          "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=400&fit=crop&q=75",
-        tags: ["Site Vitrine", "Lunettes"],
-        category: "vitrine",
-        url: "https://cms-xi-self.vercel.app/",
-      },
-    ],
-    []
+    () => t.projects.items.map((item) => ({
+      ...item,
+      image: PROJECT_IMAGES[item.id],
+      url: PROJECT_URLS[item.id],
+      category: PROJECT_CATEGORIES[item.id],
+    })),
+    [t.projects.items]
   );
 
   const itemVariants = useMemo(
@@ -321,7 +262,6 @@ const Projects = () => {
   return (
     <section className="projects" id="projects" ref={ref}>
       <div className="projects__container">
-        {/* ---- Layout desktop : texte gauche + bento droite ---- */}
         <div className="projects__desktop-layout">
           <motion.div
             className="projects__sidebar"
@@ -329,22 +269,12 @@ const Projects = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.4 }}
           >
-            <span className="projects__label">Portfolio</span>
-            <RevealText className="projects__title">Mes réalisations</RevealText>
-            <p className="projects__subtitle">
-              Des projets livrés pour de vraies entreprises — du site vitrine à
-              l'application web sur-mesure.
-            </p>
-            <p className="projects__description">
-              Chaque réalisation est conçue avec une approche stratégique :
-              comprendre votre activité, analyser vos objectifs et créer une
-              expérience utilisateur claire et efficace. L’objectif n’est pas
-              seulement d’avoir un beau site, mais un outil performant, rapide
-              et optimisé pour transformer vos visiteurs en clients.
-            </p>
+            <span className="projects__label">{t.projects.label}</span>
+            <RevealText className="projects__title">{t.projects.title}</RevealText>
+            <p className="projects__subtitle">{t.projects.subtitle}</p>
+            <p className="projects__description">{t.projects.description}</p>
           </motion.div>
 
-          {/* ---- Bento Grid — desktop uniquement ---- */}
           <motion.div
             className="projects__bento"
             initial={{ opacity: 0 }}
@@ -358,26 +288,24 @@ const Projects = () => {
                   project={project}
                   variants={itemVariants}
                   onProjectClick={handleProjectClick}
+                  categoryLabels={t.projects.categoryLabels}
                 />
               ))}
             </AnimatePresence>
           </motion.div>
         </div>
 
-        {/* ---- Header mobile (caché en desktop) ---- */}
         <motion.div
           className="projects__header-mobile"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.35 }}
         >
-          <span className="projects__label">Portfolio</span>
-          <h2 className="projects__title">Mes réalisations</h2>
+          <span className="projects__label">{t.projects.label}</span>
+          <h2 className="projects__title">{t.projects.title}</h2>
         </motion.div>
 
-        {/* ---- Liste + swipe — tablet/mobile uniquement ---- */}
         <div className="projects__list-wrapper">
-          {/* Flèche gauche */}
           <AnimatePresence>
             {canScrollLeft && (
               <motion.button
@@ -387,7 +315,7 @@ const Projects = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                aria-label="Projets précédents"
+                aria-label="Previous projects"
               >
                 <HiChevronLeft />
               </motion.button>
@@ -409,12 +337,12 @@ const Projects = () => {
                   index={index}
                   variants={itemVariants}
                   onProjectClick={handleProjectClick}
+                  overlayText={t.projects.label}
                 />
               ))}
             </AnimatePresence>
           </motion.div>
 
-          {/* Flèche droite */}
           <AnimatePresence>
             {canScrollRight && (
               <motion.button
@@ -424,14 +352,13 @@ const Projects = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                aria-label="Projets suivants"
+                aria-label="Next projects"
               >
                 <HiChevronRight />
               </motion.button>
             )}
           </AnimatePresence>
 
-          {/* Indicateur swipe — mobile uniquement */}
           <AnimatePresence>
             {showSwipeHint && (
               <motion.div
@@ -442,7 +369,7 @@ const Projects = () => {
                 transition={{ delay: 0.5, duration: 0.3 }}
               >
                 <HiOutlineArrowRight className="projects__swipe-hint-icon" />
-                <span>Glissez pour voir plus</span>
+                <span>{t.projects.swipeHint}</span>
               </motion.div>
             )}
           </AnimatePresence>

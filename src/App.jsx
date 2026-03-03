@@ -7,6 +7,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import BackToTop from "./components/ui/BackToTop";
 import LegalModalsProvider from "./components/LegalModals";
 import Testimonials from "./components/Testimonials";
+import { LanguageProvider } from "./context/LanguageContext";
 
 // Lazy load les composants below-the-fold
 const Services = lazy(() => import("./components/Service"));
@@ -52,6 +53,7 @@ function App() {
   }, []);
 
   return (
+    <LanguageProvider>
     <LegalModalsProvider>
       <AnnouncementBanner />
       <Navbar />
@@ -80,6 +82,7 @@ function App() {
       <BackToTop />
       <WhatsAppButton />
     </LegalModalsProvider>
+    </LanguageProvider>
   );
 }
 

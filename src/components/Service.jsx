@@ -6,62 +6,11 @@ import {
   HiOutlineShoppingCart,
   HiOutlineLightningBolt,
   HiOutlineCheckCircle,
-  HiOutlineChartBar,
 } from "react-icons/hi";
+import { useLanguage } from "../context/LanguageContext";
 
-const SERVICES = [
-  {
-    id: "vitrine",
-    icon: HiOutlineGlobeAlt,
-    label: "Site Vitrine",
-    title: "Site Vitrine",
-    description:
-      "Je conçois votre site de A à Z pour refléter votre image et convaincre vos visiteurs de vous contacter.",
-    features: [
-      "Identité visuelle unique",
-      "Responsive mobile",
-      "Optimisation SEO",
-      "Intégration réseaux sociaux",
-    ],
-    price: "890€",
-    stat: { value: "5j", label: "Livraison moyenne" },
-    color: "var(--color-accent-primary)",
-  },
-  {
-    id: "ecommerce",
-    icon: HiOutlineShoppingCart,
-    label: "E-Commerce",
-    title: "E-Commerce",
-    description:
-      "Je construis votre boutique en ligne pour que vos clients achètent facilement — même pendant que vous dormez.",
-    features: [
-      "Catalogue produits",
-      "Paiement sécurisé",
-      "Gestion des stocks",
-      "Suivi commandes",
-    ],
-    price: "1 990€",
-    stat: { value: "14j", label: "Livraison moyenne" },
-    color: "var(--color-accent-primary)",
-  },
-  {
-    id: "app",
-    icon: HiOutlineLightningBolt,
-    label: "App Web",
-    title: "Application Web",
-    description:
-      "Quand un outil standard ne suffit plus, je développe exactement ce dont vous avez besoin — rien de plus, rien de moins.",
-    features: [
-      "CRM / ERP",
-      "Portail professionnel",
-      "Interface clients",
-      "Dashboard admin",
-    ],
-    price: "Sur devis",
-    stat: { value: "30j", label: "Livraison moyenne" },
-    color: "var(--color-accent-primary)",
-  },
-];
+const SERVICE_ICONS = [HiOutlineGlobeAlt, HiOutlineShoppingCart, HiOutlineLightningBolt];
+const SERVICE_COLOR = "var(--color-accent-primary)";
 
 function getPosition(idx, active, total) {
   const diff = (idx - active + total) % total;
@@ -102,10 +51,8 @@ const cardVariants = {
   },
 };
 
-// ---- Card ----
-
-const ServiceCard = memo(({ service, position, active, onClick }) => {
-  const Icon = service.icon;
+const ServiceCard = memo(({ service, position, active, onClick, priceFrom }) => {
+  const Icon = SERVICE_ICONS[service._idx];
   const isCenter = position === "center";
 
   return (
@@ -122,33 +69,22 @@ const ServiceCard = memo(({ service, position, active, onClick }) => {
 
       <div
         className="services__card-topline"
-        style={{
-          background: `linear-gradient(90deg, ${service.color}, transparent)`,
-        }}
+        style={{ background: `linear-gradient(90deg, ${SERVICE_COLOR}, transparent)` }}
       />
 
-      {/* Icône + titre sur la même ligne */}
       <div className="services__card-header">
         <div
-          className={`services__card-icon${
-            isCenter ? " services__card-icon--center" : ""
-          }`}
-          style={{ color: service.color }}
+          className={`services__card-icon${isCenter ? " services__card-icon--center" : ""}`}
+          style={{ color: SERVICE_COLOR }}
         >
           <Icon />
         </div>
         <h3 className="services__card-title">{service.title}</h3>
       </div>
 
-      {/* Description */}
       <p className="services__card-description">{service.description}</p>
 
-      {/* Corps */}
-      <div
-        className="services__card-body"
-        aria-hidden={false}
-        style={{ visibility: "visible" }}
-      >
+      <div className="services__card-body" aria-hidden={false} style={{ visibility: "visible" }}>
         <motion.div
           key={active}
           initial={isCenter ? { opacity: 0 } : false}
@@ -165,29 +101,20 @@ const ServiceCard = memo(({ service, position, active, onClick }) => {
             ))}
           </ul>
 
-          {/* Prix + paiement */}
           <div className="services__card-pricing">
             <div className="services__card-price">
-              <span className="services__card-price-from">À partir de</span>
-              <span
-                className="services__card-price-value"
-                style={{ color: service.color }}
-              >
+              <span className="services__card-price-from">{priceFrom}</span>
+              <span className="services__card-price-value" style={{ color: SERVICE_COLOR }}>
                 {service.price}
               </span>
             </div>
           </div>
 
           <div className="services__card-stat">
-            <span
-              className="services__card-stat-value"
-              style={{ color: service.color }}
-            >
+            <span className="services__card-stat-value" style={{ color: SERVICE_COLOR }}>
               {service.stat.value}
             </span>
-            <span className="services__card-stat-label">
-              {service.stat.label}
-            </span>
+            <span className="services__card-stat-label">{service.stat.label}</span>
           </div>
         </motion.div>
       </div>
@@ -197,20 +124,16 @@ const ServiceCard = memo(({ service, position, active, onClick }) => {
 
 ServiceCard.displayName = "ServiceCard";
 
-// ---- Tabs ----
-
 const ServiceTabs = memo(({ services, active, onSelect }) => (
   <div className="services__tabs">
     {services.map((s, idx) => {
-      const Icon = s.icon;
+      const Icon = SERVICE_ICONS[idx];
       return (
         <button
           key={s.id}
-          className={`services__tab${
-            active === idx ? " services__tab--active" : ""
-          }`}
+          className={`services__tab${active === idx ? " services__tab--active" : ""}`}
           onClick={() => onSelect(idx)}
-          style={active === idx ? { "--tab-color": s.color } : {}}
+          style={active === idx ? { "--tab-color": SERVICE_COLOR } : {}}
         >
           <Icon className="services__tab-icon" />
           <span>{s.label}</span>
@@ -222,13 +145,17 @@ const ServiceTabs = memo(({ services, active, onSelect }) => (
 
 ServiceTabs.displayName = "ServiceTabs";
 
-// ---- Section ----
-
 const Services = () => {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [active, setActive] = useState(0);
   const touchStartX = useRef(null);
+
+  const services = useMemo(
+    () => t.services.items.map((item, idx) => ({ ...item, _idx: idx })),
+    [t.services.items]
+  );
 
   const handleSelect = useCallback((idx) => setActive(idx), []);
 
@@ -242,12 +169,12 @@ const Services = () => {
     if (Math.abs(diff) > 50) {
       setActive((prev) =>
         diff > 0
-          ? (prev + 1) % SERVICES.length
-          : (prev - 1 + SERVICES.length) % SERVICES.length
+          ? (prev + 1) % services.length
+          : (prev - 1 + services.length) % services.length
       );
     }
     touchStartX.current = null;
-  }, []);
+  }, [services.length]);
 
   const headerVariants = useMemo(
     () => ({
@@ -276,22 +203,15 @@ const Services = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <RevealText className="services__title">Ce que je propose</RevealText>
-          <p className="services__subtitle">
-            Des solutions web adaptées à vos besoins et à votre budget, livrées
-            rapidement avec un accompagnement personnalisé.
-          </p>
+          <RevealText className="services__title">{t.services.title}</RevealText>
+          <p className="services__subtitle">{t.services.subtitle}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          <ServiceTabs
-            services={SERVICES}
-            active={active}
-            onSelect={handleSelect}
-          />
+          <ServiceTabs services={services} active={active} onSelect={handleSelect} />
         </motion.div>
 
         <motion.div
@@ -302,8 +222,8 @@ const Services = () => {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {SERVICES.map((service, idx) => {
-            const position = getPosition(idx, active, SERVICES.length);
+          {services.map((service, idx) => {
+            const position = getPosition(idx, active, services.length);
             return (
               <ServiceCard
                 key={service.id}
@@ -311,6 +231,7 @@ const Services = () => {
                 position={position}
                 active={active}
                 onClick={() => handleSelect(idx)}
+                priceFrom={t.services.priceFrom}
               />
             );
           })}
@@ -322,15 +243,13 @@ const Services = () => {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.2 }}
         >
-          {SERVICES.map((s, idx) => (
+          {services.map((s, idx) => (
             <button
               key={s.id}
-              className={`services__dot${
-                active === idx ? " services__dot--active" : ""
-              }`}
+              className={`services__dot${active === idx ? " services__dot--active" : ""}`}
               onClick={() => handleSelect(idx)}
               aria-label={s.label}
-              style={active === idx ? { "--dot-color": s.color } : {}}
+              style={active === idx ? { "--dot-color": SERVICE_COLOR } : {}}
             />
           ))}
         </motion.div>

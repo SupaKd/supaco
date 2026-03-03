@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo } from "react";
 import { useLegalModals } from "./LegalModals";
+import { useLanguage } from "../context/LanguageContext";
 
 const FooterLink = memo(({ link, onClick }) => (
   <a href={link.href} className="footer__link" onClick={onClick}>
@@ -10,30 +11,16 @@ const FooterLink = memo(({ link, onClick }) => (
 FooterLink.displayName = "FooterLink";
 
 const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
-  const { openMentionsLegales, openConfidentialite, openCookieConsent } =
-    useLegalModals();
+  const { openMentionsLegales, openConfidentialite, openCookieConsent } = useLegalModals();
 
-  const footerLinks = useMemo(
-    () => ({
-      services: [
-        { label: "Site Vitrine", href: "#services" },
-        { label: "E-Commerce", href: "#services" },
-        { label: "Application Web", href: "#services" },
-        { label: "Maintenance", href: "#contact" },
-      ],
-      company: [
-        { label: "À propos", href: "#" },
-        { label: "Portfolio", href: "#projects" },
-        { label: "Tarifs", href: "#pricing" },
-        { label: "Contact", href: "#contact" },
-      ],
-      legal: [
-        { label: "Mentions légales", action: openMentionsLegales },
-        { label: "Politique de confidentialité", action: openConfidentialite },
-        { label: "Gérer mes cookies", action: openCookieConsent },
-      ],
-    }),
+  const legalLinks = useMemo(
+    () => [
+      { label: "Mentions légales", action: openMentionsLegales },
+      { label: "Politique de confidentialité", action: openConfidentialite },
+      { label: "Gérer mes cookies", action: openCookieConsent },
+    ],
     [openMentionsLegales, openConfidentialite, openCookieConsent]
   );
 
@@ -56,23 +43,20 @@ const Footer = () => {
               <span className="footer__logo-dot" />
               Supaco Digital
             </a>
-            <p className="footer__tagline">
-              Votre partenaire pour une présence web professionnelle. Sites
-              livrés en 5 jours, prix transparents, satisfaction garantie.
-            </p>
+            <p className="footer__tagline">{t.footer.tagline}</p>
             <div className="footer__newsletter">
               <input
                 type="email"
                 className="footer__newsletter-input"
-                placeholder="Votre email"
+                placeholder={t.footer.emailPlaceholder}
               />
-              <button className="footer__newsletter-btn">S'abonner</button>
+              <button className="footer__newsletter-btn">{t.footer.subscribe}</button>
             </div>
           </div>
 
           <div className="footer__column">
-            <h4 className="footer__column-title">Services</h4>
-            {footerLinks.services.map((link) => (
+            <h4 className="footer__column-title">{t.footer.servicesTitle}</h4>
+            {t.footer.links.services.map((link) => (
               <FooterLink
                 key={link.label}
                 link={link}
@@ -82,8 +66,8 @@ const Footer = () => {
           </div>
 
           <div className="footer__column">
-            <h4 className="footer__column-title">Entreprise</h4>
-            {footerLinks.company.map((link) => (
+            <h4 className="footer__column-title">{t.footer.companyTitle}</h4>
+            {t.footer.links.company.map((link) => (
               <FooterLink
                 key={link.label}
                 link={link}
@@ -93,8 +77,8 @@ const Footer = () => {
           </div>
 
           <div className="footer__column">
-            <h4 className="footer__column-title">Légal</h4>
-            {footerLinks.legal.map((link) => (
+            <h4 className="footer__column-title">{t.footer.legalTitle}</h4>
+            {legalLinks.map((link) => (
               <button
                 key={link.label}
                 className="footer__link footer__link--btn"
@@ -109,7 +93,7 @@ const Footer = () => {
 
         <div className="footer__bottom">
           <p className="footer__copyright">
-            © {currentYear} Supaco Digital. Tous droits réservés.
+            © {currentYear} Supaco Digital. {t.footer.copyright}
           </p>
         </div>
       </div>
