@@ -195,6 +195,7 @@ const ProjectItem = memo(({ project, index, variants, onProjectClick, overlayTex
 
 ProjectItem.displayName = "ProjectItem";
 
+
 const Projects = () => {
   const { t } = useLanguage();
   const ref = useRef(null);
@@ -203,7 +204,6 @@ const Projects = () => {
   const [showSwipeHint, setShowSwipeHint] = useState(true);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-
   const updateArrows = useCallback(() => {
     const el = listRef.current;
     if (!el) return;
@@ -375,6 +375,7 @@ const Projects = () => {
           </AnimatePresence>
         </div>
       </div>
+
     </section>
   );
 };

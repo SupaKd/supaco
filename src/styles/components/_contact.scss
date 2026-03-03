@@ -162,6 +162,35 @@
     }
   }
 
+  &__detail--copyable {
+    cursor: pointer;
+    border-radius: $radius-md;
+    padding: $space-xs;
+    margin: 0 calc(-1 * $space-xs);
+    transition: background $transition-fast;
+
+    &:hover {
+      background: var(--glass-hover);
+
+      .contact__detail-value {
+        color: var(--color-accent-primary);
+      }
+
+      .contact__detail-copy-icon {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__detail-copy-icon {
+    margin-left: auto;
+    color: var(--color-text-muted);
+    opacity: 0;
+    transition: opacity $transition-fast;
+    display: flex;
+    align-items: center;
+  }
+
   &__socials {
     display: flex;
     gap: $space-md;
@@ -441,6 +470,7 @@
     display: flex;
     flex-direction: column;
     gap: $space-sm;
+    position: relative;
 
     &--full {
       grid-column: span 2;
@@ -457,6 +487,12 @@
     color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    transition: color $transition-fast;
+  }
+
+  // Label passe accent au focus
+  &__form-group:focus-within &__form-label {
+    color: var(--color-accent-primary);
   }
 
   &__form-input,
@@ -468,7 +504,7 @@
     border-radius: $radius-md;
     font-size: $font-size-base;
     color: var(--color-text-primary);
-    transition: all $transition-fast;
+    transition: border-color $transition-fast, background $transition-fast, box-shadow $transition-fast;
 
     @include mobile {
       padding: $space-md;
@@ -478,7 +514,39 @@
     &:focus {
       border-color: var(--color-accent-primary);
       background: rgba($color-accent-primary, 0.05);
+      box-shadow: 0 0 0 3px rgba($color-accent-primary, 0.12);
+      outline: none;
     }
+
+    // Champ valide et rempli : teinte verte subtile
+    &:not(:placeholder-shown):not(:focus):valid {
+      border-color: rgba(52, 211, 153, 0.4);
+    }
+  }
+
+  // Barre d'accent animée sous le champ au focus
+  &__form-group::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, $color-accent-primary, $color-accent-secondary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    border-radius: 0 0 $radius-md $radius-md;
+    pointer-events: none;
+  }
+
+  &__form-group:focus-within::after {
+    transform: scaleX(1);
+  }
+
+  // Pas de barre sur le groupe bouton submit
+  &__form-group--full:last-child::after {
+    display: none;
   }
 
   &__form-select {

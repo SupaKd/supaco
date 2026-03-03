@@ -17,13 +17,47 @@ const EMAILJS_SERVICE_ID = "service_z9k3dwd";
 const EMAILJS_TEMPLATE_ID = "template_qr0hizb";
 const EMAILJS_PUBLIC_KEY = "crjyM7CbUuPkyfBTT";
 
-const ContactDetail = memo(({ icon, label, value }) => (
-  <div className="contact__detail">
+const EMAIL = "contact@supaco-digital.com";
+
+const useCopyFeedback = () => {
+  const [copied, setCopied] = useState(false);
+  const copy = useCallback((text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, []);
+  return { copied, copy };
+};
+
+const CopyFeedback = memo(({ visible }) => (
+  <div className={`copy-feedback${visible ? " copy-feedback--visible" : ""}`} aria-live="polite">
+    ✓ Copié !
+  </div>
+));
+CopyFeedback.displayName = "CopyFeedback";
+
+const ContactDetail = memo(({ icon, label, value, onCopy, copyable }) => (
+  <div
+    className={`contact__detail${copyable ? " contact__detail--copyable" : ""}`}
+    onClick={copyable ? onCopy : undefined}
+    title={copyable ? "Cliquer pour copier" : undefined}
+    data-tooltip={copyable ? "Cliquer pour copier" : undefined}
+    style={{ cursor: copyable ? "pointer" : "default" }}
+  >
     <span className="contact__detail-icon">{icon}</span>
     <div className="contact__detail-content">
       <span className="contact__detail-label">{label}</span>
       <span className="contact__detail-value">{value}</span>
     </div>
+    {copyable && (
+      <span className="contact__detail-copy-icon" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+      </span>
+    )}
   </div>
 ));
 
@@ -51,6 +85,7 @@ const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeTab, setActiveTab] = useState("message");
+  const { copied, copy } = useCopyFeedback();
 
   const [formState, setFormState] = useState({
     name: "",
@@ -119,7 +154,7 @@ const Contact = () => {
 
   const contactDetails = useMemo(
     () => [
-      { icon: <HiOutlineMail size={24} />, label: t.contact.details.email, value: "contact@supaco-digital.com" },
+      { icon: <HiOutlineMail size={24} />, label: t.contact.details.email, value: EMAIL, copyable: true },
       { icon: <HiOutlineLocationMarker size={24} />, label: t.contact.details.location, value: t.contact.details.locationValue },
       { icon: <HiOutlineClock size={24} />, label: t.contact.details.response, value: t.contact.details.responseValue },
     ],
@@ -135,6 +170,8 @@ const Contact = () => {
   );
 
   return (
+    <>
+    <CopyFeedback visible={copied} />
     <section className="contact" id="contact" ref={ref}>
       <div className="contact__container">
         <div className="contact__wrapper">
@@ -150,7 +187,11 @@ const Contact = () => {
 
             <div className="contact__details">
               {contactDetails.map((detail) => (
-                <ContactDetail key={detail.label} {...detail} />
+                <ContactDetail
+                  key={detail.label}
+                  {...detail}
+                  onCopy={detail.copyable ? () => copy(EMAIL) : undefined}
+                />
               ))}
             </div>
 
@@ -283,6 +324,7 @@ const Contact = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

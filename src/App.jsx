@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import CookieConsent from "./components/CookieConsent";
 import WhatsAppButton from "./components/WhatsAppButton";
 import BackToTop from "./components/ui/BackToTop";
+import ReadingProgress from "./components/ui/ReadingProgress";
 import LegalModalsProvider from "./components/LegalModals";
 import Testimonials from "./components/Testimonials";
 import { LanguageProvider } from "./context/LanguageContext";
@@ -78,6 +79,7 @@ function App() {
           <Footer />
         </Suspense>
       </main>
+      <ReadingProgress />
       <CookieConsent />
       <BackToTop />
       <WhatsAppButton />

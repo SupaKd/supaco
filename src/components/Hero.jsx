@@ -70,6 +70,12 @@ const badgeIcons = [
   ),
 ];
 
+const BADGE_TOOLTIPS = [
+  "Nous répondons à toute demande en moins de 24h",
+  "Sites livrés en 5 à 14 jours selon la complexité",
+  "100% de nos clients recommandent Supaco Digital",
+];
+
 const Hero = memo(() => {
   const { t } = useLanguage();
   const magnet = useMagnet(0.35);
@@ -186,8 +192,12 @@ const Hero = memo(() => {
           </p>
 
           <div className="hero__value-badges">
-            {badges.map((badge) => (
-              <span key={badge.label} className="hero__value-badge">
+            {badges.map((badge, i) => (
+              <span
+                key={badge.label}
+                className="hero__value-badge"
+                data-tooltip={BADGE_TOOLTIPS[i]}
+              >
                 <span className="hero__value-badge-icon">{badge.icon}</span>
                 {badge.label}
               </span>

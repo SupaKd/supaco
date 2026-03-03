@@ -244,12 +244,18 @@
     }
   }
 
-  // Placeholder chargement
+  // Placeholder chargement — skeleton shimmer
   &__bento-placeholder {
     position: absolute;
     inset: 0;
-    background: var(--color-bg-tertiary);
-    animation: pulse-bg 1.5s ease-in-out infinite;
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-tertiary) 25%,
+      rgba(255, 255, 255, 0.06) 50%,
+      var(--color-bg-tertiary) 75%
+    );
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
   }
 
   // Overlay sombre uniforme pour lisibilité du titre centré
@@ -551,13 +557,19 @@
     letter-spacing: 0.04em;
   }
 
-  // ---- Image Placeholder ----
+  // ---- Image Placeholder — skeleton shimmer ----
   &__item-placeholder {
     position: absolute;
     inset: 0;
-    background: var(--color-bg-tertiary);
     border-radius: $radius-md;
-    animation: pulse-bg 1.5s ease-in-out infinite;
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-tertiary) 25%,
+      rgba(255, 255, 255, 0.06) 50%,
+      var(--color-bg-tertiary) 75%
+    );
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
   }
 
   // ---- Image ----
@@ -671,6 +683,7 @@
     }
   }
 }
+
 
 @keyframes swipe-nudge {
   0%,
