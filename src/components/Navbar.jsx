@@ -109,8 +109,8 @@ const Navbar = () => {
         <div className="navbar__container">
           <a href="/" className="navbar__logo">
             <picture>
-              <source srcSet="/logo2026.webp" type="image/webp" />
-              <img src="/logo2026.png" alt="Supaco Digital" loading="eager" width="70" height="70" />
+              <source srcSet="/newlogo.webp" type="image/webp" />
+              <img src="/newlogo.png" alt="Supaco Digital" loading="eager" width="70" height="70" />
             </picture>
           </a>
 
