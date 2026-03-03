@@ -108,10 +108,13 @@ const Navbar = () => {
       >
         <div className="navbar__container">
           <a href="/" className="navbar__logo">
-            <picture>
-              <source srcSet="/newlogo.webp" type="image/webp" />
-              <img src="/newlogo.png" alt="Supaco Digital" loading="eager" width="70" height="70" />
-            </picture>
+            <img
+              src="/logo2026.png"
+              alt="Supaco Digital"
+              loading="eager"
+              width="70"
+              height="70"
+            />
           </a>
 
           <div className="navbar__menu">
@@ -136,7 +139,9 @@ const Navbar = () => {
             <button
               className="navbar__lang-toggle"
               onClick={toggleLang}
-              aria-label={lang === "fr" ? "Switch to English" : "Passer en français"}
+              aria-label={
+                lang === "fr" ? "Switch to English" : "Passer en français"
+              }
             >
               {lang === "fr" ? "EN" : "FR"}
             </button>
@@ -144,16 +149,16 @@ const Navbar = () => {
             <button
               className="navbar__theme-toggle"
               onClick={toggleTheme}
-              aria-label={
-                isDarkMode ? t.nav.lightMode : t.nav.darkMode
-              }
+              aria-label={isDarkMode ? t.nav.lightMode : t.nav.darkMode}
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
           </div>
 
           <button
-            className={`navbar__mobile-toggle${isMobileMenuOpen ? " navbar__mobile-toggle--active" : ""}`}
+            className={`navbar__mobile-toggle${
+              isMobileMenuOpen ? " navbar__mobile-toggle--active" : ""
+            }`}
             onClick={toggleMobileMenu}
             aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={isMobileMenuOpen}
@@ -165,7 +170,11 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className={`navbar__mobile-menu${isMobileMenuOpen ? " navbar__mobile-menu--open" : ""}`}>
+      <div
+        className={`navbar__mobile-menu${
+          isMobileMenuOpen ? " navbar__mobile-menu--open" : ""
+        }`}
+      >
         <div className="navbar__mobile-inner">
           <nav className="navbar__mobile-links">
             {navLinks.map((link, i) => (
@@ -204,7 +213,9 @@ const Navbar = () => {
               <button
                 className="navbar__mobile-lang"
                 onClick={toggleLang}
-                aria-label={lang === "fr" ? "Switch to English" : "Passer en français"}
+                aria-label={
+                  lang === "fr" ? "Switch to English" : "Passer en français"
+                }
               >
                 {lang === "fr" ? "🇬🇧 EN" : "🇫🇷 FR"}
               </button>

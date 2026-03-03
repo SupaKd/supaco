@@ -67,12 +67,8 @@
     filter: blur(2px);
     pointer-events: none;
     display: block;
-
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+    width: 100%;
+    height: auto;
 
     @media (prefers-reduced-motion: no-preference) {
       animation: float 10s ease-in-out infinite;

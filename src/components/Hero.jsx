@@ -108,22 +108,10 @@ const Hero = memo(() => {
   return (
     <section className="hero" id="hero">
       <motion.div className="hero__bg-logos" style={{ y: bgY }}>
-        <picture className="hero__bg-logo hero__bg-logo--1">
-          <source srcSet="/logo2026.webp" type="image/webp" />
-          <img src="/logo2026.png" alt="" width="300" height="300" loading="lazy" decoding="async" />
-        </picture>
-        <picture className="hero__bg-logo hero__bg-logo--2">
-          <source srcSet="/logo2026.webp" type="image/webp" />
-          <img src="/logo2026.png" alt="" width="250" height="250" loading="lazy" decoding="async" />
-        </picture>
-        <picture className="hero__bg-logo hero__bg-logo--3">
-          <source srcSet="/logo2026.webp" type="image/webp" />
-          <img src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" />
-        </picture>
-        <picture className="hero__bg-logo hero__bg-logo--4">
-          <source srcSet="/logo2026.webp" type="image/webp" />
-          <img src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" />
-        </picture>
+        <img className="hero__bg-logo hero__bg-logo--1" src="/logo2026.png" alt="" width="300" height="300" loading="lazy" decoding="async" />
+        <img className="hero__bg-logo hero__bg-logo--2" src="/logo2026.png" alt="" width="250" height="250" loading="lazy" decoding="async" />
+        <img className="hero__bg-logo hero__bg-logo--3" src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" />
+        <img className="hero__bg-logo hero__bg-logo--4" src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" />
       </motion.div>
 
       <motion.div className="hero__particles" style={{ y: bgY }}>
@@ -139,18 +127,15 @@ const Hero = memo(() => {
           <div className="hero__profile-card">
             <div className="hero__photo-wrapper">
               <div className="hero__photo">
-                <picture>
-                  <source srcSet="/kevin.webp" type="image/webp" />
-                  <img
-                    src="/kevin.png"
-                    alt="Kevin - Développeur web Supaco Digital"
-                    width="200"
-                    height="200"
-                    loading="eager"
-                    fetchPriority="high"
-                    decoding="async"
-                  />
-                </picture>
+                <img
+                  src="/kevin.png"
+                  alt="Kevin - Développeur web Supaco Digital"
+                  width="200"
+                  height="200"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
               </div>
             </div>
 
