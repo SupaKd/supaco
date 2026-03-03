@@ -6,7 +6,9 @@ import LegalModalsProvider from "./components/LegalModals";
 import { LanguageProvider } from "./context/LanguageContext";
 
 // Lazy load tous les composants below-the-fold
-const AnnouncementBanner = lazy(() => import("./components/AnnouncementBanner"));
+const AnnouncementBanner = lazy(() =>
+  import("./components/AnnouncementBanner")
+);
 const Services = lazy(() => import("./components/Service"));
 const Projects = lazy(() => import("./components/Projects"));
 const Testimonials = lazy(() => import("./components/Testimonials"));
@@ -55,46 +57,43 @@ function App() {
 
   return (
     <LanguageProvider>
-    <LegalModalsProvider>
-      <Suspense fallback={null}>
-        <AnnouncementBanner />
-      </Suspense>
-      <Navbar />
-      <main>
-        <Hero />
-        <Suspense fallback={<SectionLoader />}>
-          <Services />
+      <LegalModalsProvider>
+        <Suspense fallback={null}>
+          <AnnouncementBanner />
         </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Projects />
+        <Navbar />
+        <main>
+          <Hero />
+          <Suspense fallback={<SectionLoader />}>
+            <Services />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <Projects />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <Testimonials />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <Contact />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <Stats />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <Footer />
+          </Suspense>
+        </main>
+        <ReadingProgress />
+        <Suspense fallback={null}>
+          <CookieConsent />
         </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Testimonials />
+        <Suspense fallback={null}>
+          <BackToTop />
         </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Contact />
+        <Suspense fallback={null}>
+          <WhatsAppButton />
         </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Stats />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Responsive />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Footer />
-        </Suspense>
-      </main>
-      <ReadingProgress />
-      <Suspense fallback={null}>
-        <CookieConsent />
-      </Suspense>
-      <Suspense fallback={null}>
-        <BackToTop />
-      </Suspense>
-      <Suspense fallback={null}>
-        <WhatsAppButton />
-      </Suspense>
-    </LegalModalsProvider>
+      </LegalModalsProvider>
     </LanguageProvider>
   );
 }

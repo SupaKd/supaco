@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
 import { Sun, Moon } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -105,11 +104,14 @@ const Navbar = () => {
       <nav
         className={`navbar${isScrolled ? " navbar--scrolled" : ""}${
           isHidden ? " navbar--hidden" : ""
-        }`}
+        }${isMobileMenuOpen ? " navbar--menu-open" : ""}`}
       >
         <div className="navbar__container">
           <a href="/" className="navbar__logo">
-            <img src="/logo2026.png" alt="logo" loading="eager" />
+            <picture>
+              <source srcSet="/logo2026.webp" type="image/webp" />
+              <img src="/logo2026.png" alt="Supaco Digital" loading="eager" width="70" height="70" />
+            </picture>
           </a>
 
           <div className="navbar__menu">
@@ -151,58 +153,54 @@ const Navbar = () => {
           </div>
 
           <button
-            className="navbar__mobile-toggle"
+            className={`navbar__mobile-toggle${isMobileMenuOpen ? " navbar__mobile-toggle--active" : ""}`}
             onClick={toggleMobileMenu}
-            aria-label="Menu"
+            aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+            <span />
+            <span />
+            <span />
           </button>
         </div>
       </nav>
 
-      {isMobileMenuOpen && (
-        <>
-          <div className="navbar__mobile-overlay" onClick={toggleMobileMenu} />
-          <div className="navbar__mobile-menu navbar__mobile-menu--open">
-            <button
-              className="navbar__mobile-close"
-              onClick={toggleMobileMenu}
-              aria-label="Fermer le menu"
-            >
-              <FiX size={28} />
-            </button>
+      <div className={`navbar__mobile-menu${isMobileMenuOpen ? " navbar__mobile-menu--open" : ""}`}>
+        <div className="navbar__mobile-inner">
+          <nav className="navbar__mobile-links">
+            {navLinks.map((link, i) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="navbar__mobile-link"
+                onClick={(e) => scrollToSection(e, link.href)}
+                style={{ "--i": i }}
+              >
+                <span className="navbar__mobile-link-num">0{i + 1}</span>
+                <span className="navbar__mobile-link-label">{link.label}</span>
+                <span className="navbar__mobile-link-arrow">→</span>
+              </a>
+            ))}
+          </nav>
 
-            <div className="navbar__mobile-links">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="navbar__link"
-                  onClick={(e) => scrollToSection(e, link.href)}
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-
+          <div className="navbar__mobile-footer">
             <a
               href="#contact"
-              className="navbar__cta"
+              className="navbar__cta navbar__mobile-cta"
               onClick={(e) => scrollToSection(e, "#contact")}
             >
               {t.nav.startProject}
             </a>
 
-            <div className="navbar__mobile-bottom">
+            <div className="navbar__mobile-utils">
               <button
                 className="navbar__mobile-theme"
                 onClick={toggleTheme}
                 aria-label={isDarkMode ? t.nav.lightMode : t.nav.darkMode}
               >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
                 <span>{isDarkMode ? t.nav.lightMode : t.nav.darkMode}</span>
               </button>
-
               <button
                 className="navbar__mobile-lang"
                 onClick={toggleLang}
@@ -212,8 +210,8 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   );
 };
