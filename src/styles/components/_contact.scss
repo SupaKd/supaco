@@ -30,6 +30,9 @@
     @include tablet {
       grid-template-columns: 1fr;
       gap: $space-2xl;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
     }
 
     @include mobile {
@@ -242,7 +245,8 @@
     border-radius: $radius-lg;
 
     @include tablet {
-      height: 720px;
+      height: 640px;
+      border-radius: $radius-md;
     }
 
     @include mobile {
@@ -264,6 +268,10 @@
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: $radius-lg;
+
+    @include tablet {
+      padding: $space-md $space-lg;
+    }
 
     @include mobile {
       padding: $space-md $space-lg;

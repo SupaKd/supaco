@@ -1,5 +1,11 @@
 import { memo, useCallback, useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform, AnimatePresence, useInView } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+  useInView,
+} from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useMagnet } from "../hooks/useMagnet";
 import HighlightText from "./ui/HighlightText";
@@ -186,7 +192,9 @@ const Hero = memo(() => {
             {/* Description */}
             <div className="hero__profile-desc">
               <span className="hero__profile-name">Kevin</span>
-              <span className="hero__profile-role">Développeur web freelance</span>
+              <span className="hero__profile-role">
+                Développeur web freelance
+              </span>
             </div>
 
             {/* Contacts */}
@@ -266,7 +274,9 @@ const Hero = memo(() => {
             concrets. <br />
             Mon approche est stratégique : Comprendre votre activité, vos enjeux
             et vos objectifs pour concevoir un site qui attire, rassure et{" "}
-            <HighlightText delay={0.3}>convertit vos prospects en clients.</HighlightText>{" "}
+            <HighlightText delay={0.3}>
+              convertit vos prospects en clients.
+            </HighlightText>{" "}
             <br />
           </p>
 
@@ -274,7 +284,10 @@ const Hero = memo(() => {
             {" "}
             Un site internet renforce votre crédibilité et crée un canal
             d’acquisition disponible 24h/24. Si vos prospects ne vous trouvent
-            pas en ligne, <HighlightText delay={0.5}>ils choisissent vos concurrents.</HighlightText>
+            pas en ligne,{" "}
+            <HighlightText delay={0.5}>
+              ils choisissent vos concurrents.
+            </HighlightText>
           </p>
 
           {/* Badges valeurs */}

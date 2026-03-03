@@ -56,6 +56,7 @@
     gap: $space-sm;
     margin-bottom: $space-2xl;
     text-align: center;
+    align-items: center;
 
     @media (min-width: 769px) {
       display: none;
@@ -355,10 +356,11 @@
       scrollbar-width: none;
       gap: $space-lg;
       padding-bottom: $space-lg;
+      padding-top: $space-sm;
       // Padding symétrique pour centrer la première et la dernière card
       margin: 0;
-      padding-left: calc(50vw - 150px);
-      padding-right: calc(50vw - 150px);
+      padding-left: calc(50vw - 140px);
+      padding-right: calc(50vw - 140px);
 
       &::-webkit-scrollbar {
         display: none;
@@ -443,11 +445,12 @@
       border: 1px solid var(--glass-border);
       border-radius: $radius-lg;
       background: var(--glass-bg);
-      min-width: 280px;
-      max-width: 300px;
+      min-width: 260px;
+      max-width: 280px;
       flex-shrink: 0;
       scroll-snap-align: center;
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
 
       &:first-child {
         border-top: 1px solid var(--glass-border);
@@ -457,6 +460,7 @@
         padding-left: 0;
         padding-right: 0;
         border-color: rgba($color-accent-primary, 0.3);
+        box-shadow: var(--shadow-md);
       }
     }
   }

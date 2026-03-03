@@ -113,40 +113,44 @@ $z-toast: 500;
   --navbar-scrolled-backdrop: rgba(255, 255, 255, 0.03);
 
   --grid-line-color: rgba(255, 255, 255, 0.02);
+
+  --highlight-color: rgba(7, 123, 217, 0.3);
 }
 
 [data-theme="light"] {
-  --color-bg-primary: #f0efeb;
-  --color-bg-secondary: #f9f9f9;
-  --color-bg-tertiary: #f9f9f9;
+  --color-bg-primary: #f5f7ff;
+  --color-bg-secondary: #eef1fb;
+  --color-bg-tertiary: #ffffff;
 
-  --color-text-primary: #1c1612;
-  --color-text-secondary: #5c4f3d;
-  --color-text-muted: #9c8c78;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
 
-  --color-accent-primary: #1e3a5f;
-  --color-accent-secondary: #2d5282;
+  --color-accent-primary: #2563eb;
+  --color-accent-secondary: #3b82f6;
 
-  --glass-bg: rgba(30, 58, 95, 0.04);
-  --glass-border: rgba(30, 58, 95, 0.12);
-  --glass-hover: rgba(30, 58, 95, 0.07);
+  --glass-bg: rgba(37, 99, 235, 0.05);
+  --glass-border: rgba(37, 99, 235, 0.15);
+  --glass-hover: rgba(37, 99, 235, 0.09);
 
-  --shadow-sm: 0 1px 4px rgba(20, 40, 70, 0.08),
-    0 2px 8px rgba(20, 40, 70, 0.05);
-  --shadow-md: 0 2px 12px rgba(20, 40, 70, 0.1),
-    0 4px 24px rgba(20, 40, 70, 0.07);
-  --shadow-lg: 0 4px 24px rgba(20, 40, 70, 0.12),
-    0 8px 48px rgba(20, 40, 70, 0.08);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06),
+    0 2px 8px rgba(37, 99, 235, 0.08);
+  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08),
+    0 8px 32px rgba(37, 99, 235, 0.1);
+  --shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.1),
+    0 16px 64px rgba(37, 99, 235, 0.12);
 
-  --navbar-scrolled-bg: #f0efeb;
-  --navbar-scrolled-backdrop: #f0efeb;
+  --navbar-scrolled-bg: rgba(245, 247, 255, 0.85);
+  --navbar-scrolled-backdrop: rgba(245, 247, 255, 0.85);
 
-  --grid-line-color: rgba(30, 58, 95, 0.04);
+  --grid-line-color: rgba(37, 99, 235, 0.07);
+
+  --highlight-color: rgba(250, 204, 21, 0.45);
 
   // Surcharge du gradient-text pour tous les éléments qui utilisent la classe
   .gradient-text,
   &.gradient-text {
-    background: linear-gradient(135deg, #1e3a5f 0%, #2d5282 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

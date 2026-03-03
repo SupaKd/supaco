@@ -78,10 +78,18 @@
     transform-origin: top center;
     will-change: transform, opacity;
 
+    @include tablet {
+      padding: $space-xl $space-2xl;
+    }
+
     &-inner {
       display: flex;
       align-items: center;
       gap: $space-3xl;
+
+      @include tablet {
+        gap: $space-2xl;
+      }
 
       @include mobile {
         flex-direction: column;
@@ -126,6 +134,10 @@
       font-weight: 600;
       color: var(--color-text-primary);
       margin-bottom: $space-md;
+
+      @include tablet {
+        font-size: $font-size-xl;
+      }
     }
 
     &-description {
@@ -133,6 +145,11 @@
       color: var(--color-text-secondary);
       line-height: 1.7;
       max-width: 480px;
+
+      @include tablet {
+        max-width: 100%;
+        font-size: $font-size-sm;
+      }
     }
   }
 

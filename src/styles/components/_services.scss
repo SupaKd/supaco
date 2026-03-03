@@ -45,12 +45,21 @@
     @include heading-lg;
     color: var(--color-text-primary);
     margin-bottom: $space-lg;
+
+    @include tablet {
+      font-size: $font-size-4xl;
+    }
   }
 
   &__subtitle {
     max-width: 560px;
     margin: 0 auto;
     @include body-text;
+
+    @include tablet {
+      font-size: $font-size-base;
+      padding: 0 $space-md;
+    }
   }
 
   // ---- Tabs ----
@@ -61,6 +70,12 @@
     gap: $space-sm;
     margin-bottom: $space-3xl;
     flex-wrap: wrap;
+
+    @include tablet {
+      gap: $space-xs;
+      margin-bottom: $space-2xl;
+      padding: 0 $space-sm;
+    }
   }
 
   &__tab {
@@ -118,6 +133,7 @@
 
     @include tablet {
       height: auto;
+      min-height: 500px;
     }
   }
 
@@ -139,7 +155,8 @@
     @include tablet {
       position: static;
       width: 100%;
-      max-width: 420px;
+      max-width: 500px;
+      padding: $space-xl $space-lg;
 
       &--left,
       &--right,

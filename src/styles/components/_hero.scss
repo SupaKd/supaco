@@ -15,8 +15,10 @@
   padding: $space-5xl $container-padding;
 
   @include tablet {
-    min-height: auto;
-    padding: $space-4xl $space-lg $space-3xl;
+    min-height: 100svh;
+    padding: calc($space-5xl + 64px) $space-lg $space-4xl;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
   @include mobile {
@@ -210,6 +212,7 @@
     @include tablet {
       grid-template-columns: 1fr;
       gap: $space-2xl;
+      align-items: start;
     }
 
     @include mobile {
@@ -227,7 +230,7 @@
     @include tablet {
       display: flex;
       justify-content: center;
-      order: 1;
+      order: 2;
     }
 
     @include mobile {
@@ -257,8 +260,14 @@
     }
 
     @include tablet {
-      max-width: 320px;
-      margin-top: 4rem;
+      max-width: 480px;
+      width: 100%;
+      margin-top: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: $space-md;
+      padding: $space-lg $space-xl;
     }
 
     @include mobile {
@@ -289,6 +298,11 @@
     overflow: hidden;
     flex-shrink: 0;
     box-shadow: 0 0 40px rgba($color-accent-primary, 0.1);
+
+    @include tablet {
+      width: 110px;
+      height: 110px;
+    }
 
     @include mobile {
       width: 130px;
@@ -369,7 +383,8 @@
 
     @include tablet {
       text-align: center;
-      order: 2;
+      order: 1;
+      gap: $space-lg;
     }
 
     @include mobile {
@@ -459,6 +474,7 @@
 
     @include tablet {
       justify-content: center;
+      gap: $space-xs;
     }
 
     @include mobile {
@@ -517,7 +533,7 @@
     align-items: center;
     justify-content: center;
     gap: $space-sm;
-    padding: $space-lg $space-3xl;
+    padding: $space-md $space-xl;
     background: var(--color-accent-primary);
     color: var(--color-bg-primary);
     font-size: $font-size-lg;
@@ -580,7 +596,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: $space-lg $space-2xl;
+    padding: $space-md $space-xl;
     background: transparent;
     color: var(--color-text-primary);
     font-size: $font-size-base;
@@ -621,13 +637,25 @@
     box-sizing: border-box;
 
     @include tablet {
-      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
       padding-top: $space-md;
+      border-top: none;
+      padding-left: $space-lg;
+      border-left: 1px solid var(--glass-border);
+      align-items: center;
+      flex: 1;
     }
 
     @include mobile {
+      flex-direction: column;
+      align-items: center;
       gap: $space-xs;
       padding-top: $space-sm;
+      border-left: none;
+      border-top: 1px solid var(--glass-border);
+      padding-left: 0;
     }
   }
 
