@@ -41,8 +41,8 @@ const ContactDetail = memo(({ icon, label, value, onCopy, copyable }) => (
   <div
     className={`contact__detail${copyable ? " contact__detail--copyable" : ""}`}
     onClick={copyable ? onCopy : undefined}
-    title={copyable ? "Cliquer pour copier" : undefined}
-    data-tooltip={copyable ? "Cliquer pour copier" : undefined}
+    title={copyable ? "Cliquez pour copier" : undefined}
+    data-tooltip={copyable ? "Cliquez pour copier" : undefined}
     style={{ cursor: copyable ? "pointer" : "default" }}
   >
     <span className="contact__detail-icon">{icon}</span>

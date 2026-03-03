@@ -7,6 +7,8 @@ export default defineConfig({
   build: {
     // Cible les navigateurs modernes pour réduire le polyfill overhead
     target: 'es2020',
+    // Split CSS par chunk pour ne charger que les styles nécessaires
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -28,7 +30,6 @@ export default defineConfig({
         drop_debugger: true,
         passes: 2,
         pure_funcs: ['console.log', 'console.info', 'console.warn'],
-        // Supprimer le code mort
         dead_code: true,
         unused: true,
       },
@@ -37,9 +38,9 @@ export default defineConfig({
       }
     },
     cssMinify: true,
-    // Assets < 2kb inlinés (réduit les requêtes réseau sur mobile)
-    assetsInlineLimit: 2048,
-    // Pas de source maps en prod (réduit le temps de build et la taille)
+    // Assets < 4kb inlinés (réduit les requêtes réseau)
+    assetsInlineLimit: 4096,
+    // Pas de source maps en prod
     sourcemap: false,
   },
   server: {

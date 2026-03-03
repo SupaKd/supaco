@@ -30,7 +30,7 @@ const MentionsLegalesContent = () => (
         <br />
         Téléphone : 07.83.05.24.12
         <br />
-        Email : contact@supaco.digital.com
+        Email : contact@supaco-digital.com
       </p>
     </section>
 

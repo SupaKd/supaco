@@ -66,6 +66,13 @@
     opacity: 0.3;
     filter: blur(2px);
     pointer-events: none;
+    display: block;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
     @media (prefers-reduced-motion: no-preference) {
       animation: float 10s ease-in-out infinite;

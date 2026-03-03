@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 const STORAGE_KEY = "announcement_banner_dismissed";
 
 const TICKER_TEXT =
-  "Bénéficiez de -15% sur votre premier site web — Offre réservée aux nouveaux clients.";
+  "Bénéficiez de -5% sur votre premier site web — Offre réservée aux nouveaux clients.";
 
 const AnnouncementBanner = () => {
   const [isVisible, setIsVisible] = useState(false);

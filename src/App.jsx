@@ -1,22 +1,22 @@
 import { useEffect, lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
-import AnnouncementBanner from "./components/AnnouncementBanner";
 import Hero from "./components/Hero";
-import CookieConsent from "./components/CookieConsent";
-import WhatsAppButton from "./components/WhatsAppButton";
-import BackToTop from "./components/ui/BackToTop";
 import ReadingProgress from "./components/ui/ReadingProgress";
 import LegalModalsProvider from "./components/LegalModals";
-import Testimonials from "./components/Testimonials";
 import { LanguageProvider } from "./context/LanguageContext";
 
-// Lazy load les composants below-the-fold
+// Lazy load tous les composants below-the-fold
+const AnnouncementBanner = lazy(() => import("./components/AnnouncementBanner"));
 const Services = lazy(() => import("./components/Service"));
 const Projects = lazy(() => import("./components/Projects"));
+const Testimonials = lazy(() => import("./components/Testimonials"));
 const Stats = lazy(() => import("./components/Stats"));
 const Contact = lazy(() => import("./components/Contact"));
 const Responsive = lazy(() => import("./components/Responsive"));
 const Footer = lazy(() => import("./components/Footer"));
+const CookieConsent = lazy(() => import("./components/CookieConsent"));
+const WhatsAppButton = lazy(() => import("./components/WhatsAppButton"));
+const BackToTop = lazy(() => import("./components/ui/BackToTop"));
 
 // Loading fallback minimaliste
 const SectionLoader = () => (
@@ -56,7 +56,9 @@ function App() {
   return (
     <LanguageProvider>
     <LegalModalsProvider>
-      <AnnouncementBanner />
+      <Suspense fallback={null}>
+        <AnnouncementBanner />
+      </Suspense>
       <Navbar />
       <main>
         <Hero />
@@ -76,13 +78,22 @@ function App() {
           <Stats />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
+          <Responsive />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
           <Footer />
         </Suspense>
       </main>
       <ReadingProgress />
-      <CookieConsent />
-      <BackToTop />
-      <WhatsAppButton />
+      <Suspense fallback={null}>
+        <CookieConsent />
+      </Suspense>
+      <Suspense fallback={null}>
+        <BackToTop />
+      </Suspense>
+      <Suspense fallback={null}>
+        <WhatsAppButton />
+      </Suspense>
     </LegalModalsProvider>
     </LanguageProvider>
   );

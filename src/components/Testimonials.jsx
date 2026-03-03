@@ -38,7 +38,7 @@ const TESTIMONIALS_DATA = [
     date: { fr: "il y a 4 mois", en: "4 months ago" },
     color: AVATAR_COLORS[2],
     text: {
-      fr: "Professionnel, disponible et réactif. Les prestations sont de qualités. Je recommande !",
+      fr: "Professionnel, disponible et réactif. Les prestations sont de qualité. Je recommande !",
       en: "Professional, available and responsive. The services are of high quality. I recommend!",
     },
   },

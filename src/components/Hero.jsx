@@ -5,6 +5,7 @@ import {
   useTransform,
   AnimatePresence,
   useInView,
+  useReducedMotion,
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useMagnet } from "../hooks/useMagnet";
@@ -78,10 +79,15 @@ const BADGE_TOOLTIPS = [
 
 const Hero = memo(() => {
   const { t } = useLanguage();
-  const magnet = useMagnet(0.35);
+  const prefersReducedMotion = useReducedMotion();
+  const magnet = useMagnet(prefersReducedMotion ? 0 : 0.35);
   const { scrollY } = useScroll();
-  const bgY = useTransform(scrollY, [0, 600], [0, 120]);
-  const contentY = useTransform(scrollY, [0, 600], [0, -60]);
+  const bgYRaw = useTransform(scrollY, [0, 600], [0, 120]);
+  const contentYRaw = useTransform(scrollY, [0, 600], [0, -60]);
+  // Désactiver le parallax sur mobile et si l'utilisateur préfère moins d'animations
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const bgY = (prefersReducedMotion || isMobile) ? 0 : bgYRaw;
+  const contentY = (prefersReducedMotion || isMobile) ? 0 : contentYRaw;
 
   const badges = [
     { icon: badgeIcons[0], label: t.hero.badges.response },
@@ -102,10 +108,22 @@ const Hero = memo(() => {
   return (
     <section className="hero" id="hero">
       <motion.div className="hero__bg-logos" style={{ y: bgY }}>
-        <img src="/logo2026.png" alt="" width="300" height="300" loading="lazy" decoding="async" className="hero__bg-logo hero__bg-logo--1" />
-        <img src="/logo2026.png" alt="" width="250" height="250" loading="lazy" decoding="async" className="hero__bg-logo hero__bg-logo--2" />
-        <img src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" className="hero__bg-logo hero__bg-logo--3" />
-        <img src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" className="hero__bg-logo hero__bg-logo--4" />
+        <picture className="hero__bg-logo hero__bg-logo--1">
+          <source srcSet="/logo2026.webp" type="image/webp" />
+          <img src="/logo2026.png" alt="" width="300" height="300" loading="lazy" decoding="async" />
+        </picture>
+        <picture className="hero__bg-logo hero__bg-logo--2">
+          <source srcSet="/logo2026.webp" type="image/webp" />
+          <img src="/logo2026.png" alt="" width="250" height="250" loading="lazy" decoding="async" />
+        </picture>
+        <picture className="hero__bg-logo hero__bg-logo--3">
+          <source srcSet="/logo2026.webp" type="image/webp" />
+          <img src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" />
+        </picture>
+        <picture className="hero__bg-logo hero__bg-logo--4">
+          <source srcSet="/logo2026.webp" type="image/webp" />
+          <img src="/logo2026.png" alt="" width="200" height="60" loading="lazy" decoding="async" />
+        </picture>
       </motion.div>
 
       <motion.div className="hero__particles" style={{ y: bgY }}>
@@ -121,15 +139,18 @@ const Hero = memo(() => {
           <div className="hero__profile-card">
             <div className="hero__photo-wrapper">
               <div className="hero__photo">
-                <img
-                  src="/kevin.png"
-                  alt="Kevin - Développeur web Supaco Digital"
-                  width="200"
-                  height="200"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                />
+                <picture>
+                  <source srcSet="/kevin.webp" type="image/webp" />
+                  <img
+                    src="/kevin.png"
+                    alt="Kevin - Développeur web Supaco Digital"
+                    width="200"
+                    height="200"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                </picture>
               </div>
             </div>
 
