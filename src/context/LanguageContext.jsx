@@ -51,7 +51,7 @@ export const translations = {
             "Optimisation SEO",
             "Intégration réseaux sociaux",
           ],
-          price: "890€",
+          price: "1 490€",
           stat: { value: "5j", label: "Livraison moyenne" },
         },
         {
@@ -66,7 +66,7 @@ export const translations = {
             "Gestion des stocks",
             "Suivi commandes",
           ],
-          price: "1 990€",
+          price: "2 500€",
           stat: { value: "14j", label: "Livraison moyenne" },
         },
         {
@@ -156,7 +156,8 @@ export const translations = {
     testimonials: {
       label: "Témoignages",
       title: "Ce que disent nos clients",
-      subtitle: "La satisfaction de nos clients est notre meilleure carte de visite.",
+      subtitle:
+        "La satisfaction de nos clients est notre meilleure carte de visite.",
       contributor: "Contributeur local",
       googleLink: "Voir tous nos avis sur Google",
       prevAriaLabel: "Avis précédent",
@@ -206,7 +207,8 @@ export const translations = {
         title: "Erreur d'envoi",
         alternative: "Vous pouvez aussi nous contacter directement à",
         retry: "Réessayer",
-        fallback: "Une erreur est survenue. Veuillez réessayer ou nous contacter directement.",
+        fallback:
+          "Une erreur est survenue. Veuillez réessayer ou nous contacter directement.",
       },
     },
     // Stats
