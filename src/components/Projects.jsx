@@ -1,6 +1,12 @@
 import { useState, useRef, memo, useCallback, useMemo, useEffect } from "react";
-import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
-import RevealText from './ui/RevealText';
+import {
+  motion,
+  useInView,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
+import RevealText from "./ui/RevealText";
 import {
   HiOutlineExternalLink,
   HiOutlineArrowRight,
@@ -16,7 +22,7 @@ const PROJECT_IMAGES = {
   4: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=600&h=400&fit=crop&q=75",
   6: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=75",
   5: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&q=75",
-  3: "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=400&fit=crop&q=75",
+  3: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=400&fit=crop&q=75",
 };
 
 const PROJECT_URLS = {
@@ -26,7 +32,7 @@ const PROJECT_URLS = {
   4: "https://depannage-gemeaux.fr/",
   6: "https://restaurant-t.vercel.app/",
   5: "https://www.yojeme.fr/",
-  3: "https://cms-xi-self.vercel.app/",
+  3: "https://photographe-six.vercel.app/",
 };
 
 const PROJECT_CATEGORIES = {
@@ -58,7 +64,9 @@ const ProjectImage = memo(({ src, alt, overlayText }) => {
       <img
         src={optimizedSrc}
         alt={alt}
-        className={`projects__item-image ${isLoaded ? "projects__item-image--loaded" : ""}`}
+        className={`projects__item-image ${
+          isLoaded ? "projects__item-image--loaded" : ""
+        }`}
         loading="lazy"
         decoding="async"
         onLoad={() => setIsLoaded(true)}
@@ -75,126 +83,132 @@ const ProjectImage = memo(({ src, alt, overlayText }) => {
 
 ProjectImage.displayName = "ProjectImage";
 
-const BentoCard = memo(({ project, variants, onProjectClick, categoryLabels }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const optimizedSrc = optimizeUnsplashUrl(project.image);
-  const cardRef = useRef(null);
+const BentoCard = memo(
+  ({ project, variants, categoryLabels }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const optimizedSrc = optimizeUnsplashUrl(project.image);
+    const cardRef = useRef(null);
 
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const springX = useSpring(rotateX, { stiffness: 150, damping: 20 });
-  const springY = useSpring(rotateY, { stiffness: 150, damping: 20 });
+    const rotateX = useMotionValue(0);
+    const rotateY = useMotionValue(0);
+    const springX = useSpring(rotateX, { stiffness: 150, damping: 20 });
+    const springY = useSpring(rotateY, { stiffness: 150, damping: 20 });
 
-  const handleMouseMove = useCallback((e) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const { left, top, width, height } = card.getBoundingClientRect();
-    const x = (e.clientX - left) / width - 0.5;
-    const y = (e.clientY - top) / height - 0.5;
-    rotateY.set(x * 14);
-    rotateX.set(-y * 14);
-  }, [rotateX, rotateY]);
+    const handleMouseMove = useCallback(
+      (e) => {
+        const card = cardRef.current;
+        if (!card) return;
+        const { left, top, width, height } = card.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        rotateY.set(x * 14);
+        rotateX.set(-y * 14);
+      },
+      [rotateX, rotateY]
+    );
 
-  const handleMouseLeave = useCallback(() => {
-    rotateX.set(0);
-    rotateY.set(0);
-  }, [rotateX, rotateY]);
+    const handleMouseLeave = useCallback(() => {
+      rotateX.set(0);
+      rotateY.set(0);
+    }, [rotateX, rotateY]);
 
-  const handleClick = useCallback(() => {
-    onProjectClick(project.url);
-  }, [project.url, onProjectClick]);
+    return (
+      <motion.a
+        ref={cardRef}
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="projects__bento-card"
+        variants={variants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        data-cursor-hover
+        aria-label={project.title}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX: springX,
+          rotateY: springY,
+          transformStyle: "preserve-3d",
+          transformPerspective: 800,
+        }}
+      >
+        {!isLoaded && <div className="projects__bento-placeholder" />}
+        <img
+          src={optimizedSrc}
+          alt={project.title}
+          className={`projects__bento-bg${
+            isLoaded ? " projects__bento-bg--loaded" : ""
+          }`}
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setIsLoaded(true)}
+        />
 
-  return (
-    <motion.article
-      ref={cardRef}
-      className="projects__bento-card"
-      variants={variants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      data-cursor-hover
-      onClick={handleClick}
-      role="link"
-      tabIndex={0}
-      aria-label={`${project.title}`}
-      onKeyDown={(e) => e.key === "Enter" && handleClick()}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX: springX,
-        rotateY: springY,
-        transformStyle: "preserve-3d",
-        transformPerspective: 800,
-      }}
-    >
-      {!isLoaded && <div className="projects__bento-placeholder" />}
-      <img
-        src={optimizedSrc}
-        alt={project.title}
-        className={`projects__bento-bg${isLoaded ? " projects__bento-bg--loaded" : ""}`}
-        loading="lazy"
-        decoding="async"
-        onLoad={() => setIsLoaded(true)}
-      />
+        <div className="projects__bento-gradient" />
 
-      <div className="projects__bento-gradient" />
-
-      <div className="projects__bento-content">
-        <h3 className="projects__bento-title">{project.title}</h3>
-        <span className={`projects__bento-badge projects__bento-badge--${project.category}`}>
-          {categoryLabels[project.category]}
-        </span>
-      </div>
-    </motion.article>
-  );
-});
+        <div className="projects__bento-content">
+          <h3 className="projects__bento-title">{project.title}</h3>
+          <span
+            className={`projects__bento-badge projects__bento-badge--${project.category}`}
+          >
+            {categoryLabels[project.category]}
+          </span>
+        </div>
+      </motion.a>
+    );
+  }
+);
 
 BentoCard.displayName = "BentoCard";
 
-const ProjectItem = memo(({ project, index, variants, onProjectClick, overlayText }) => {
-  const handleClick = useCallback(() => {
-    onProjectClick(project.url);
-  }, [project.url, onProjectClick]);
+const ProjectItem = memo(
+  ({ project, index, variants, overlayText }) => {
+    return (
+      <motion.a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="projects__item"
+        variants={variants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        data-cursor-hover
+        aria-label={project.title}
+      >
+        <span className="projects__item-number">
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
-  return (
-    <motion.article
-      className="projects__item"
-      variants={variants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      data-cursor-hover
-      onClick={handleClick}
-      role="link"
-      tabIndex={0}
-      aria-label={`${project.title}`}
-      onKeyDown={(e) => e.key === "Enter" && handleClick()}
-    >
-      <span className="projects__item-number">
-        {String(index + 1).padStart(2, "0")}
-      </span>
+        <ProjectImage
+          src={project.image}
+          alt={project.title}
+          overlayText={overlayText}
+        />
 
-      <ProjectImage src={project.image} alt={project.title} overlayText={overlayText} />
-
-      <div className="projects__item-content">
-        <div className="projects__item-tags">
-          {project.tags.map((tag) => (
-            <span key={tag} className="projects__item-tag">{tag}</span>
-          ))}
+        <div className="projects__item-content">
+          <div className="projects__item-tags">
+            {project.tags.map((tag) => (
+              <span key={tag} className="projects__item-tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h3 className="projects__item-title">{project.title}</h3>
+          <p className="projects__item-description">{project.description}</p>
         </div>
-        <h3 className="projects__item-title">{project.title}</h3>
-        <p className="projects__item-description">{project.description}</p>
-      </div>
 
-      <div className="projects__item-arrow">
-        <HiOutlineExternalLink className="projects__item-arrow-icon" />
-      </div>
-    </motion.article>
-  );
-});
+        <div className="projects__item-arrow">
+          <HiOutlineExternalLink className="projects__item-arrow-icon" />
+        </div>
+      </motion.a>
+    );
+  }
+);
 
 ProjectItem.displayName = "ProjectItem";
-
 
 const Projects = () => {
   const { t } = useLanguage();
@@ -230,12 +244,13 @@ const Projects = () => {
   }, []);
 
   const projects = useMemo(
-    () => t.projects.items.map((item) => ({
-      ...item,
-      image: PROJECT_IMAGES[item.id],
-      url: PROJECT_URLS[item.id],
-      category: PROJECT_CATEGORIES[item.id],
-    })),
+    () =>
+      t.projects.items.map((item) => ({
+        ...item,
+        image: PROJECT_IMAGES[item.id],
+        url: PROJECT_URLS[item.id],
+        category: PROJECT_CATEGORIES[item.id],
+      })),
     [t.projects.items]
   );
 
@@ -255,10 +270,6 @@ const Projects = () => {
     []
   );
 
-  const handleProjectClick = useCallback((url) => {
-    if (url) window.open(url, "_blank", "noopener,noreferrer");
-  }, []);
-
   return (
     <section className="projects" id="projects" ref={ref}>
       <div className="projects__container">
@@ -270,7 +281,9 @@ const Projects = () => {
             transition={{ duration: 0.4 }}
           >
             <span className="projects__label">{t.projects.label}</span>
-            <RevealText className="projects__title">{t.projects.title}</RevealText>
+            <RevealText className="projects__title">
+              {t.projects.title}
+            </RevealText>
             <p className="projects__subtitle">{t.projects.subtitle}</p>
             <p className="projects__description">{t.projects.description}</p>
           </motion.div>
@@ -287,7 +300,6 @@ const Projects = () => {
                   key={project.id}
                   project={project}
                   variants={itemVariants}
-                  onProjectClick={handleProjectClick}
                   categoryLabels={t.projects.categoryLabels}
                 />
               ))}
@@ -336,7 +348,6 @@ const Projects = () => {
                   project={project}
                   index={index}
                   variants={itemVariants}
-                  onProjectClick={handleProjectClick}
                   overlayText={t.projects.label}
                 />
               ))}
@@ -375,7 +386,6 @@ const Projects = () => {
           </AnimatePresence>
         </div>
       </div>
-
     </section>
   );
 };

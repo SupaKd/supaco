@@ -145,10 +145,10 @@ export const translations = {
         },
         {
           id: 3,
-          title: "Optical Store",
+          title: "Sofia Photo",
           description:
             "Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon",
-          tags: ["Site Vitrine", "Lunettes"],
+          tags: ["Site Vitrine", "Photographe"],
         },
       ],
     },
