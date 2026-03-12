@@ -217,7 +217,7 @@ const Testimonials = () => {
   );
 
   return (
-    <section className="testimonials" id="testimonials" ref={ref}>
+    <section className="testimonials" id="testimonials" ref={ref} aria-label="Avis clients Google">
       <div className="testimonials__container">
         <motion.div
           className="testimonials__header"

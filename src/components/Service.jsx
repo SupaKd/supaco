@@ -189,7 +189,7 @@ const Services = () => {
   );
 
   return (
-    <section className="services" id="services" ref={ref}>
+    <section className="services" id="services" ref={ref} aria-label="Nos services de création web">
       <div className="services__bg" aria-hidden="true">
         <div className="services__bg-orb services__bg-orb--1" />
         <div className="services__bg-orb services__bg-orb--2" />

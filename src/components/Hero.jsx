@@ -127,15 +127,18 @@ const Hero = memo(() => {
           <div className="hero__profile-card">
             <div className="hero__photo-wrapper">
               <div className="hero__photo">
-                <img
-                  src="/kevin.png"
-                  alt="Kevin - Développeur web Supaco Digital"
-                  width="200"
-                  height="200"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                />
+                <picture>
+                  <source srcSet="/kevin.webp" type="image/webp" />
+                  <img
+                    src="/kevin.png"
+                    alt="Kevin - Développeur web Supaco Digital"
+                    width="200"
+                    height="200"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                </picture>
               </div>
             </div>
 

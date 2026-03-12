@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://supaco-digital.com/</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="fr-FR" href="https://supaco-digital.com/"/>
@@ -12,25 +12,25 @@
   </url>
   <url>
     <loc>https://supaco-digital.com/#services</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://supaco-digital.com/#projects</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://supaco-digital.com/#pricing</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://supaco-digital.com/#contact</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

@@ -174,7 +174,7 @@ const PhoneMockup = memo(() => {
 
           <div className="responsive__ui-navbar">
             <img
-              src="/newlogo.png"
+              src="/logo2026.png"
               alt="logo"
               className="responsive__ui-logo"
               loading="lazy"

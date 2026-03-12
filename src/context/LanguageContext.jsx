@@ -66,7 +66,7 @@ export const translations = {
             "Gestion des stocks",
             "Suivi commandes",
           ],
-          price: "2 500€",
+          price: "2 490€",
           stat: { value: "14j", label: "Livraison moyenne" },
         },
         {

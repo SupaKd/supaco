@@ -172,7 +172,7 @@ const Contact = () => {
   return (
     <>
     <CopyFeedback visible={copied} />
-    <section className="contact" id="contact" ref={ref}>
+    <section className="contact" id="contact" ref={ref} aria-label="Contactez Supaco Digital — Devis gratuit">
       <div className="contact__container">
         <div className="contact__wrapper">
           <motion.div

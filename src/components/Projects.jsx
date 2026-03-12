@@ -27,7 +27,7 @@ const PROJECT_IMAGES = {
 
 const PROJECT_URLS = {
   1: "https://sabai-thoiry.com/",
-  7: "https://mb-beige-six.vercel.app/",
+  7: "https://mb-patrimoine-finance.fr/",
   2: "https://bellifood.com/",
   4: "https://depannage-gemeaux.fr/",
   6: "https://restaurant-t.vercel.app/",
@@ -83,130 +83,126 @@ const ProjectImage = memo(({ src, alt, overlayText }) => {
 
 ProjectImage.displayName = "ProjectImage";
 
-const BentoCard = memo(
-  ({ project, variants, categoryLabels }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const optimizedSrc = optimizeUnsplashUrl(project.image);
-    const cardRef = useRef(null);
+const BentoCard = memo(({ project, variants, categoryLabels }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const optimizedSrc = optimizeUnsplashUrl(project.image);
+  const cardRef = useRef(null);
 
-    const rotateX = useMotionValue(0);
-    const rotateY = useMotionValue(0);
-    const springX = useSpring(rotateX, { stiffness: 150, damping: 20 });
-    const springY = useSpring(rotateY, { stiffness: 150, damping: 20 });
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const springX = useSpring(rotateX, { stiffness: 150, damping: 20 });
+  const springY = useSpring(rotateY, { stiffness: 150, damping: 20 });
 
-    const handleMouseMove = useCallback(
-      (e) => {
-        const card = cardRef.current;
-        if (!card) return;
-        const { left, top, width, height } = card.getBoundingClientRect();
-        const x = (e.clientX - left) / width - 0.5;
-        const y = (e.clientY - top) / height - 0.5;
-        rotateY.set(x * 14);
-        rotateX.set(-y * 14);
-      },
-      [rotateX, rotateY]
-    );
+  const handleMouseMove = useCallback(
+    (e) => {
+      const card = cardRef.current;
+      if (!card) return;
+      const { left, top, width, height } = card.getBoundingClientRect();
+      const x = (e.clientX - left) / width - 0.5;
+      const y = (e.clientY - top) / height - 0.5;
+      rotateY.set(x * 14);
+      rotateX.set(-y * 14);
+    },
+    [rotateX, rotateY]
+  );
 
-    const handleMouseLeave = useCallback(() => {
-      rotateX.set(0);
-      rotateY.set(0);
-    }, [rotateX, rotateY]);
+  const handleMouseLeave = useCallback(() => {
+    rotateX.set(0);
+    rotateY.set(0);
+  }, [rotateX, rotateY]);
 
-    return (
-      <motion.a
-        ref={cardRef}
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="projects__bento-card"
-        variants={variants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        data-cursor-hover
-        aria-label={project.title}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX: springX,
-          rotateY: springY,
-          transformStyle: "preserve-3d",
-          transformPerspective: 800,
-        }}
-      >
-        {!isLoaded && <div className="projects__bento-placeholder" />}
-        <img
-          src={optimizedSrc}
-          alt={project.title}
-          className={`projects__bento-bg${
-            isLoaded ? " projects__bento-bg--loaded" : ""
-          }`}
-          loading="lazy"
-          decoding="async"
-          onLoad={() => setIsLoaded(true)}
-        />
+  return (
+    <motion.a
+      ref={cardRef}
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="projects__bento-card"
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      data-cursor-hover
+      aria-label={project.title}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX: springX,
+        rotateY: springY,
+        transformStyle: "preserve-3d",
+        transformPerspective: 800,
+      }}
+    >
+      {!isLoaded && <div className="projects__bento-placeholder" />}
+      <img
+        src={optimizedSrc}
+        alt={project.title}
+        className={`projects__bento-bg${
+          isLoaded ? " projects__bento-bg--loaded" : ""
+        }`}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setIsLoaded(true)}
+      />
 
-        <div className="projects__bento-gradient" />
+      <div className="projects__bento-gradient" />
 
-        <div className="projects__bento-content">
-          <h3 className="projects__bento-title">{project.title}</h3>
-          <span
-            className={`projects__bento-badge projects__bento-badge--${project.category}`}
-          >
-            {categoryLabels[project.category]}
-          </span>
-        </div>
-      </motion.a>
-    );
-  }
-);
+      <div className="projects__bento-content">
+        <h3 className="projects__bento-title">{project.title}</h3>
+        <span
+          className={`projects__bento-badge projects__bento-badge--${project.category}`}
+        >
+          {categoryLabels[project.category]}
+        </span>
+      </div>
+    </motion.a>
+  );
+});
 
 BentoCard.displayName = "BentoCard";
 
-const ProjectItem = memo(
-  ({ project, index, variants, overlayText }) => {
-    return (
-      <motion.a
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="projects__item"
-        variants={variants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        data-cursor-hover
-        aria-label={project.title}
-      >
-        <span className="projects__item-number">
-          {String(index + 1).padStart(2, "0")}
-        </span>
+const ProjectItem = memo(({ project, index, variants, overlayText }) => {
+  return (
+    <motion.a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="projects__item"
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      data-cursor-hover
+      aria-label={project.title}
+    >
+      <span className="projects__item-number">
+        {String(index + 1).padStart(2, "0")}
+      </span>
 
-        <ProjectImage
-          src={project.image}
-          alt={project.title}
-          overlayText={overlayText}
-        />
+      <ProjectImage
+        src={project.image}
+        alt={project.title}
+        overlayText={overlayText}
+      />
 
-        <div className="projects__item-content">
-          <div className="projects__item-tags">
-            {project.tags.map((tag) => (
-              <span key={tag} className="projects__item-tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-          <h3 className="projects__item-title">{project.title}</h3>
-          <p className="projects__item-description">{project.description}</p>
+      <div className="projects__item-content">
+        <div className="projects__item-tags">
+          {project.tags.map((tag) => (
+            <span key={tag} className="projects__item-tag">
+              {tag}
+            </span>
+          ))}
         </div>
+        <h3 className="projects__item-title">{project.title}</h3>
+        <p className="projects__item-description">{project.description}</p>
+      </div>
 
-        <div className="projects__item-arrow">
-          <HiOutlineExternalLink className="projects__item-arrow-icon" />
-        </div>
-      </motion.a>
-    );
-  }
-);
+      <div className="projects__item-arrow">
+        <HiOutlineExternalLink className="projects__item-arrow-icon" />
+      </div>
+    </motion.a>
+  );
+});
 
 ProjectItem.displayName = "ProjectItem";
 
@@ -271,7 +267,7 @@ const Projects = () => {
   );
 
   return (
-    <section className="projects" id="projects" ref={ref}>
+    <section className="projects" id="projects" ref={ref} aria-label="Portfolio — Nos réalisations web">
       <div className="projects__container">
         <div className="projects__desktop-layout">
           <motion.div
