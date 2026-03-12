@@ -85,7 +85,7 @@ const PolitiqueConfidentialiteContent = () => (
         Le responsable du traitement des données personnelles est :<br />
         <strong>Supaco Digital</strong>
         <br />
-        Email : contact@supaco.digital
+        Email : contact@supaco-digital.com
       </p>
     </section>
 
@@ -165,7 +165,7 @@ const PolitiqueConfidentialiteContent = () => (
         <li>Droit à la portabilité</li>
         <li>Droit d&apos;opposition</li>
       </ul>
-      <p>Pour exercer ces droits, contactez-nous à : contact@supaco.digital</p>
+      <p>Pour exercer ces droits, contactez-nous à : contact@supaco-digital.com</p>
       <p>
         Vous pouvez également introduire une réclamation auprès de la{" "}
         <strong>CNIL</strong> (www.cnil.fr).

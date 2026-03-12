@@ -292,7 +292,7 @@ export const translations = {
             "SEO optimisation",
             "Social media integration",
           ],
-          price: "€890",
+          price: "€1,490",
           stat: { value: "5d", label: "Average delivery" },
         },
         {
@@ -307,7 +307,7 @@ export const translations = {
             "Stock management",
             "Order tracking",
           ],
-          price: "€1,990",
+          price: "€2,490",
           stat: { value: "14d", label: "Average delivery" },
         },
         {

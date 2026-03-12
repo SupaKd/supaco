@@ -260,7 +260,7 @@ const Contact = () => {
                     <p className="contact__error-text">{errorMessage}</p>
                     <p className="contact__error-alternative">
                       {t.contact.error.alternative}{" "}
-                      <a href="mailto:contact@supaco.digital">contact@supaco.digital</a>
+                      <a href="mailto:contact@supaco-digital.com">contact@supaco-digital.com</a>
                     </p>
                     <button className="contact__form-submit" onClick={resetForm}>
                       {t.contact.error.retry}
