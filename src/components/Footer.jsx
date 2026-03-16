@@ -45,16 +45,6 @@ const Footer = () => {
               Supaco Digital
             </a>
             <p className="footer__tagline">{t.footer.tagline}</p>
-            <div className="footer__newsletter">
-              <input
-                type="email"
-                className="footer__newsletter-input"
-                placeholder={t.footer.emailPlaceholder}
-              />
-              <button className="footer__newsletter-btn">
-                {t.footer.subscribe}
-              </button>
-            </div>
           </div>
 
           <div className="footer__column">

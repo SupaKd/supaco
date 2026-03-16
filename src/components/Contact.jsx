@@ -112,7 +112,7 @@ const TAB_ICONS = {
 };
 
 const Contact = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeTab, setActiveTab] = useState("message");
@@ -131,19 +131,28 @@ const Contact = () => {
   const [fieldErrors, setFieldErrors] = useState({});
 
   const validateField = useCallback((name, value) => {
+    const isFr = lang === "fr";
     switch (name) {
       case "name":
-        return value.trim().length < 2 ? "Le nom doit contenir au moins 2 caractères." : "";
+        return value.trim().length < 2
+          ? isFr ? "Le nom doit contenir au moins 2 caractères." : "Name must be at least 2 characters."
+          : "";
       case "email":
-        return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "Adresse email invalide." : "";
+        return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+          ? isFr ? "Adresse email invalide." : "Invalid email address."
+          : "";
       case "service":
-        return !value ? "Veuillez sélectionner un service." : "";
+        return !value
+          ? isFr ? "Veuillez sélectionner un service." : "Please select a service."
+          : "";
       case "message":
-        return value.trim().length < 10 ? "Le message doit contenir au moins 10 caractères." : "";
+        return value.trim().length < 10
+          ? isFr ? "Le message doit contenir au moins 10 caractères." : "Message must be at least 10 characters."
+          : "";
       default:
         return "";
     }
-  }, []);
+  }, [lang]);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;

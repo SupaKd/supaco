@@ -23,7 +23,6 @@ const MentionsLegalesContent = () => (
       <p>
         <strong>Supaco Digital</strong>
         <br />
-        {/* TODO: Remplacez par vos vraies informations */}
         Forme juridique : EI
         <br />
         Adresse : Saint-Genis-Pouilly
@@ -37,7 +36,6 @@ const MentionsLegalesContent = () => (
     <section>
       <h3>2. Hébergement</h3>
       <p>
-        {/* TODO: Remplacez par votre hébergeur */}
         Le site est hébergé par :<br />
         <strong>Hostinger</strong>
         <br />
