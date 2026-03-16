@@ -5,17 +5,17 @@ import { useLanguage } from "../context/LanguageContext";
 const PANELS = [
   {
     id: "vitrine",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=80&auto=format&fit=crop",
+    image: "/service/vitrine.jpg",
     label: "Le Classique",
   },
   {
     id: "ecommerce",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop",
+    image: "/service/ecom.jpg",
     label: "La Boutique",
   },
   {
     id: "app",
-    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80&auto=format&fit=crop",
+    image: "/service/appweb.jpg",
     label: "Sur-mesure",
   },
 ];
