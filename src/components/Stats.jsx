@@ -1,5 +1,5 @@
 import { useRef, memo, useMemo, useState, useEffect, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   HiOutlineRocketLaunch,
   HiOutlineFaceSmile,
@@ -8,11 +8,12 @@ import {
 } from "react-icons/hi2";
 import { useLanguage } from "../context/LanguageContext";
 
-const useScrambleCount = (target, isInView, duration = 2000) => {
+const useScrambleCount = (target, isInView, duration = 2000, reduced = false) => {
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
+    if (reduced) { setDisplay(target); return; }
 
     const startTime = performance.now();
     const scrambleDuration = duration * 0.45;
@@ -39,13 +40,13 @@ const useScrambleCount = (target, isInView, duration = 2000) => {
     };
 
     requestAnimationFrame(animate);
-  }, [isInView, target, duration]);
+  }, [isInView, target, duration, reduced]);
 
   return display;
 };
 
-const StatItem = memo(({ stat, isInView, variants }) => {
-  const count = useScrambleCount(stat.value, isInView);
+const StatItem = memo(({ stat, isInView, variants, reduced }) => {
+  const count = useScrambleCount(stat.value, isInView, 2000, reduced);
 
   return (
     <motion.div className="stats__item" variants={variants}>
@@ -66,6 +67,7 @@ const Stats = () => {
   const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const prefersReducedMotion = useReducedMotion();
 
   const stats = useMemo(
     () => [
@@ -78,26 +80,30 @@ const Stats = () => {
   );
 
   const containerVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.07 },
-      },
-    }),
-    []
+    () => prefersReducedMotion
+      ? {}
+      : ({
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.07 },
+          },
+        }),
+    [prefersReducedMotion]
   );
 
   const itemVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 15 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.28, ease: "easeOut" },
-      },
-    }),
-    []
+    () => prefersReducedMotion
+      ? {}
+      : ({
+          hidden: { opacity: 0, y: 15 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.28, ease: "easeOut" },
+          },
+        }),
+    [prefersReducedMotion]
   );
 
   return (
@@ -105,11 +111,11 @@ const Stats = () => {
       <motion.div
         className="stats__container"
         variants={containerVariants}
-        initial="hidden"
+        initial={prefersReducedMotion ? false : "hidden"}
         animate={isInView ? "visible" : "hidden"}
       >
         {stats.map((stat) => (
-          <StatItem key={stat.label} stat={stat} isInView={isInView} variants={itemVariants} />
+          <StatItem key={stat.label} stat={stat} isInView={isInView} variants={itemVariants} reduced={!!prefersReducedMotion} />
         ))}
       </motion.div>
     </section>

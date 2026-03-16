@@ -9,93 +9,27 @@ const features = [
   "Expérience utilisateur cohérente sur tous les appareils",
 ];
 
-// ---- Écrans simulés ----
-
-const ScreenHome = memo(() => (
-  <div className="phone-screen__home">
-    <div className="phone-screen__home-hero">
-      <div className="phone-screen__home-badge" />
-      <div className="phone-screen__home-title" />
-      <div className="phone-screen__home-title phone-screen__home-title--short" />
-      <div className="phone-screen__home-sub" />
-      <div className="phone-screen__home-cta">Démarrer →</div>
-    </div>
-
-    <div className="phone-screen__home-stats">
-      {[
-        { value: "15+", label: "Projets" },
-        { value: "98%", label: "Satisfaits" },
-        { value: "5★", label: "Note" },
-      ].map(({ value, label }) => (
-        <div key={label} className="phone-screen__home-stat">
-          <span className="phone-screen__home-stat-value">{value}</span>
-          <span className="phone-screen__home-stat-label">{label}</span>
-        </div>
-      ))}
-    </div>
-
-    <div className="phone-screen__home-section-label">Derniers projets</div>
-    <div className="phone-screen__home-projects">
-      <div className="phone-screen__home-project phone-screen__home-project--cyan">
-        <div className="phone-screen__home-project-tag">Site Vitrine</div>
-        <div className="phone-screen__home-project-line" />
-      </div>
-      <div className="phone-screen__home-project phone-screen__home-project--blue">
-        <div className="phone-screen__home-project-tag">E-Commerce</div>
-        <div className="phone-screen__home-project-line" />
-      </div>
-    </div>
-  </div>
-));
-
-const ScreenServices = memo(() => (
-  <div className="phone-screen__services">
-    <div className="phone-screen__section-label">Nos services</div>
-    {[
-      { label: "Site Vitrine" },
-      { label: "E-Commerce" },
-      { label: "App Web" },
-    ].map(({ label }) => (
-      <div key={label} className="phone-screen__service-card">
-        <div className="phone-screen__service-icon" />
-        <div className="phone-screen__service-text">
-          <div className="phone-screen__service-name">{label}</div>
-          <div className="phone-screen__service-line" />
-          <div className="phone-screen__service-line phone-screen__service-line--short" />
-        </div>
-        <div className="phone-screen__service-arrow">›</div>
-      </div>
-    ))}
-  </div>
-));
-
-const ScreenContact = memo(() => (
-  <div className="phone-screen__contact">
-    <div className="phone-screen__section-label">Nous contacter</div>
-    <div className="phone-screen__input">
-      <div className="phone-screen__input-label">Nom</div>
-      <div className="phone-screen__input-field" />
-    </div>
-    <div className="phone-screen__input">
-      <div className="phone-screen__input-label">Email</div>
-      <div className="phone-screen__input-field" />
-    </div>
-    <div className="phone-screen__input">
-      <div className="phone-screen__input-label">Message</div>
-      <div className="phone-screen__input-field phone-screen__input-field--textarea" />
-    </div>
-    <div className="phone-screen__contact-btn">Envoyer</div>
-  </div>
-));
-
-ScreenHome.displayName = "ScreenHome";
-ScreenServices.displayName = "ScreenServices";
-ScreenContact.displayName = "ScreenContact";
+// ---- Écrans photo ----
 
 const SCREENS = [
-  { id: "home", label: "Accueil", Component: ScreenHome },
-  { id: "services", label: "Services", Component: ScreenServices },
-  { id: "contact", label: "Contact", Component: ScreenContact },
+  {
+    id: "home",
+    label: "Accueil",
+    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80&auto=format&fit=crop",
+    caption: "Site Vitrine",
+  },
+  {
+    id: "services",
+    label: "E-Commerce",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80&auto=format&fit=crop",
+    caption: "Boutique en ligne",
+  },
+  {
+    id: "contact",
+    label: "App Web",
+    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&q=80&auto=format&fit=crop",
+    caption: "Application web",
+  },
 ];
 
 const slideVariants = {
@@ -160,7 +94,6 @@ const PhoneMockup = memo(() => {
     };
   }, []);
 
-  const { Component } = SCREENS[active];
 
   return (
     <div className="responsive__phone" ref={containerRef}>
@@ -206,7 +139,14 @@ const PhoneMockup = memo(() => {
                 exit="exit"
                 className="responsive__ui-screen"
               >
-                <Component />
+                <img
+                  src={SCREENS[active].image}
+                  alt={SCREENS[active].caption}
+                  className="responsive__ui-photo"
+                  loading="lazy"
+                  draggable={false}
+                />
+                <div className="responsive__ui-caption">{SCREENS[active].caption}</div>
               </Motion.div>
             </AnimatePresence>
           </div>

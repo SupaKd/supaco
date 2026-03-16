@@ -85,6 +85,13 @@ button {
   color: inherit;
 }
 
+// Focus visible — keyboard navigation
+:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 3px;
+  border-radius: $radius-sm;
+}
+
 // Inputs
 input, textarea {
   font-family: inherit;
@@ -209,6 +216,41 @@ section {
   &:hover::after {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+  }
+}
+
+// ============================================
+// Lazy Image skeleton
+// ============================================
+
+.lazy-image {
+  overflow: hidden;
+
+  &__skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-tertiary) 25%,
+      rgba(255, 255, 255, 0.06) 50%,
+      var(--color-bg-tertiary) 75%
+    );
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+    border-radius: inherit;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &--loaded {
+      opacity: 1;
+    }
   }
 }
 

@@ -105,49 +105,49 @@ export const translations = {
           id: 1,
           title: "Restaurant Sabai",
           description:
-            "Application web complète de commande en ligne pour un restaurant de cuisine asiatique authentique à Thoiry",
+            "Application web sur mesure avec système de commande en ligne, gestion du menu en temps réel et interface d'administration — développée pour un restaurant de cuisine asiatique authentique à Thoiry, dans le Pays de Gex.",
           tags: ["Application Web", "Restaurant"],
         },
         {
           id: 7,
           title: "MB - Patrimoine & Finance",
           description:
-            "Site vitrine professionnel pour une conseillère en investissements, avec présentation des services et prise de contact",
+            "Site vitrine haut de gamme pour une conseillère indépendante en gestion de patrimoine et investissements. Design épuré inspirant confiance, présentation des services, intégration Calendly et formulaire de contact sécurisé.",
           tags: ["Site Vitrine", "Finance"],
         },
         {
           id: 2,
           title: "Bellifood",
           description:
-            "Site vitrine avec menu digital pour un restaurant de tacos et burgers à Oyonnax",
+            "Site vitrine avec menu digital interactif pour un restaurant de tacos et burgers à Oyonnax. Mise en avant des plats, identité visuelle forte et optimisation SEO locale pour attirer une clientèle de proximité.",
           tags: ["Site Vitrine", "Restaurant"],
         },
         {
           id: 4,
           title: "Dépannage Gémeaux",
           description:
-            "Site vitrine professionnel pour une entreprise de plomberie et chauffage avec formulaire de contact et présentation des services",
+            "Site vitrine professionnel pour une entreprise de serrurier et éléctricité. Présentation claire des interventions, formulaire de devis rapide, numéro d'urgence mis en avant et référencement local optimisé.",
           tags: ["Site Vitrine", "Artisan"],
         },
         {
           id: 6,
           title: "Le Comptoir",
           description:
-            "Site vitrine élégant pour un restaurant, avec présentation du menu et ambiance soignée",
+            "Site vitrine élégant pour un restaurant gastronomique. Présentation du menu, galerie photo immersive, réservation en ligne et design soigné qui reflète l'identité et l'ambiance de l'établissement.",
           tags: ["Site Vitrine", "Restaurant"],
         },
         {
           id: 5,
           title: "Yojeme",
           description:
-            "Site vitrine moderne et responsive avec design épuré et optimisation SEO",
+            "Site vitrine moderne et entièrement responsive pour une association. Design minimaliste, animations fluides, performances optimisées et stratégie SEO intégrée dès la conception.",
           tags: ["Site Vitrine", "Services"],
         },
         {
           id: 3,
           title: "Sofia Photo",
           description:
-            "Landing page moderne avec effet 3D pour une boutique de lunettes à Lyon",
+            "Landing page immersive pour une photographe professionnelle. Galerie full-screen, effet parallaxe, formulaire de réservation de séance et expérience visuelle conçue pour mettre le travail artistique en valeur.",
           tags: ["Site Vitrine", "Photographe"],
         },
       ],
@@ -172,7 +172,7 @@ export const translations = {
       details: {
         email: "Email",
         location: "Localisation",
-        locationValue: "Pays de Gex, France",
+        locationValue: "Saint-Genis-Pouilly, France",
         response: "Réponse",
         responseValue: "Sous 24 heures",
       },
@@ -346,50 +346,50 @@ export const translations = {
           id: 1,
           title: "Restaurant Sabai",
           description:
-            "Complete online ordering web application for an authentic Asian restaurant in Thoiry",
+            "Custom web application with online ordering system, real-time menu management and admin dashboard — built for an authentic Thai restaurant in Thoiry, Pays de Gex.",
           tags: ["Web Application", "Restaurant"],
         },
         {
           id: 7,
           title: "MB - Wealth & Finance",
           description:
-            "Professional showcase site for an investment advisor, with service presentation and contact form",
+            "Premium showcase site for an independent wealth management advisor. Clean trust-inspiring design, service presentation, Calendly integration and secure contact form.",
           tags: ["Showcase Site", "Finance"],
         },
         {
           id: 2,
           title: "Bellifood",
           description:
-            "Showcase site with digital menu for a tacos and burgers restaurant in Oyonnax",
+            "Showcase site with interactive digital menu for a tacos and burgers restaurant in Oyonnax. Strong visual identity and local SEO optimisation to attract nearby customers.",
           tags: ["Showcase Site", "Restaurant"],
         },
         {
           id: 4,
           title: "Gémeaux Repairs",
           description:
-            "Professional showcase site for a plumbing and heating company with contact form and service presentation",
+            "Professional showcase site for a plumbing and heating company. Clear service overview, quick quote form, prominent emergency number and optimised local SEO.",
           tags: ["Showcase Site", "Craftsman"],
         },
         {
           id: 6,
           title: "Le Comptoir",
           description:
-            "Elegant showcase site for a restaurant, with menu presentation and refined atmosphere",
+            "Elegant showcase site for a gastronomic restaurant. Menu presentation, immersive photo gallery, online booking and refined design that reflects the establishment's identity.",
           tags: ["Showcase Site", "Restaurant"],
         },
         {
           id: 5,
           title: "Yojeme",
           description:
-            "Modern and responsive showcase site with clean design and SEO optimisation",
+            "Modern fully responsive showcase site for a service brand. Minimalist design, smooth animations, optimised performance and SEO strategy built in from the ground up.",
           tags: ["Showcase Site", "Services"],
         },
         {
           id: 3,
-          title: "Optical Store",
+          title: "Sofia Photo",
           description:
-            "Modern landing page with 3D effect for an eyewear boutique in Lyon",
-          tags: ["Showcase Site", "Eyewear"],
+            "Immersive landing page for a professional photographer. Full-screen gallery, parallax effect, session booking form and a visual experience designed to showcase artistic work.",
+          tags: ["Showcase Site", "Photographer"],
         },
       ],
     },

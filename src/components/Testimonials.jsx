@@ -1,5 +1,5 @@
 import { useRef, memo, useMemo, useState, useCallback, useEffect } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useReducedMotion } from "framer-motion";
 import RevealText from './ui/RevealText';
 import { HiStar } from "react-icons/hi2";
 import { FcGoogle } from "react-icons/fc";
@@ -206,6 +206,7 @@ const Testimonials = () => {
   const { lang, t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const prefersReducedMotion = useReducedMotion();
 
   const testimonials = useMemo(
     () => TESTIMONIALS_DATA.map((item) => ({
@@ -221,7 +222,7 @@ const Testimonials = () => {
       <div className="testimonials__container">
         <motion.div
           className="testimonials__header"
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.35 }}
         >
@@ -232,7 +233,7 @@ const Testimonials = () => {
 
         <motion.div
           className="testimonials__carousel-wrapper"
-          initial={{ opacity: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
@@ -241,7 +242,7 @@ const Testimonials = () => {
 
         <motion.div
           className="testimonials__slider-wrapper"
-          initial={{ opacity: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
@@ -255,7 +256,7 @@ const Testimonials = () => {
 
         <motion.div
           className="testimonials__google"
-          initial={{ opacity: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
         >

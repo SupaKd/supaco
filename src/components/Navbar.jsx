@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Sun, Moon } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -21,7 +22,7 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem("theme");
-    return saved ? saved === "dark" : true;
+    return saved ? saved === "dark" : false;
   });
   const lastScrollY = useRef(0);
   const { lang, toggleLang, t } = useLanguage();
@@ -51,9 +52,11 @@ const Navbar = () => {
 
   const navLinks = useMemo(
     () => [
-      { label: t.nav.services, href: "#services" },
-      { label: t.nav.projects, href: "#projects" },
-      { label: t.nav.contact, href: "#contact" },
+      { label: t.nav.services, href: "/services", isRoute: true },
+      { label: t.nav.projects, href: "/projets", isRoute: true },
+      { label: t.nav.contact, href: "/contact", isRoute: true },
+      { label: "FAQ", href: "/faq", isRoute: true },
+      { label: "Blog", href: "/blog", isRoute: true },
     ],
     [t]
   );
@@ -107,7 +110,7 @@ const Navbar = () => {
         }${isMobileMenuOpen ? " navbar--menu-open" : ""}`}
       >
         <div className="navbar__container">
-          <a href="/" className="navbar__logo">
+          <Link to="/" className="navbar__logo">
             <img
               src="/logo2026.png"
               alt="Supaco Digital"
@@ -115,11 +118,22 @@ const Navbar = () => {
               width="70"
               height="70"
             />
-          </a>
+          </Link>
 
           <div className="navbar__menu">
             {navLinks.map((link) => {
               const sectionId = link.href.slice(1);
+              if (link.isRoute) {
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className="navbar__link"
+                  >
+                    {link.label}
+                  </Link>
+                );
+              }
               return (
                 <a
                   key={link.href}
@@ -177,19 +191,36 @@ const Navbar = () => {
       >
         <div className="navbar__mobile-inner">
           <nav className="navbar__mobile-links">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="navbar__mobile-link"
-                onClick={(e) => scrollToSection(e, link.href)}
-                style={{ "--i": i }}
-              >
-                <span className="navbar__mobile-link-num">0{i + 1}</span>
-                <span className="navbar__mobile-link-label">{link.label}</span>
-                <span className="navbar__mobile-link-arrow">→</span>
-              </a>
-            ))}
+            {navLinks.map((link, i) => {
+              if (link.isRoute) {
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className="navbar__mobile-link"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{ "--i": i }}
+                  >
+                    <span className="navbar__mobile-link-num">0{i + 1}</span>
+                    <span className="navbar__mobile-link-label">{link.label}</span>
+                    <span className="navbar__mobile-link-arrow">→</span>
+                  </Link>
+                );
+              }
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="navbar__mobile-link"
+                  onClick={(e) => scrollToSection(e, link.href)}
+                  style={{ "--i": i }}
+                >
+                  <span className="navbar__mobile-link-num">0{i + 1}</span>
+                  <span className="navbar__mobile-link-label">{link.label}</span>
+                  <span className="navbar__mobile-link-arrow">→</span>
+                </a>
+              );
+            })}
           </nav>
 
           <div className="navbar__mobile-footer">

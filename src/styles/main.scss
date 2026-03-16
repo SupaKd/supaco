@@ -10,6 +10,7 @@
 // Components
 @use 'components/announcement-banner';
 @use 'components/navbar';
+@use 'components/services-split';
 @use 'components/hero';
 @use 'components/services';
 @use 'components/projects';
@@ -19,6 +20,9 @@
 @use 'components/contact';
 @use 'components/footer';
 @use 'components/techno';
+@use 'components/faq';
+@use 'components/blog';
+@use 'components/blog-modal';
 @use 'components/cookie-consent';
 @use 'components/legal-modals';
 @use 'components/whatsapp';

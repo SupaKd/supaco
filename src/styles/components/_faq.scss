@@ -1,0 +1,140 @@
+@use '../variables' as *;
+
+// ============================================
+// FAQ
+// ============================================
+
+.faq {
+  padding: $space-5xl 0;
+  background: var(--color-bg-primary);
+
+  &__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 $container-padding;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-3xl;
+  }
+
+  &__label {
+    display: inline-block;
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-primary);
+    margin-bottom: $space-md;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    margin: 0 0 $space-md;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $font-size-lg;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  // ---- Liste ----
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  // ---- Item ----
+  &__item {
+    border-bottom: 1px solid var(--glass-border);
+    transition: background $transition-fast;
+
+    &--open {
+      .faq__icon {
+        color: var(--color-accent-primary);
+      }
+    }
+
+    &:hover {
+      background: var(--glass-bg);
+    }
+  }
+
+  // ---- Question ----
+  &__question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-lg;
+    padding: $space-lg $space-md;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: $font-body;
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-accent-primary);
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+    transition: color $transition-fast, transform $transition-base;
+    display: flex;
+    align-items: center;
+  }
+
+  // ---- Réponse ----
+  &__answer {
+    overflow: hidden;
+
+    p {
+      font-family: $font-body;
+      font-size: $font-size-base;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      padding: 0 $space-md $space-lg;
+      margin: 0;
+    }
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: 768px) {
+  .faq {
+    padding: $space-3xl 0;
+
+    &__question {
+      font-size: $font-size-sm;
+      padding: $space-md;
+    }
+
+    &__answer p {
+      padding: 0 $space-md $space-md;
+      font-size: $font-size-sm;
+    }
+  }
+}

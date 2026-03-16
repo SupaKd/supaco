@@ -1,4 +1,6 @@
 import { useState, useRef, memo, useCallback, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
+import useFocusTrap from "../hooks/useFocusTrap";
 import {
   motion,
   useInView,
@@ -12,6 +14,7 @@ import {
   HiOutlineArrowRight,
   HiChevronLeft,
   HiChevronRight,
+  HiX,
 } from "react-icons/hi";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -23,6 +26,38 @@ const PROJECT_IMAGES = {
   6: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=75",
   5: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&q=75",
   3: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=400&fit=crop&q=75",
+};
+
+// Images pour le modal : chaque projet a des captures desktop et mobile
+const PROJECT_MODAL_IMAGES = {
+  1: {
+    desktop: ["/projets/sabaidesktop.png", "/projets/sabaidesktop2.png"],
+    mobile: ["/projets/sabaimobile.png", "/projets/sabaimobile2.png"],
+  },
+  7: {
+    desktop: ["/projets/mbdestop.png"],
+    mobile: ["/projets/mbmobile.png"],
+  },
+  2: {
+    desktop: ["/projets/bellidesktop.png"],
+    mobile: ["/projets/bellimobile.png"],
+  },
+  4: {
+    desktop: ["/projets/gemeauxdesktop.png"],
+    mobile: ["/projets/gemeauxmobile.png"],
+  },
+  6: {
+    desktop: ["/projets/restodesktop.png"],
+    mobile: ["/projets/restomobilee.png"],
+  },
+  5: {
+    desktop: ["/projets/photodesktop.png"],
+    mobile: ["/projets/photomobile.png"],
+  },
+  3: {
+    desktop: ["/projets/photodesktop.png"],
+    mobile: ["/projets/photomobile.png"],
+  },
 };
 
 const PROJECT_URLS = {
@@ -54,6 +89,187 @@ const optimizeUnsplashUrl = (url) => {
   return u.toString();
 };
 
+// ---- Modal projet ----
+const ProjectModal = memo(({ project, onClose }) => {
+  const [activeTab, setActiveTab] = useState("desktop");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const panelRef = useRef(null);
+  const modalImages = PROJECT_MODAL_IMAGES[project.id] || {
+    desktop: [project.image],
+    mobile: [project.image],
+  };
+  const images = modalImages[activeTab] || [];
+
+  useFocusTrap(panelRef, true);
+
+  // Fermeture au clic sur backdrop
+  const handleBackdropClick = useCallback(
+    (e) => {
+      if (e.target === e.currentTarget) onClose();
+    },
+    [onClose]
+  );
+
+  // Fermeture avec Escape
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  // Reset index quand on change d'onglet
+  const handleTabChange = useCallback((tab) => {
+    setActiveTab(tab);
+    setCurrentIndex(0);
+  }, []);
+
+  const prev = useCallback(() => {
+    setCurrentIndex((i) => (i - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const next = useCallback(() => {
+    setCurrentIndex((i) => (i + 1) % images.length);
+  }, [images.length]);
+
+  return createPortal(
+    <motion.div
+      className="project-modal__backdrop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      onClick={handleBackdropClick}
+    >
+      <motion.div
+        ref={panelRef}
+        className="project-modal__panel"
+        initial={{ opacity: 0, y: 32, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 24, scale: 0.97 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={project.title}
+      >
+        {/* Header */}
+        <div className="project-modal__header">
+          <div className="project-modal__header-info">
+            <h2 className="project-modal__title">{project.title}</h2>
+            <div className="project-modal__tags">
+              {project.tags.map((tag) => (
+                <span key={tag} className="project-modal__tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="project-modal__header-actions">
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-modal__visit-btn"
+              aria-label="Voir le site"
+            >
+              <HiOutlineExternalLink size={16} />
+              Voir le site
+            </a>
+            <button
+              className="project-modal__close"
+              onClick={onClose}
+              aria-label="Fermer"
+            >
+              <HiX size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Tabs Desktop / Mobile */}
+        <div className="project-modal__tabs">
+          <button
+            className={`project-modal__tab${
+              activeTab === "desktop" ? " project-modal__tab--active" : ""
+            }`}
+            onClick={() => handleTabChange("desktop")}
+          >
+            Desktop
+          </button>
+          <button
+            className={`project-modal__tab${
+              activeTab === "mobile" ? " project-modal__tab--active" : ""
+            }`}
+            onClick={() => handleTabChange("mobile")}
+          >
+            Mobile
+          </button>
+        </div>
+
+        {/* Slider images */}
+        <div
+          className={`project-modal__slider project-modal__slider--${activeTab}`}
+        >
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={`${activeTab}-${currentIndex}`}
+              src={optimizeUnsplashUrl(images[currentIndex])}
+              alt={`${project.title} — ${activeTab} ${currentIndex + 1}`}
+              className="project-modal__img"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
+              loading="lazy"
+              decoding="async"
+            />
+          </AnimatePresence>
+
+          {images.length > 1 && (
+            <>
+              <button
+                className="project-modal__arrow project-modal__arrow--left"
+                onClick={prev}
+                aria-label="Image précédente"
+              >
+                <HiChevronLeft size={22} />
+              </button>
+              <button
+                className="project-modal__arrow project-modal__arrow--right"
+                onClick={next}
+                aria-label="Image suivante"
+              >
+                <HiChevronRight size={22} />
+              </button>
+              <div className="project-modal__dots">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`project-modal__dot${
+                      i === currentIndex ? " project-modal__dot--active" : ""
+                    }`}
+                    onClick={() => setCurrentIndex(i)}
+                    aria-label={`Image ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Description */}
+        <div className="project-modal__description">
+          <p>{project.description}</p>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body
+  );
+});
+
+ProjectModal.displayName = "ProjectModal";
+
 const ProjectImage = memo(({ src, alt, overlayText }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const optimizedSrc = optimizeUnsplashUrl(src);
@@ -83,7 +299,7 @@ const ProjectImage = memo(({ src, alt, overlayText }) => {
 
 ProjectImage.displayName = "ProjectImage";
 
-const BentoCard = memo(({ project, variants, categoryLabels }) => {
+const BentoCard = memo(({ project, variants, categoryLabels, onOpen }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const optimizedSrc = optimizeUnsplashUrl(project.image);
   const cardRef = useRef(null);
@@ -112,11 +328,8 @@ const BentoCard = memo(({ project, variants, categoryLabels }) => {
   }, [rotateX, rotateY]);
 
   return (
-    <motion.a
+    <motion.button
       ref={cardRef}
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
       className="projects__bento-card"
       variants={variants}
       initial="hidden"
@@ -126,6 +339,7 @@ const BentoCard = memo(({ project, variants, categoryLabels }) => {
       aria-label={project.title}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={() => onOpen(project)}
       style={{
         rotateX: springX,
         rotateY: springY,
@@ -155,54 +369,54 @@ const BentoCard = memo(({ project, variants, categoryLabels }) => {
           {categoryLabels[project.category]}
         </span>
       </div>
-    </motion.a>
+    </motion.button>
   );
 });
 
 BentoCard.displayName = "BentoCard";
 
-const ProjectItem = memo(({ project, index, variants, overlayText }) => {
-  return (
-    <motion.a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="projects__item"
-      variants={variants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      data-cursor-hover
-      aria-label={project.title}
-    >
-      <span className="projects__item-number">
-        {String(index + 1).padStart(2, "0")}
-      </span>
+const ProjectItem = memo(
+  ({ project, index, variants, overlayText, onOpen }) => {
+    return (
+      <motion.button
+        className="projects__item"
+        variants={variants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        data-cursor-hover
+        aria-label={project.title}
+        onClick={() => onOpen(project)}
+      >
+        <span className="projects__item-number">
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
-      <ProjectImage
-        src={project.image}
-        alt={project.title}
-        overlayText={overlayText}
-      />
+        <ProjectImage
+          src={project.image}
+          alt={project.title}
+          overlayText={overlayText}
+        />
 
-      <div className="projects__item-content">
-        <div className="projects__item-tags">
-          {project.tags.map((tag) => (
-            <span key={tag} className="projects__item-tag">
-              {tag}
-            </span>
-          ))}
+        <div className="projects__item-content">
+          <div className="projects__item-tags">
+            {project.tags.map((tag) => (
+              <span key={tag} className="projects__item-tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h3 className="projects__item-title">{project.title}</h3>
+          <p className="projects__item-description">{project.description}</p>
         </div>
-        <h3 className="projects__item-title">{project.title}</h3>
-        <p className="projects__item-description">{project.description}</p>
-      </div>
 
-      <div className="projects__item-arrow">
-        <HiOutlineExternalLink className="projects__item-arrow-icon" />
-      </div>
-    </motion.a>
-  );
-});
+        <div className="projects__item-arrow">
+          <HiOutlineExternalLink className="projects__item-arrow-icon" />
+        </div>
+      </motion.button>
+    );
+  }
+);
 
 ProjectItem.displayName = "ProjectItem";
 
@@ -214,6 +428,8 @@ const Projects = () => {
   const [showSwipeHint, setShowSwipeHint] = useState(true);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const updateArrows = useCallback(() => {
     const el = listRef.current;
     if (!el) return;
@@ -232,6 +448,18 @@ const Projects = () => {
     updateArrows();
     return () => el.removeEventListener("scroll", onScroll);
   }, [updateArrows]);
+
+  // Bloquer le scroll body quand modal ouvert
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "clip";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
 
   const scrollBy = useCallback((dir) => {
     const el = listRef.current;
@@ -266,8 +494,16 @@ const Projects = () => {
     []
   );
 
+  const handleOpen = useCallback((project) => setSelectedProject(project), []);
+  const handleClose = useCallback(() => setSelectedProject(null), []);
+
   return (
-    <section className="projects" id="projects" ref={ref} aria-label="Portfolio — Nos réalisations web">
+    <section
+      className="projects"
+      id="projects"
+      ref={ref}
+      aria-label="Portfolio — Nos réalisations web"
+    >
       <div className="projects__container">
         <div className="projects__desktop-layout">
           <motion.div
@@ -297,6 +533,7 @@ const Projects = () => {
                   project={project}
                   variants={itemVariants}
                   categoryLabels={t.projects.categoryLabels}
+                  onOpen={handleOpen}
                 />
               ))}
             </AnimatePresence>
@@ -345,6 +582,7 @@ const Projects = () => {
                   index={index}
                   variants={itemVariants}
                   overlayText={t.projects.label}
+                  onOpen={handleOpen}
                 />
               ))}
             </AnimatePresence>
@@ -382,6 +620,13 @@ const Projects = () => {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectModal project={selectedProject} onClose={handleClose} />
+        )}
+      </AnimatePresence>
     </section>
   );
 };
