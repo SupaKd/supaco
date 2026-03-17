@@ -95,8 +95,12 @@
       cursor: pointer;
       &:hover {
         background: var(--glass-hover);
-        .contact__detail-value { color: var(--color-accent-primary); }
-        .contact__detail-copy-icon { opacity: 1; }
+        .contact__detail-value {
+          color: var(--color-accent-primary);
+        }
+        .contact__detail-copy-icon {
+          opacity: 1;
+        }
       }
     }
 
@@ -168,7 +172,8 @@
     border-radius: 50%;
     color: var(--color-text-primary);
     font-size: $font-size-lg;
-    transition: background $transition-base, color $transition-base, transform $transition-base;
+    transition: background $transition-base, color $transition-base,
+      transform $transition-base;
 
     &:hover {
       background: var(--color-accent-primary);
@@ -193,7 +198,7 @@
     align-items: center;
     gap: $space-md;
     padding: $space-md $space-lg;
-    background: var(--color-bg-tertiary);
+    background: var(--color-glass);
     border: 1px solid var(--glass-border);
     border-radius: $radius-lg;
     text-decoration: none;
@@ -237,7 +242,7 @@
 
   // ---- Form card ----
   &__form {
-    background: var(--color-bg-tertiary);
+    background: var(--color-glass);
     border: 1px solid var(--glass-border);
     border-radius: $radius-xl;
     padding: $space-xl;
@@ -328,7 +333,9 @@
       .contact__form-select,
       .contact__form-textarea {
         border-color: #ef4444;
-        &:focus { box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15); }
+        &:focus {
+          box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
       }
     }
 
@@ -372,7 +379,8 @@
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: $radius-md;
-    transition: border-color $transition-fast, background $transition-fast, box-shadow $transition-fast;
+    transition: border-color $transition-fast, background $transition-fast,
+      box-shadow $transition-fast;
 
     &::placeholder {
       color: var(--color-text-secondary);
@@ -474,7 +482,9 @@
       transition: color $transition-base;
       line-height: 1;
 
-      @include mobile { font-size: $font-size-xs; }
+      @include mobile {
+        font-size: $font-size-xs;
+      }
     }
 
     &-desc {
@@ -490,16 +500,25 @@
       margin: 0 $space-md;
       flex-shrink: 0;
 
-      @include mobile { width: 24px; margin: 0 $space-sm; }
+      @include mobile {
+        width: 24px;
+        margin: 0 $space-sm;
+      }
     }
 
     &--active {
       .contact__step-bubble {
         border-color: var(--color-accent-primary);
-        background: color-mix(in srgb, var(--color-accent-primary) 10%, transparent);
+        background: color-mix(
+          in srgb,
+          var(--color-accent-primary) 10%,
+          transparent
+        );
         color: var(--color-accent-primary);
       }
-      .contact__step-label { color: var(--color-accent-primary); }
+      .contact__step-label {
+        color: var(--color-accent-primary);
+      }
     }
 
     &--done {
@@ -508,7 +527,9 @@
         background: var(--color-accent-primary);
         color: #fff;
       }
-      .contact__step-label { color: var(--color-text-primary); }
+      .contact__step-label {
+        color: var(--color-text-primary);
+      }
     }
   }
 
@@ -555,11 +576,15 @@
     flex: 1;
     margin-top: 0 !important;
 
-    @include mobile { width: 100%; }
+    @include mobile {
+      width: 100%;
+    }
   }
 
   // ---- Calendly ----
-  &__calendly { flex: 1; }
+  &__calendly {
+    flex: 1;
+  }
 
   &__calendly-iframe {
     display: block;
@@ -568,7 +593,9 @@
     border: none;
     border-radius: $radius-lg;
 
-    @include mobile { height: 820px; }
+    @include mobile {
+      height: 820px;
+    }
   }
 
   // ---- Success ----
@@ -674,5 +701,7 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
